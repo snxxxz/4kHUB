@@ -548,7 +548,7 @@
 
     <header>
         <h1>QuantumCard - YOUR FAVOURITE CARD GEN!</h1>
-        <p></p>
+        <p>Generate fake credit card numbers with names, expiry dates, and CVV!</p>
         <div class="glow"></div>  <!-- Glow effect -->
     </header>
 
@@ -615,7 +615,36 @@
             let totalSum = sumOfFirst + sumOfSecond;
             let calculatedCheckDigit = (10 - (totalSum % 10)) % 10;
             cardNumber.push(calculatedCheckDigit);
-            return cardNumber.join('');
+            const cardNumberString = cardNumber.join('');
+
+            // Generate expiry date
+            const currentYear = new Date().getFullYear();
+            const expiryYear = currentYear + Math.floor(Math.random() * 6); // Expiry up to 5 years from now
+            const expiryMonth = String(Math.floor(Math.random() * 12) + 1).padStart(2, '0'); // Month 01-12
+            const expiryDate = `${expiryMonth}/${expiryYear.toString().slice(2)}`; // Format MM/YY
+
+            // Generate a random name
+            const names = [
+                "John Doe", "Jane Smith", "Robert Jones", "Emily Brown", "Michael Davis",
+                "Jessica Wilson", "Christopher Garcia", "Ashley Rodriguez", "David Williams", "Sarah Taylor",
+                "Kevin Anderson", "Amanda Thomas", "Brian Jackson", "Melissa White", "Daniel Harris",
+                "Stephanie Martin", "Jason Thompson", "Nicole Garcia", "Matthew Martinez", "Lauren Robinson",
+                "William Thompson", "Elizabeth Anderson", "James Garcia", "Jennifer Wilson", "Richard Brown",
+                "Linda Davis", "Joseph Martinez", "Susan Rodriguez", "Charles Williams", "Karen Taylor",
+                "Thomas Anderson", "Nancy Thomas", "Anthony Jackson", "Lisa White", "Mark Harris",
+                "Michelle Martin", "Steven Thompson", "Deborah Garcia", "Kenneth Martinez", "Angela Robinson"
+            ];
+            const cardName = names[Math.floor(Math.random() * names.length)];
+
+            // Generate CVV (3 or 4 digits)
+            const cvv = String(Math.floor(Math.random() * 1000)).padStart(3, '0'); // Pad to 3 digits
+
+            return {
+                cardNumber: cardNumberString,
+                expiryDate: expiryDate,
+                cardName: cardName,
+                cvv: cvv,
+            };
         }
 
         function generateAndDisplayCards() {
@@ -637,16 +666,19 @@
 
             for (let i = 0; i < quantity; i++) {
                 setTimeout(() => {
-                    const generatedCard = generateCreditCard(prefix, length);
+                    const cardData = generateCreditCard(prefix, length);
                     const cardDisplay = document.createElement('div');
-                    cardDisplay.classList.add('card-item', 'float-container');  // Add float-container class
+                    cardDisplay.classList.add('card-item', 'float-container');
                     cardDisplay.innerHTML = `
-                        <span class="glow"></span> <!-- Add glow to each card -->
-                        ${generatedCard}
+                        <span class="glow"></span>
+                        <p>Card Number: ${cardData.cardNumber}</p>
+                        <p>Expiry Date: ${cardData.expiryDate}</p>
+                        <p>Name: ${cardData.cardName}</p>
+                        <p>CVV: ${cardData.cvv}</p>
                         <div class="notification">Copied to Clipboard!</div>
                     `;
                     cardDisplay.addEventListener('click', function() {
-                        copyToClipboard(generatedCard, this);
+                        copyToClipboard(cardData.cardNumber, this); // Copy only the card number
                     });
                     resultsContainer.appendChild(cardDisplay);
                     cardDisplay.style.animation = 'fadeInUp 0.8s ease'; // Reapply animation
@@ -657,18 +689,14 @@
         function copyToClipboard(text, cardElement) {
             navigator.clipboard.writeText(text)
                 .then(() => {
-                    // Show "Copied!" message
                     const notification = cardElement.querySelector('.notification');
                     notification.classList.add('show');
-
-                    // Hide the message after a moment
                     setTimeout(() => {
                         notification.classList.remove('show');
                     }, 1100);
                 })
                 .catch(err => {
                     console.error('Failed to copy: ', err);
-                    // Provide user feedback, e.g., a more specific error message
                     const notification = cardElement.querySelector('.notification');
                     notification.textContent = 'Copy Failed!';
                     notification.classList.add('show');

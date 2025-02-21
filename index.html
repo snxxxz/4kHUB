@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,750 +13,769 @@
             padding: 0;
         }
 
-        /* --- Dark Theme Setup --- */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* More human-friendly font */
-            line-height: 1.7;
-            background: #181818; /* Slightly lighter dark background */
-            color: #ddd; /* Slightly brighter text */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            padding: 30px; /* Reduced padding */
-            overflow-x: hidden;
-            position: relative;
-        }
+/* --- Dark Theme Setup --- */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* More human-friendly font */
+        line-height: 1.7;
+        background: #181818; /* Slightly lighter dark background */
+        color: #ddd; /* Slightly brighter text */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+        padding: 30px; /* Reduced padding */
+        overflow-x: hidden;
+        position: relative;
+    }
 
-        /* --- Animated Background (Stars and Nebula) --- */
-        body::before, body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
+    /* --- Animated Background (Falling Snow) --- */
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+        background: #181818; /* Keep a dark background */
+    }
 
-        /* Nebula background (radial gradient) - Softer, less intense */
-        body::before {
-            background: radial-gradient(ellipse farthest-corner at center, #222 0%, #141414 70%); /* Softer nebula */
-            animation: nebula 35s linear infinite; /* Slightly slower */
-        }
+    /* Snowflake styling */
+    .snowflake {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: white;
+        border-radius: 50%;
+        opacity: 0.7;
+        animation: fall linear infinite;
+    }
 
-        /* Starfield (with more subtle stars) */
-        body::after {
-            background-image:
-                radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%), /* Subtler stars */
-                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='none' stroke='%23222' stroke-width='0.5'%3E%3C/rect%3E%3C/svg%3E"); /* Grid */
-            background-attachment: fixed;
-            animation: starfield 50s linear infinite; /* Slower */
+    /* Animate the snowflakes falling */
+    @keyframes fall {
+        0% {
+            transform: translateY(0);
+            opacity: 0.7;
         }
-
-        @keyframes nebula {
-            0% { background-position: center top; }
-            100% { background-position: center bottom; }
-        }
-
-        @keyframes starfield {
-            0% {
-                background-position: 0 0, 0 0;
-            }
-            100% {
-                background-position: 600px 600px, 0 0; /* Increased offset */
-            }
-        }
-
-        /* --- Subtle Pulsing Effects --- */
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                opacity: 0.8;
-            }
-            50% {
-                transform: scale(1.03); /* Increased scale for more visibility */
-                opacity: 1;
-            }
-            100% {
-                transform: scale(1);
-                opacity: 0.8;
-            }
-        }
-
-        /* --- Header Section --- */
-        header {
-            background-color: rgba(35, 35, 35, 0.8); /* Slightly more opaque */
-            backdrop-filter: blur(10px); /* Reduced blur */
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5); /* Reduced shadow */
-            padding: 35px; /* Reduced padding */
-            border-radius: 18px; /* Less rounded */
-            width: 100%;
-            max-width: 850px; /* Reduced max width */
-            margin-bottom: 40px; /* Reduced margin */
-            text-align: center;
-            position: relative;
-            z-index: 2;
-            overflow: hidden;
-        }
-
-        /* Header glow effect - Subtler */
-        header::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            border-radius: 20px;
-            background: linear-gradient(100deg, #5a8ee6, #7ab1e6, #5a8ee6); /* Adjusted colors */
-            z-index: -1;
-            filter: blur(12px); /* Reduced blur */
-            opacity: 0.45; /* Reduced opacity */
-            transition: opacity 0.3s ease;
-        }
-
-        header:hover::before {
-            opacity: 0.65; /* Increased opacity on hover */
-        }
-
-        header:hover {
-            transform: translateY(-6px); /* Reduced lift */
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6); /* Softer hover shadow */
-        }
-
-        h1 {
-            font-size: 3.7rem; /* Reduced size */
-            color: #fff;
-            margin-bottom: 18px; /* Reduced margin */
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-            transition: color 0.3s ease;
-            letter-spacing: 0.8px;
-            animation: pulse 3s ease infinite;
-        }
-
-        header:hover h1 {
-            color: #b3d9ff; /* Softer highlight color */
-        }
-
-        p {
-            color: #d9d9d9; /* Slightly brighter text */
-            font-size: 1.2rem;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-            transition: color 0.3s ease;
-            letter-spacing: 0.5px;
-        }
-
-        header:hover p {
-            color: #f0f0f0; /* Brighter text on hover */
-        }
-
-        /* --- Main Content Section --- */
-        main {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            max-width: 850px;
-            background-color: rgba(35, 35, 35, 0.8); /* Same as header */
-            backdrop-filter: blur(10px);
-            padding: 35px; /* Reduced padding */
-            border-radius: 18px; /* Same as header */
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5); /* Same as header */
-            position: relative;
-            z-index: 2;
-            overflow: hidden;
-        }
-
-        main::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            border-radius: 20px;
-            background: linear-gradient(100deg, #5a8ee6, #7ab1e6, #5a8ee6); /* Same as header */
-            z-index: -1;
-            filter: blur(12px); /* Same as header */
-            opacity: 0.45;
-            transition: opacity 0.3s ease;
-        }
-
-        main:hover::before {
-            opacity: 0.65;
-        }
-
-        main:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6); /* Softer hover shadow */
-        }
-
-        /* --- Input and Button Styles --- */
-        .form-group {
-            margin-bottom: 28px; /* Reduced margin */
-            width: 100%;
-            animation: fadeIn 0.6s ease; /* Reduced fade in time */
-        }
-
-        label {
-            display: block;
-            font-weight: 500; /* Reduced weight */
-            margin-bottom: 10px; /* Reduced margin */
-            color: #fff;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
-            transition: color 0.3s ease;
-            letter-spacing: 0.6px;
-            font-size: 1.1rem;
-        }
-
-        .refined-input, .refined-select {
-            width: 100%;
-            padding: 16px; /* Reduced padding */
-            border: 1.5px solid rgba(70, 70, 70, 0.6); /* Darker border */
-            border-radius: 8px; /* Reduced radius */
-            font-size: 1.15rem; /* Reduced font size */
-            margin-bottom: 18px; /* Reduced margin */
-            transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, transform 0.2s ease;
-            background-color: rgba(45, 45, 45, 0.6);
-            color: #eee; /* Slightly brighter text */
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
-            letter-spacing: 0.6px;
-        }
-
-        .refined-input:focus, .refined-select:focus {
-            border-color: #7ab1e6; /* Adjusted focus color */
-            outline: none;
-            box-shadow: 0 0 10px rgba(122, 177, 230, 0.6); /* Adjusted focus shadow */
-            background-color: rgba(35, 35, 35, 0.8);
-            transform: scale(1.01);
-        }
-
-        button {
-            background-color: #7ab1e6; /* Adjusted button color */
-            color: #2f3748;
-            padding: 18px 32px; /* Reduced padding */
-            border: none;
-            border-radius: 8px; /* Reduced radius */
-            font-size: 1.3rem; /* Reduced font size */
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-            width: 100%;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
-            animation: fadeInUp 0.7s ease; /* Reduced fade up time */
-            letter-spacing: 0.9px;
-            font-weight: 500; /* Reduced weight */
-            position: relative;
-            overflow: hidden;
-        }
-
-        button:hover {
-            background-color: #6aa7e0; /* Darker blue on hover */
-            transform: translateY(-4px); /* Reduced lift */
-            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.6); /* Reduced hover shadow */
-        }
-
-        button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.2);
-            transform: translate(-50%, -50%);
+        100% {
+            transform: translateY(100vh);
             opacity: 0;
-            transition: width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
-            z-index: 1;
         }
+    }
 
-        button:active::before {
-            width: 180%; /* Reduced size */
-            height: 180%; /* Reduced size */
+    /* --- Subtle Pulsing Effects --- */
+    @keyframes pulse {
+        0% {
+            transform: scale(1);
+            opacity: 0.8;
+        }
+        50% {
+            transform: scale(1.03); /* Increased scale for more visibility */
             opacity: 1;
         }
+        100% {
+            transform: scale(1);
+            opacity: 0.8;
+        }
+    }
 
-        /* --- Results Section --- */
-        #results-container {
-            margin-top: 35px; /* Reduced margin */
-            width: 100%;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 30px; /* Reduced gap */
-            animation: fadeIn 0.6s ease;
-            position: relative;
-        }
+    /* --- Header Section --- */
+    header {
+        background-color: rgba(35, 35, 35, 0.8); /* Slightly more opaque */
+        backdrop-filter: blur(10px); /* Reduced blur */
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5); /* Reduced shadow */
+        padding: 35px; /* Reduced padding */
+        border-radius: 18px; /* Less rounded */
+        width: 100%;
+        max-width: 850px; /* Reduced max width */
+        margin-bottom: 40px; /* Reduced margin */
+        text-align: center;
+        position: relative;
+        z-index: 2;
+        overflow: hidden;
+    }
 
-        #results-container::before {
-            content: '';
-            position: absolute;
-            top: -3px;
-            left: -3px;
-            right: -3px;
-            bottom: -3px;
-            border-radius: 20px;
-            background: linear-gradient(100deg, #5a8ee6, #7ab1e6, #5a8ee6); /* Same as header */
-            z-index: -1;
-            filter: blur(14px); /* Reduced blur */
-            opacity: 0.45;
-            transition: opacity 0.3s ease;
-        }
+    /* Header glow effect - Subtler */
+    header::before {
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        border-radius: 20px;
+        background: linear-gradient(100deg, #5a8ee6, #7ab1e6, #5a8ee6); /* Adjusted colors */
+        z-index: -1;
+        filter: blur(12px); /* Reduced blur */
+        opacity: 0.45; /* Reduced opacity */
+        transition: opacity 0.3s ease;
+    }
 
-        #results-container:hover::before {
-            opacity: 0.65;
-        }
+    header:hover::before {
+        opacity: 0.65; /* Increased opacity on hover */
+    }
 
-        .results-header {
-            font-size: 2.2rem; /* Reduced font size */
-            font-weight: 600; /* Reduced weight */
-            margin-bottom: 25px; /* Reduced margin */
-            width: 100%;
-            text-align: center;
-            color: #fff;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-            animation: fadeInUp 0.7s ease;
-            letter-spacing: 1.2px;
-            position: relative;
-        }
+    header:hover {
+        transform: translateY(-6px); /* Reduced lift */
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6); /* Softer hover shadow */
+    }
 
-        .results-header::before {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 2.5px; /* Reduced height */
-            background-color: #7ab1e6; /* Adjusted highlight color */
-            transition: width 0.4s ease;
-        }
+    h1 {
+        font-size: 3.7rem; /* Reduced size */
+        color: #fff;
+        margin-bottom: 18px; /* Reduced margin */
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        transition: color 0.3s ease;
+        letter-spacing: 0.8px;
+        animation: pulse 3s ease infinite;
+    }
 
-        .results-header:hover::before {
-            width: 65%; /* Reduced highlight width */
-        }
+    header:hover h1 {
+        color: #b3d9ff; /* Softer highlight color */
+    }
 
-        .card-item {
-            background-color: rgba(45, 45, 45, 0.7);
-            border: 1.5px solid rgba(255, 255, 255, 0.08); /* Lighter border */
-            border-radius: 14px; /* Reduced rounding */
-            padding: 25px;
-            font-family: 'Consolas', monospace; /* Changed font */
-            font-size: 1.35rem; /* Reduced font size */
-            color: #fff;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            text-align: center;
-            width: calc(33.33% - 30px);
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45); /* Softer shadow */
-            animation: fadeInUp 0.8s ease;
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-            user-select: none;
-        }
+    p {
+        color: #d9d9d9; /* Slightly brighter text */
+        font-size: 1.2rem;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        transition: color 0.3s ease;
+        letter-spacing: 0.5px;
+    }
 
-        .card-item::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            border-radius: 15px;
-            background: linear-gradient(100deg, #5a8ee6, #7ab1e6, #5a8ee6); /* Same as header */
-            z-index: -1;
-            filter: blur(11px); /* Reduced blur */
-            opacity: 0.55;
-        }
+    header:hover p {
+        color: #f0f0f0; /* Brighter text on hover */
+    }
 
-        .card-item:hover {
-            transform: translateY(-10px); /* Reduced lift */
-            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55); /* Reduced hover shadow */
-            border-color: #7ab1e6;
-        }
+    /* --- Main Content Section --- */
+    main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 850px;
+        background-color: rgba(35, 35, 35, 0.8); /* Same as header */
+        backdrop-filter: blur(10px);
+        padding: 35px; /* Reduced padding */
+        border-radius: 18px; /* Same as header */
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5); /* Same as header */
+        position: relative;
+        z-index: 2;
+        overflow: hidden;
+    }
 
-        /* Error Display */
-        .error-display {
-            color: #f57c7c; /* Softer error color */
-            font-weight: 600;
-            text-align: center;
-            margin-top: 25px; /* Reduced margin */
-            animation: shake 0.5s ease;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
-            letter-spacing: 0.9px;
-        }
+    main::before {
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        border-radius: 20px;
+        background: linear-gradient(100deg, #5a8ee6, #7ab1e6, #5a8ee6); /* Same as header */
+        z-index: -1;
+        filter: blur(12px); /* Same as header */
+        opacity: 0.45;
+        transition: opacity 0.3s ease;
+    }
 
-        /* --- Keyframes for Animations --- */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
+    main:hover::before {
+        opacity: 0.65;
+    }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    main:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6); /* Softer hover shadow */
+    }
 
-        @keyframes shake {
-            0%, 100% {
-                transform: translateX(0);
-            }
-            10%, 30%, 50%, 70%, 90% {
-                transform: translateX(-15px); /* Reduced shake amount */
-            }
-            20%, 40%, 60%, 80% {
-                transform: translateX(15px); /* Reduced shake amount */
-            }
-        }
-        /* Add the following for the animated glow */
-        .glow {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(122, 177, 230, 0.18); /* Adjusted glow color */
-            border-radius: 14px;
-            z-index: -1;
-            pointer-events: none;  /* Ensure no interference */
-            animation: glowing 2.2s ease infinite; /* Adjusted glow speed */
-            opacity: 0; /* Start hidden */
-        }
+    /* --- Input and Button Styles --- */
+    .form-group {
+        margin-bottom: 28px; /* Reduced margin */
+        width: 100%;
+        animation: fadeIn 0.6s ease; /* Reduced fade in time */
+    }
 
-        @keyframes glowing {
-            0% {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-            50% {
-                opacity: 0.5; /* Adjusted glow intensity */
-                transform: scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-        }
-        .card-item:hover .glow {
-            animation-play-state: running;
-        }
+    label {
+        display: block;
+        font-weight: 500; /* Reduced weight */
+        margin-bottom: 10px; /* Reduced margin */
+        color: #fff;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+        transition: color 0.3s ease;
+        letter-spacing: 0.6px;
+        font-size: 1.1rem;
+    }
 
-        /* Add the following for the floating effect */
-        .float-container {
-          position: relative;
-          animation: floating 5s ease-in-out infinite;
-        }
+    .refined-input, .refined-select {
+        width: 100%;
+        padding: 16px; /* Reduced padding */
+        border: 1.5px solid rgba(70, 70, 70, 0.6); /* Darker border */
+        border-radius: 8px; /* Reduced radius */
+        font-size: 1.15rem; /* Reduced font size */
+        margin-bottom: 18px; /* Reduced margin */
+        transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, transform 0.2s ease;
+        background-color: rgba(45, 45, 45, 0.6);
+        color: #eee; /* Slightly brighter text */
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+        letter-spacing: 0.6px;
+    }
 
-        @keyframes floating {
-            0% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-7px); /* Reduced floating distance */
-            }
-            100% {
-                transform: translateY(0);
-            }
-        }
+    .refined-input:focus, .refined-select:focus {
+        border-color: #7ab1e6; /* Adjusted focus color */
+        outline: none;
+        box-shadow: 0 0 10px rgba(122, 177, 230, 0.6); /* Adjusted focus shadow */
+        background-color: rgba(35, 35, 35, 0.8);
+        transform: scale(1.01);
+    }
 
-        /* --- Copy to Clipboard Animation --- */
-        @keyframes copyAnimation {
-            0% {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    button {
+        background-color: #7ab1e6; /* Adjusted button color */
+        color: #2f3748;
+        padding: 18px 32px; /* Reduced padding */
+        border: none;
+        border-radius: 8px; /* Reduced radius */
+        font-size: 1.3rem; /* Reduced font size */
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        width: 100%;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+        animation: fadeInUp 0.7s ease; /* Reduced fade up time */
+        letter-spacing: 0.9px;
+        font-weight: 500; /* Reduced weight */
+        position: relative;
+        overflow: hidden;
+    }
 
-        .notification {
-            position: absolute;
-            top: -35px; /* Start above the card */
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: rgba(45, 45, 45, 0.85);
-            color: #b3d9ff; /* Adjusted notification color */
-            padding: 7px 16px; /* Reduced padding */
-            border-radius: 5px; /* Reduced rounding */
-            font-size: 1.05rem;
+    button:hover {
+        background-color: #6aa7e0; /* Darker blue on hover */
+        transform: translateY(-4px); /* Reduced lift */
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.6); /* Reduced hover shadow */
+    }
+
+    button::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.2);
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        transition: width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+        z-index: 1;
+    }
+
+    button:active::before {
+        width: 180%; /* Reduced size */
+        height: 180%; /* Reduced size */
+        opacity: 1;
+    }
+
+    /* --- Results Section --- */
+    #results-container {
+        margin-top: 35px; /* Reduced margin */
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px; /* Reduced gap */
+        animation: fadeIn 0.6s ease;
+        position: relative;
+    }
+
+    #results-container::before {
+        content: '';
+        position: absolute;
+        top: -3px;
+        left: -3px;
+        right: -3px;
+        bottom: -3px;
+        border-radius: 20px;
+        background: linear-gradient(100deg, #5a8ee6, #7ab1e6, #5a8ee6); /* Same as header */
+        z-index: -1;
+        filter: blur(14px); /* Reduced blur */
+        opacity: 0.45;
+        transition: opacity 0.3s ease;
+    }
+
+    #results-container:hover::before {
+        opacity: 0.65;
+    }
+
+    .results-header {
+        font-size: 2.2rem; /* Reduced font size */
+        font-weight: 600; /* Reduced weight */
+        margin-bottom: 25px; /* Reduced margin */
+        width: 100%;
+        text-align: center;
+        color: #fff;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        animation: fadeInUp 0.7s ease;
+        letter-spacing: 1.2px;
+        position: relative;
+    }
+
+    .results-header::before {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 2.5px; /* Reduced height */
+        background-color: #7ab1e6; /* Adjusted highlight color */
+        transition: width 0.4s ease;
+    }
+
+    .results-header:hover::before {
+        width: 65%; /* Reduced highlight width */
+    }
+
+    .card-item {
+        background-color: rgba(45, 45, 45, 0.7);
+        border: 1.5px solid rgba(255, 255, 255, 0.08); /* Lighter border */
+        border-radius: 14px; /* Reduced rounding */
+        padding: 25px;
+        font-family: 'Consolas', monospace; /* Changed font */
+        font-size: 1.35rem; /* Reduced font size */
+        color: #fff;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+        transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        text-align: center;
+        width: calc(33.33% - 30px);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45); /* Softer shadow */
+        animation: fadeInUp 0.8s ease;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .card-item::before {
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        border-radius: 15px;
+        background: linear-gradient(100deg, #5a8ee6, #7ab1e6, #5a8ee6); /* Same as header */
+        z-index: -1;
+        filter: blur(11px); /* Reduced blur */
+        opacity: 0.55;
+    }
+
+    .card-item:hover {
+        transform: translateY(-10px); /* Reduced lift */
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55); /* Reduced hover shadow */
+        border-color: #7ab1e6;
+    }
+
+    /* Error Display */
+    .error-display {
+        color: #f57c7c; /* Softer error color */
+        font-weight: 600;
+        text-align: center;
+        margin-top: 25px; /* Reduced margin */
+        animation: shake 0.5s ease;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+        letter-spacing: 0.9px;
+    }
+
+    /* --- Keyframes for Animations --- */
+    @keyframes fadeIn {
+        from {
             opacity: 0;
-            transition: opacity 0.3s ease, top 0.3s ease;
-            pointer-events: none;
-            z-index: 11;
-            animation: copyAnimation 0.4s ease; /* Added animation */
         }
-
-        .notification.show {
+        to {
             opacity: 1;
-            top: 12px; /* Reduced distance into view */
         }
+    }
 
-        /* --- "More Features Coming Soon" Alert --- */
-        .alert-container {
-            position: fixed;
-            top: 12px;
-            right: 12px;
-            background-color: rgba(45, 45, 45, 0.85);
-            color: #b3d9ff;
-            padding: 10px 18px; /* Reduced padding */
-            border-radius: 10px; /* Reduced rounding */
-            font-size: 0.95rem; /* Reduced font size */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-            z-index: 100;
-            animation: alertFadeIn 0.4s ease, alertSlideIn 0.5s ease; /* Slightly slower animations */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
         }
-
-        @keyframes alertFadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+        to {
+            opacity: 1;
+            transform: translateY(0);
         }
+    }
 
-        @keyframes alertSlideIn {
-            from {
-                transform: translateX(70px); /* Reduced slide-in distance */
-            }
-            to {
-                transform: translateX(0);
-            }
+    @keyframes shake {
+        0%, 100% {
+            transform: translateX(0);
         }
-
-        .alert-container::before {
-            content: "✨"; /* Changed emoji */
-            margin-right: 5px; /* Reduced spacing */
+        10%, 30%, 50%, 70%, 90% {
+            transform: translateX(-15px); /* Reduced shake amount */
         }
+        20%, 40%, 60%, 80% {
+            transform: translateX(15px); /* Reduced shake amount */
+        }
+    }
+    /* Add the following for the animated glow */
+    .glow {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(122, 177, 230, 0.18); /* Adjusted glow color */
+        border-radius: 14px;
+        z-index: -1;
+        pointer-events: none;  /* Ensure no interference */
+        animation: glowing 2.2s ease infinite; /* Adjusted glow speed */
+        opacity: 0; /* Start hidden */
+    }
 
-      /* Social Icons */
-      .social-icons {
-          position: fixed;
-          bottom: 20px;
-          right: 20px;
-          display: flex;
-          gap: 15px;
-          z-index: 100;
-      }
+    @keyframes glowing {
+        0% {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        50% {
+            opacity: 0.5; /* Adjusted glow intensity */
+            transform: scale(1);
+        }
+        100% {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+    }
+    .card-item:hover .glow {
+        animation-play-state: running;
+    }
 
-      .social-icons a {
-          display: block;
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          background-color: rgba(45, 45, 45, 0.85);
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
-          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-      }
+    /* Add the following for the floating effect */
+    .float-container {
+      position: relative;
+      animation: floating 5s ease-in-out infinite;
+    }
 
-      .social-icons a:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
-      }
+    @keyframes floating {
+        0% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-7px); /* Reduced floating distance */
+        }
+        100% {
+            transform: translateY(0);
+        }
+    }
 
-      .social-icons img {
-          width: 24px;
-          height: 24px;
-          opacity: 0.7;
-          transition: opacity 0.3s ease;
-      }
+    /* --- Copy to Clipboard Animation --- */
+    @keyframes copyAnimation {
+        0% {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 
-      .social-icons a:hover img {
-          opacity: 1;
-      }
+    .notification {
+        position: absolute;
+        top: -35px; /* Start above the card */
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: rgba(45, 45, 45, 0.85);
+        color: #b3d9ff; /* Adjusted notification color */
+        padding: 7px 16px; /* Reduced padding */
+        border-radius: 5px; /* Reduced rounding */
+        font-size: 1.05rem;
+        opacity: 0;
+        transition: opacity 0.3s ease, top 0.3s ease;
+        pointer-events: none;
+        z-index: 11;
+        animation: copyAnimation 0.4s ease; /* Added animation */
+    }
 
-    </style>
+    .notification.show {
+        opacity: 1;
+        top: 12px; /* Reduced distance into view */
+    }
+
+    /* --- "More Features Coming Soon" Alert --- */
+    .alert-container {
+        position: fixed;
+        top: 12px;
+        right: 12px;
+        background-color: rgba(45, 45, 45, 0.85);
+        color: #b3d9ff;
+        padding: 10px 18px; /* Reduced padding */
+        border-radius: 10px; /* Reduced rounding */
+        font-size: 0.95rem; /* Reduced font size */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        z-index: 100;
+        animation: alertFadeIn 0.4s ease, alertSlideIn 0.5s ease; /* Slightly slower animations */
+    }
+
+    @keyframes alertFadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes alertSlideIn {
+        from {
+            transform: translateX(70px); /* Reduced slide-in distance */
+        }
+        to {
+            transform: translateX(0);
+        }
+    }
+
+    .alert-container::before {
+        content: "✨"; /* Changed emoji */
+        margin-right: 5px; /* Reduced spacing */
+    }
+
+  /* Social Icons */
+  .social-icons {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      gap: 15px;
+      z-index: 100;
+  }
+
+  .social-icons a {
+      display: block;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: rgba(45, 45, 45, 0.85);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  }
+
+  .social-icons a:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+  }
+
+  .social-icons img {
+      width: 24px;
+      height: 24px;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+  }
+
+  .social-icons a:hover img {
+      opacity: 1;
+  }
+
+</style>
 </head>
 <body>
 
-    <header>
-        <h1>4KHUB - YOUR FAVOURITE CARD GEN!</h1>
-        <p>Generate fake credit card numbers with names, expiry dates, and CVV!</p>
-        <div class="glow"></div>  <!-- Glow effect -->
-    </header>
+<header>
+    <h1>4KHUB - YOUR FAVOURITE 𝑷𝑳𝑼𝑮!</h1>
+    <div class="glow"></div>  <!-- Glow effect -->
+</header>
 
-    <main>
-        <div class="form-group">
-            <label for="inputPrefix">Card Type:</label>
-            <select id="inputPrefix" class="refined-select">
-                <option value="4">Visa</option>
-                <option value="51">Mastercard</option>
-                <option value="34">American Express</option>
-                <option value="6011">Discover</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="inputLength">Card Length:</label>
-            <select id="inputLength" class="refined-select">
-                <option value="13">13 Digits</option>
-                <option value="15">15 Digits</option>
-                <option value="16" selected>16 Digits</option>
-                <option value="19">19 Digits</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="inputQuantity">How Many Cards?</label>
-            <input type="number" id="inputQuantity" class="refined-input" value="10" min="1">
-        </div>
-
-        <button onclick="generateAndDisplayCards()">Create My Cards!</button>
-
-        <h2 class="results-header">Your Cards Are Here:</h2>
-        <div id="results-container"></div>
-    </main>
-
-    <!-- "More Features Coming Soon" Alert -->
-    <div class="alert-container">
-        New features coming soon...
+<main>
+    <div class="form-group">
+        <label for="inputPrefix">Card Type:</label>
+        <select id="inputPrefix" class="refined-select">
+            <option value="4">Visa</option>
+            <option value="51">Mastercard</option>
+            <option value="34">American Express</option>
+            <option value="6011">Discover</option>
+        </select>
     </div>
 
-    <!-- Social Icons -->
-    <div class="social-icons">
-        <a href="https://discord.gg/4khub" target="_blank">
-            <img src="https://freepnglogo.com/images/all_img/1708701355discord-icon-png.png" alt="Discord">
-        </a>
-        <a href="https://www.youtube.com/@4kthe1andonly" target="_blank">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg" alt="YouTube">
-        </a>
+    <div class="form-group">
+        <label for="inputLength">Card Length:</label>
+        <select id="inputLength" class="refined-select">
+            <option value="13">13 Digits</option>
+            <option value="15">15 Digits</option>
+            <option value="16" selected>16 Digits</option>
+            <option value="19">19 Digits</option>
+        </select>
     </div>
 
-    <script>
-        function generateCreditCard(cardPrefix, cardLength) {
-            let cardNumber = cardPrefix.split('').map(Number);
-            while (cardNumber.length < cardLength - 1) {
-                cardNumber.push(Math.floor(Math.random() * 10));
-            }
-            let doubledValues = [];
-            for (let i = cardNumber.length - 1; i >= 0; i -= 2) {
-                doubledValues.push(cardNumber[i] * 2);
-            }
-            for (let i = 0; i < doubledValues.length; i++) {
-                if (doubledValues[i] > 9) {
-                    doubledValues[i] -= 9;
-                }
-            }
-            let sumOfFirst = 0;
-            let sumOfSecond = 0;
-            for (let i = cardNumber.length - 2; i >= 0; i -= 2) {
-                sumOfFirst += cardNumber[i];
-            }
-            for (let i = 0; i < doubledValues.length; i++) {
-                sumOfSecond += doubledValues[i];
-            }
-            let totalSum = sumOfFirst + sumOfSecond;
-            let calculatedCheckDigit = (10 - (totalSum % 10)) % 10;
-            cardNumber.push(calculatedCheckDigit);
-            const cardNumberString = cardNumber.join('');
+    <div class="form-group">
+        <label for="inputQuantity">How Many Cards?</label>
+        <input type="number" id="inputQuantity" class="refined-input" value="10" min="1">
+    </div>
 
-            // Generate expiry date
-            const currentYear = new Date().getFullYear();
-            const expiryYear = currentYear + Math.floor(Math.random() * 6); // Expiry up to 5 years from now
-            const expiryMonth = String(Math.floor(Math.random() * 12) + 1).padStart(2, '0'); // Month 01-12
-            const expiryDate = `${expiryMonth}/${expiryYear.toString().slice(2)}`; // Format MM/YY
+    <button onclick="generateAndDisplayCards()">Create My Cards!</button>
 
-            // Generate a random name
-            const names = [
-                "John Doe", "Jane Smith", "Robert Jones", "Emily Brown", "Michael Davis",
-                "Jessica Wilson", "Christopher Garcia", "Ashley Rodriguez", "David Williams", "Sarah Taylor",
-                "Kevin Anderson", "Amanda Thomas", "Brian Jackson", "Melissa White", "Daniel Harris",
-                "Stephanie Martin", "Jason Thompson", "Nicole Garcia", "Matthew Martinez", "Lauren Robinson",
-                "William Thompson", "Elizabeth Anderson", "James Garcia", "Jennifer Wilson", "Richard Brown",
-                "Linda Davis", "Joseph Martinez", "Susan Rodriguez", "Charles Williams", "Karen Taylor",
-                "Thomas Anderson", "Nancy Thomas", "Anthony Jackson", "Lisa White", "Mark Harris",
-                "Michelle Martin", "Steven Thompson", "Deborah Garcia", "Kenneth Martinez", "Angela Robinson"
-            ];
-            const cardName = names[Math.floor(Math.random() * names.length)];
+    <h2 class="results-header">Your Cards Are Here:</h2>
+    <div id="results-container"></div>
+</main>
 
-            // Generate CVV (3 or 4 digits)
-            const cvv = String(Math.floor(Math.random() * 1000)).padStart(3, '0'); // Pad to 3 digits
+<!-- "More Features Coming Soon" Alert -->
+<div class="alert-container">
+    New features coming soon...
+</div>
 
-            return {
-                cardNumber: cardNumberString,
-                expiryDate: expiryDate,
-                cardName: cardName,
-                cvv: cvv,
-            };
+<!-- Social Icons -->
+<div class="social-icons">
+    <a href="https://discord.gg/4khub" target="_blank">
+        <img src="https://freepnglogo.com/images/all_img/1708701355discord-icon-png.png" alt="Discord">
+    </a>
+    <a href="https://www.youtube.com/@4kthe1andonly" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg" alt="YouTube">
+    </a>
+</div>
+
+<script>
+    function generateCreditCard(cardPrefix, cardLength) {
+        let cardNumber = cardPrefix.split('').map(Number);
+        while (cardNumber.length < cardLength - 1) {
+            cardNumber.push(Math.floor(Math.random() * 10));
         }
-
-        function generateAndDisplayCards() {
-            const prefix = document.getElementById('inputPrefix').value;
-            const length = document.getElementById('inputLength').value;
-            const quantity = parseInt(document.getElementById('inputQuantity').value, 10);
-            const resultsContainer = document.getElementById('results-container');
-            resultsContainer.innerHTML = '';
-
-            if (isNaN(quantity) || quantity <= 0) {
-                resultsContainer.innerHTML = '<p class="error-display">Please enter a valid number of cards.</p>';
-                return;
-            }
-
-            // Clear any existing animations to prevent issues
-            resultsContainer.style.animation = 'none';
-            void resultsContainer.offsetWidth; // Force reflow
-            resultsContainer.style.animation = 'fadeIn 0.6s ease'; // Reapply animation
-
-            for (let i = 0; i < quantity; i++) {
-                setTimeout(() => {
-                    const cardData = generateCreditCard(prefix, length);
-                    const cardDisplay = document.createElement('div');
-                    cardDisplay.classList.add('card-item', 'float-container');
-                    cardDisplay.innerHTML = `
-                        <span class="glow"></span>
-                        <p>Card Number: ${cardData.cardNumber}</p>
-                        <p>Expiry Date: ${cardData.expiryDate}</p>
-                        <p>Name: ${cardData.cardName}</p>
-                        <p>CVV: ${cardData.cvv}</p>
-                        <div class="notification">Copied to Clipboard!</div>
-                    `;
-                    cardDisplay.addEventListener('click', function() {
-                        copyToClipboard(cardData.cardNumber, this); // Copy only the card number
-                    });
-                    resultsContainer.appendChild(cardDisplay);
-                    cardDisplay.style.animation = 'fadeInUp 0.8s ease'; // Reapply animation
-                }, i * 140); // slightly adjust the delay for smoother appearance
+        let doubledValues = [];
+        for (let i = cardNumber.length - 1; i >= 0; i -= 2) {
+            doubledValues.push(cardNumber[i] * 2);
+        }
+        for (let i = 0; i < doubledValues.length; i++) {
+            if (doubledValues[i] > 9) {
+                doubledValues[i] -= 9;
             }
         }
+        let sumOfFirst = 0;
+        let sumOfSecond = 0;
+        for (let i = cardNumber.length - 2; i >= 0; i -= 2) {
+            sumOfFirst += cardNumber[i];
+        }
+        for (let i = 0; i < doubledValues.length; i++) {
+            sumOfSecond += doubledValues[i];
+        }
+        let totalSum = sumOfFirst + sumOfSecond;
+        let calculatedCheckDigit = (10 - (totalSum % 10)) % 10;
+        cardNumber.push(calculatedCheckDigit);
+        const cardNumberString = cardNumber.join('');
 
-        function copyToClipboard(text, cardElement) {
-            navigator.clipboard.writeText(text)
-                .then(() => {
-                    const notification = cardElement.querySelector('.notification');
-                    notification.classList.add('show');
-                    setTimeout(() => {
-                        notification.classList.remove('show');
-                    }, 1100);
-                })
-                .catch(err => {
-                    console.error('Failed to copy: ', err);
-                    const notification = cardElement.querySelector('.notification');
-                    notification.textContent = 'Copy Failed!';
-                    notification.classList.add('show');
-                    setTimeout(() => {
-                        notification.classList.remove('show');
-                        notification.textContent = 'Copied to Clipboard!';
-                    }, 2000);
+        // Generate expiry date
+        const currentYear = new Date().getFullYear();
+        const expiryYear = currentYear + Math.floor(Math.random() * 6); // Expiry up to 5 years from now
+        const expiryMonth = String(Math.floor(Math.random() * 12) + 1).padStart(2, '0'); // Month 01-12
+        const expiryDate = `${expiryMonth}/${expiryYear.toString().slice(2)}`; // Format MM/YY
+
+        // Generate a random name
+        const names = [
+            "John Doe", "Jane Smith", "Robert Jones", "Emily Brown", "Michael Davis",
+            "Jessica Wilson", "Christopher Garcia", "Ashley Rodriguez", "David Williams", "Sarah Taylor",
+            "Kevin Anderson", "Amanda Thomas", "Brian Jackson", "Melissa White", "Daniel Harris",
+            "Stephanie Martin", "Jason Thompson", "Nicole Garcia", "Matthew Martinez", "Lauren Robinson",
+            "William Thompson", "Elizabeth Anderson", "James Garcia", "Jennifer Wilson", "Richard Brown",
+            "Linda Davis", "Joseph Martinez", "Susan Rodriguez", "Charles Williams", "Karen Taylor",
+            "Thomas Anderson", "Nancy Thomas", "Anthony Jackson", "Lisa White", "Mark Harris",
+            "Michelle Martin", "Steven Thompson", "Deborah Garcia", "Kenneth Martinez", "Angela Robinson"
+        ];
+        const cardName = names[Math.floor(Math.random() * names.length)];
+
+        // Generate CVV (3 or 4 digits)
+        const cvv = String(Math.floor(Math.random() * 1000)).padStart(3, '0'); // Pad to 3 digits
+
+        return {
+            cardNumber: cardNumberString,
+            expiryDate: expiryDate,
+            cardName: cardName,
+            cvv: cvv,
+        };
+    }
+
+    function generateAndDisplayCards() {
+        const prefix = document.getElementById('inputPrefix').value;
+        const length = document.getElementById('inputLength').value;
+        const quantity = parseInt(document.getElementById('inputQuantity').value, 10);
+        const resultsContainer = document.getElementById('results-container');
+        resultsContainer.innerHTML = '';
+
+        if (isNaN(quantity) || quantity <= 0) {
+            resultsContainer.innerHTML = '<p class="error-display">Please enter a valid number of cards.</p>';
+            return;
+        }
+
+        // Clear any existing animations to prevent issues
+        resultsContainer.style.animation = 'none';
+        void resultsContainer.offsetWidth; // Force reflow
+        resultsContainer.style.animation = 'fadeIn 0.6s ease'; // Reapply animation
+
+        for (let i = 0; i < quantity; i++) {
+            setTimeout(() => {
+                const cardData = generateCreditCard(prefix, length);
+                const cardDisplay = document.createElement('div');
+                cardDisplay.classList.add('card-item', 'float-container');
+                cardDisplay.innerHTML = `
+                    <span class="glow"></span>
+                    <p>Card Number: ${cardData.cardNumber}</p>
+                    <p>Expiry Date: ${cardData.expiryDate}</p>
+                    <p>Name: ${cardData.cardName}</p>
+                    <p>CVV: ${cardData.cvv}</p>
+                    <div class="notification">Copied to Clipboard!</div>
+                `;
+                cardDisplay.addEventListener('click', function() {
+                    copyToClipboard(cardData.cardNumber, this); // Copy only the card number
                 });
+                resultsContainer.appendChild(cardDisplay);
+                cardDisplay.style.animation = 'fadeInUp 0.8s ease'; // Reapply animation
+            }, i * 140); // slightly adjust the delay for smoother appearance
         }
-    </script>
+    }
+
+    function copyToClipboard(text, cardElement) {
+        navigator.clipboard.writeText(text)
+            .then(() => {
+                const notification = cardElement.querySelector('.notification');
+                notification.classList.add('show');
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 1100);
+            })
+            .catch(err => {
+                console.error('Failed to copy: ', err);
+                const notification = cardElement.querySelector('.notification');
+                notification.textContent = 'Copy Failed!';
+                notification.classList.add('show');
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                    notification.textContent = 'Copied to Clipboard!';
+                }, 2000);
+            });
+    }
+
+     // JavaScript to generate and animate snowflakes
+     document.addEventListener('DOMContentLoaded', function () {
+        const numberOfSnowflakes = 70; // Adjust for more/less snow
+        const body = document.body;
+
+        for (let i = 0; i < numberOfSnowflakes; i++) {
+            let snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+            body.appendChild(snowflake);
+
+            // Randomize starting position and animation duration
+            let startPosition = Math.random() * 100; // Start from anywhere on the width
+            let animationDuration = Math.random() * 8 + 4; // Duration between 4 and 12 seconds
+
+            snowflake.style.left = `${startPosition}vw`;
+            snowflake.style.animationDuration = `${animationDuration}s`;
+            snowflake.style.animationDelay = `${Math.random() * 5}s`; // Add a slight delay for each flake to start
+
+            // Randomize size (optional)
+            let size = Math.random() * 5 + 5; // Size between 5px and 10px
+            snowflake.style.width = `${size}px`;
+            snowflake.style.height = `${size}px`;
+        }
+    });
+</script>
 </body>
 </html>

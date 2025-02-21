@@ -690,23 +690,53 @@ button:active::before {
     align-items: center;
     z-index: 1000; /* Ensure it's on top */
     flex-direction: column; /* Stack spinner and text */
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out; /* Smooth fade-in */
 }
 
+/* Loading Spinner */
 .loading-spinner {
     border: 8px solid rgba(106, 167, 224, 0.3); /* Light blue border */
     border-top: 8px solid #7ab1e6; /* Solid blue top */
     border-radius: 50%;
     width: 70px;
     height: 70px;
-    animation: insane-spin 1s linear infinite; /* Spin animation */
+    animation: spinning 1.5s linear infinite, colorTransition 2s ease-in-out infinite;
     margin-bottom: 20px; /* Space between spinner and text */
 }
 
+/* Spinner Rotation */
+@keyframes spinning {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Color Transition for Spinner */
+@keyframes colorTransition {
+    0% {
+        border-top-color: #7ab1e6;
+    }
+    25% {
+        border-top-color: #5a8ee6;
+    }
+    50% {
+        border-top-color: #4d96e7;
+    }
+    75% {
+        border-top-color: #7ab1e6;
+    }
+    100% {
+        border-top-color: #5a8ee6;
+    }
+}
+
+/* Loading Text */
 .loading-text {
     color: #fff;
     font-size: 1.4rem;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-    animation: pulse 2s ease infinite; /* Pulse animation for text */
+    animation: textPulse 2s ease infinite; /* Pulse animation for text */
+    font-weight: bold;
 }
 
 @keyframes insane-spin {
@@ -717,14 +747,40 @@ button:active::before {
     100% { transform: rotate(360deg); border-top-color: #7ab1e6; }
 }
 
+/* --- LOGIN BUTTON STYLE --- */
+.login-button {
+    position: fixed;
+    top: 80px; /* Increased top value to 50px */
+    right: 20px;
+    background-color: rgba(45, 45, 45, 0.85);
+    color: #b3d9ff;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    z-index: 100;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.login-button:hover {
+    background-color: #5a8ee6;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+}
+
 
     </style>
 </head>
 <body>
 
+<a href="login.html" class="login-button">Login</a> <!-- LOGIN BUTTON ADDED HERE -->
+<a href="checker.html" class="checker-button">Go to Checker</a>
+
 <canvas id="plexus-canvas"></canvas>
 
-<a href="checker.html" class="checker-button">Go to Checker</a>
 
 <div id="loading-overlay">
     <div class="loading-spinner"></div>

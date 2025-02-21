@@ -27,40 +27,14 @@ body {
     position: relative;
 }
 
-/* --- Animated Background (Abstract Shapes) --- */
-body::before {
-    content: '';
+/* --- Plexus Background Animation --- */
+#plexus-canvas {
     position: fixed;
     top: 0;
     left: 0;
+    z-index: -1;
     width: 100%;
     height: 100%;
-    pointer-events: none;
-    z-index: -1;
-    background: #181818; /* Keep a dark background */
-}
-
-.abstract-shape {
-    position: absolute;
-    border-radius: 50%;
-    opacity: 0.6;
-    animation: abstractMotion linear infinite;
-    background: linear-gradient(45deg, #5a8ee6, #7ab1e6); /* Example gradient */
-}
-
-@keyframes abstractMotion {
-    0% {
-        transform: translate(0, 0) rotate(0deg);
-        opacity: 0.4;
-    }
-    50% {
-        transform: translate(var(--translateX), var(--translateY)) rotate(180deg);
-        opacity: 0.8;
-    }
-    100% {
-        transform: translate(0, 0) rotate(360deg);
-        opacity: 0.4;
-    }
 }
 
 /* --- Subtle Pulsing Effects --- */
@@ -350,6 +324,8 @@ button:active::before {
     overflow: hidden;
     cursor: pointer;
     user-select: none;
+    display: flex; /* Enable flex layout */
+    flex-direction: column; /* Stack children vertically */
 }
 
 .card-item::before {
@@ -538,11 +514,11 @@ button:active::before {
     margin-right: 5px; /* Reduced spacing */
 }
 
-/* Social Icons */
+/* Social Icons - Moved to bottom right */
 .social-icons {
     position: fixed;
-    top: 20px; /* Changed from bottom to top */
-    left: 20px; /* Changed from right to left */
+    bottom: 20px;
+    right: 20px;
     display: flex;
     gap: 15px;
     z-index: 100;
@@ -579,6 +555,7 @@ button:active::before {
 
 /* Initial State Styles */
 #initial-message {
+    display: none; /* Initially hide the initial message section */
     font-size: 2rem;
     color: #fff;
     text-align: center;
@@ -606,7 +583,9 @@ button:active::before {
 }
 
 #main-content {
-    display: none; /* Initially hide the main content */
+    display: flex; /* Initially show the main content */
+    flex-direction: column;
+    align-items: center;
 }
 
 /* Support Message */
@@ -629,11 +608,58 @@ button:active::before {
 #support-message a:hover {
     color: #fff;
 }
+
+/* New Validation Feature Styles */
+.card-actions {
+    display: flex;
+    justify-content: space-around; /* Distribute space evenly */
+    width: 100%;
+    margin-top: 15px;
+    gap: 10px; /* Space between buttons */
+}
+
+.validate-button, .copy-button {
+    background-color: #5a8ee6; /* Slightly different shade */
+    color: #fff;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+.validate-button:hover, .copy-button:hover {
+    background-color: #4a7ec6;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.validation-message {
+    margin-top: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.validation-message.valid {
+    color: #66bb6a; /* Green for valid */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.validation-message.invalid {
+    color: #ef5350; /* Red for invalid */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
     </style>
 </head>
 <body>
 
-<div id="initial-message">Press Enter To Continue!</div>
+<canvas id="plexus-canvas"></canvas>
+
+<div id="initial-message">Press Enter To Continue!</div> <!--  Removed Initial Message -->
 
 <div id="main-content">
     <header>
@@ -696,16 +722,11 @@ button:active::before {
 </div>
 
 <script>
-    const initialMessage = document.getElementById('initial-message');
+    // Removed initial message and enter to continue functionality
+
     const mainContent = document.getElementById('main-content');
     const supportMessage = document.getElementById('support-message');
 
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'Enter') {
-            initialMessage.style.display = 'none';
-            mainContent.style.display = 'flex';
-        }
-    });
 
     function generateCreditCard(cardPrefix, cardLength) {
         let cardNumber = cardPrefix.split('').map(Number);
@@ -792,11 +813,13 @@ button:active::before {
                     <p>Expiry Date: ${cardData.expiryDate}</p>
                     <p>Name: ${cardData.cardName}</p>
                     <p>CVV: ${cardData.cvv}</p>
+                    <div class="card-actions">
+                        <button class="validate-button" onclick="validateCardNumber('${cardData.cardNumber}', this.closest('.card-item'))">Validate</button>
+                        <button class="copy-button" onclick="copyToClipboard('${cardData.cardNumber}', this.closest('.card-item'))">Copy</button>
+                    </div>
                     <div class="notification">Copied to Clipboard!</div>
+                    <div class="validation-message"></div>
                 `;
-                cardDisplay.addEventListener('click', function() {
-                    copyToClipboard(cardData.cardNumber, this); // Copy only the card number
-                });
                 resultsContainer.appendChild(cardDisplay);
                 cardDisplay.style.animation = 'fadeInUp 0.8s ease'; // Reapply animation
             }, i * 140); // slightly adjust the delay for smoother appearance
@@ -825,49 +848,118 @@ button:active::before {
             });
     }
 
-     // JavaScript to generate and animate abstract shapes
-     document.addEventListener('DOMContentLoaded', function () {
-        const numberOfShapes = 40; // Adjust for more/less shapes
-        const body = document.body;
-
-        for (let i = 0; i < numberOfShapes; i++) {
-            let shape = document.createElement('div');
-            shape.classList.add('abstract-shape');
-            body.appendChild(shape);
-
-            // Randomize starting position, size, and animation duration
-            let startPositionX = Math.random() * 100; // Start from anywhere on the width
-            let startPositionY = Math.random() * 100; // Start from anywhere on the height
-            let animationDuration = Math.random() * 10 + 5; // Duration between 5 and 15 seconds
-            let size = Math.random() * 40 + 20; // Size between 20px and 60px
-
-            // Randomize translation distances for the animation
-            let translateX = (Math.random() - 0.5) * 120; // Range of -60 to 60vw
-            let translateY = (Math.random() - 0.5) * 120; // Range of -60 to 60vh
-
-            shape.style.left = `${startPositionX}vw`;
-            shape.style.top = `${startPositionY}vh`;
-            shape.style.width = `${size}px`;
-            shape.style.height = `${size}px`;
-            shape.style.animationDuration = `${animationDuration}s`;
-            shape.style.animationDelay = `${Math.random() * 5}s`; // Add a slight delay for each shape to start
-
-            // Set the translation distances as CSS variables
-            shape.style.setProperty('--translateX', `${translateX}vw`);
-            shape.style.setProperty('--translateY', `${translateY}vh`);
-
-            // Randomize the background gradient
-            const colors = [
-                ['#5a8ee6', '#7ab1e6'],
-                ['#ff6b6b', '#f44336'],
-                ['#4caf50', '#8bc34a'],
-                ['#3f51b5', '#7986cb'],
-                ['#9c27b0', '#ba68c8']
-            ];
-            const randomColorSet = colors[Math.floor(Math.random() * colors.length)];
-            shape.style.background = `linear-gradient(45deg, ${randomColorSet[0]}, ${randomColorSet[1]})`;
+    function validateCardNumber(cardNumber, cardElement) {
+        const validationMessageElement = cardElement.querySelector('.validation-message');
+        if (!cardNumber) {
+            validationMessageElement.textContent = "Invalid";
+            validationMessageElement.classList.remove('valid');
+            validationMessageElement.classList.add('invalid');
+            return false;
         }
+
+        let sum = 0;
+        let shouldDouble = false;
+        for (let i = cardNumber.length - 1; i >= 0; i--) {
+            let digit = parseInt(cardNumber[i]);
+
+            if (shouldDouble) {
+                digit *= 2;
+                if (digit > 9)
+                    digit -= 9;
+            }
+            sum += digit;
+            shouldDouble = !shouldDouble;
+        }
+        const isValid = (sum % 10 === 0);
+        if (isValid) {
+            validationMessageElement.textContent = "Valid";
+            validationMessageElement.classList.remove('invalid');
+            validationMessageElement.classList.add('valid');
+        } else {
+            validationMessageElement.textContent = "Invalid";
+            validationMessageElement.classList.remove('valid');
+            validationMessageElement.classList.add('invalid');
+        }
+        return isValid;
+    }
+
+
+    // Plexus Animation Script
+    document.addEventListener('DOMContentLoaded', function() {
+        const canvas = document.getElementById('plexus-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const points = [];
+        const numPoints = 150; // Adjust for point density
+        const maxDistance = 120; // Max distance to draw lines
+
+        class Point {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.vx = (Math.random() - 0.5) * 0.3; // small velocity
+                this.vy = (Math.random() - 0.5) * 0.3;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Bounce from edges
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+
+            draw(context) {
+                context.beginPath();
+                context.arc(this.x, this.y, 2, 0, Math.PI * 2); // Small points
+                context.fillStyle = 'rgba(90, 142, 230, 0.6)'; // Faint blue points
+                context.fill();
+            }
+        }
+
+        for (let i = 0; i < numPoints; i++) {
+            points.push(new Point(Math.random() * canvas.width, Math.random() * canvas.height));
+        }
+
+        function drawPlexus() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            points.forEach(point => {
+                point.update();
+                point.draw(ctx);
+            });
+
+            for (let i = 0; i < points.length; i++) {
+                for (let j = i + 1; j < points.length; j++) {
+                    const dx = points[i].x - points[j].x;
+                    const dy = points[i].y - points[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < maxDistance) {
+                        ctx.beginPath();
+                        ctx.moveTo(points[i].x, points[i].y);
+                        ctx.lineTo(points[j].x, points[j].y);
+                        ctx.strokeStyle = `rgba(90, 142, 230, ${1 - distance / maxDistance})`; // Fade lines with distance
+                        ctx.lineWidth = 0.7;
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            requestAnimationFrame(drawPlexus);
+        }
+
+        drawPlexus();
+
+        window.addEventListener('resize', function() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
     });
+
 </script>
 
 </body>

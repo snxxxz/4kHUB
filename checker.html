@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4KHUB - Credit Card Checker</title>
+    <style>
+        /* --- General Reset and Base Styles --- */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+/* --- Dark Theme Setup --- */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.7;
+    background: #181818;
+    color: #ddd;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 30px;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* --- Plexus Background Animation --- */
+#plexus-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+}
+
+/* --- Subtle Pulsing Effects --- */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.03);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+}
+
+/* --- Header Section --- */
+header {
+    background-color: rgba(35, 35, 35, 0.8);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+    padding: 35px;
+    border-radius: 18px;
+    width: 100%;
+    max-width: 850px;
+    margin-bottom: 40px;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+}
+
+/* Header glow effect - Subtler */
+header::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 20px;
+    background: linear-gradient(100deg, #5a8ee6, #7ab1e6, #5a8ee6);
+    z-index: -1;
+    filter: blur(12px);
+    opacity: 0.45;
+    transition: opacity 0.3s ease;
+}
+
+header:hover::before {
+    opacity: 0.65;
+}
+
+header:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+}
+
+h1 {
+    font-size: 3.7rem;
+    color: #fff;
+    margin-bottom: 18px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    transition: color 0.3s ease;
+    letter-spacing: 0.8px;
+    animation: pulse 3s ease infinite;
+}
+
+header:hover h1 {
+    color: #b3d9ff;
+}
+
+p {
+    color: #d9d9d9;
+    font-size: 1.2rem;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    transition: color 0.3s ease;
+    letter-spacing: 0.5px;
+}
+
+header:hover p {
+    color: #f0f0f0;
+}
+
+/* --- Main Content Section --- */
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 850px;
+    background-color: rgba(35, 35, 35, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 35px;
+    border-radius: 18px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+}
+
+main::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 20px;
+    background: linear-gradient(100deg, #5a8ee6, #7ab1e6, #5a8ee6);
+    z-index: -1;
+    filter: blur(12px);
+    opacity: 0.45;
+    transition: opacity 0.3s ease;
+}
+
+main:hover::before {
+    opacity: 0.65;
+}
+
+main:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+}
+
+/* --- Input and Button Styles --- */
+.form-group {
+    margin-bottom: 28px;
+    width: 100%;
+    animation: fadeIn 0.6s ease;
+}
+
+label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 10px;
+    color: #fff;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+    transition: color 0.3s ease;
+    letter-spacing: 0.6px;
+    font-size: 1.1rem;
+}
+
+.refined-input, .refined-select {
+    width: 100%;
+    padding: 16px;
+    border: 1.5px solid rgba(70, 70, 70, 0.6);
+    border-radius: 8px;
+    font-size: 1.15rem;
+    margin-bottom: 18px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, transform 0.2s ease;
+    background-color: rgba(45, 45, 45, 0.6);
+    color: #eee;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+    letter-spacing: 0.6px;
+}
+
+.refined-input:focus, .refined-select:focus {
+    border-color: #7ab1e6;
+    outline: none;
+    box-shadow: 0 0 10px rgba(122, 177, 230, 0.6);
+    background-color: rgba(35, 35, 35, 0.8);
+    transform: scale(1.01);
+}
+
+button {
+    background-color: #7ab1e6;
+    color: #2f3748;
+    padding: 18px 32px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+    animation: fadeInUp 0.7s ease;
+    letter-spacing: 0.9px;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+}
+
+button:hover {
+    background-color: #6aa7e0;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.6);
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+    z-index: 1;
+}
+
+button:active::before {
+    width: 180%;
+    height: 180%;
+    opacity: 1;
+}
+
+/* --- Results Section --- */
+#results-container {
+    margin-top: 35px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px; /* Removed gap as we are showing single result now */
+    animation: fadeIn 0.6s ease;
+    position: relative;
+    flex-direction: column; /* Changed to column to center validation message */
+    align-items: center; /* Center align items in results container */
+}
+
+#results-container::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border-radius: 20px;
+    background: linear-gradient(100deg, #5a8ee6, #7ab1e6, #5a8ee6);
+    z-index: -1;
+    filter: blur(14px);
+    opacity: 0.45;
+    transition: opacity 0.3s ease;
+}
+
+#results-container:hover::before {
+    opacity: 0.65;
+}
+
+.results-header {
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin-bottom: 25px;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    animation: fadeInUp 0.7s ease;
+    letter-spacing: 1.2px;
+    position: relative;
+}
+
+.results-header::before {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2.5px;
+    background-color: #7ab1e6;
+    transition: width 0.4s ease;
+}
+
+.results-header:hover::before {
+    width: 65%;
+}
+
+.card-item {
+    background-color: rgba(45, 45, 45, 0.7);
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 25px;
+    font-family: 'Consolas', monospace;
+    font-size: 1.35rem;
+    color: #fff;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    text-align: center;
+    width: calc(33.33% - 30px); /* Adjusted width for single item if needed */
+    max-width: 400px; /* Example max width for single item */
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+    animation: fadeInUp 0.8s ease;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    user-select: none;
+    display: flex; /* Enable flex layout */
+    flex-direction: column; /* Stack children vertically */
+    margin-bottom: 20px; /* Add margin for spacing if needed */
+}
+
+.card-item::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 15px;
+    background: linear-gradient(100deg, #5a8ee6, #7ab1e6, #5a8ee6);
+    z-index: -1;
+    filter: blur(11px);
+    opacity: 0.55;
+}
+
+.card-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
+    border-color: #7ab1e6;
+}
+
+/* Error Display */
+.error-display {
+    color: #f57c7c;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 25px;
+    animation: shake 0.5s ease;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+    letter-spacing: 0.9px;
+}
+
+/* --- Keyframes for Animations --- */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-15px);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateX(15px);
+    }
+}
+/* Add the following for the animated glow */
+.glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(122, 177, 230, 0.18);
+    border-radius: 14px;
+    z-index: -1;
+    pointer-events: none;
+    animation: glowing 2.2s ease infinite;
+    opacity: 0; /* Start hidden */
+}
+
+@keyframes glowing {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+}
+.card-item:hover .glow {
+    animation-play-state: running;
+}
+
+/* Add the following for the floating effect */
+.float-container {
+  position: relative;
+  animation: floating 5s ease-in-out infinite;
+}
+
+@keyframes floating {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-7px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+/* --- Copy to Clipboard Animation --- */
+@keyframes copyAnimation {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.notification {
+    position: absolute;
+    top: -35px; /* Start above the card */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(45, 45, 45, 0.85);
+    color: #b3d9ff;
+    padding: 7px 16px;
+    border-radius: 5px;
+    font-size: 1.05rem;
+    opacity: 0;
+    transition: opacity 0.3s ease, top 0.3s ease;
+    pointer-events: none;
+    z-index: 11;
+    animation: copyAnimation 0.4s ease; /* Added animation */
+}
+
+.notification.show {
+    opacity: 1;
+    top: 12px; /* Reduced distance into view */
+}
+
+/* --- "More Features Coming Soon" Alert --- */
+.alert-container {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    background-color: rgba(45, 45, 45, 0.85);
+    color: #b3d9ff;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    z-index: 100;
+    animation: alertFadeIn 0.4s ease, alertSlideIn 0.5s ease; /* Slightly slower animations */
+}
+
+@keyframes alertFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes alertSlideIn {
+    from {
+        transform: translateX(70px); /* Reduced slide-in distance */
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+.alert-container::before {
+    content: "✨"; /* Changed emoji */
+    margin-right: 5px; /* Reduced spacing */
+}
+
+/* Social Icons - Moved to bottom right */
+.social-icons {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    gap: 15px;
+    z-index: 100;
+}
+
+.social-icons a {
+    display: block;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(45, 45, 45, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.social-icons a:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+}
+
+.social-icons img {
+    width: 24px;
+    height: 24px;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.social-icons a:hover img {
+    opacity: 1;
+}
+
+/* Initial State Styles */
+#initial-message {
+    display: none; /* Initially hide the initial message section */
+    font-size: 2rem;
+    color: #fff;
+    text-align: center;
+    margin-top: 25vh; /* Vertically center the text */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    animation: pulse 3s ease infinite;
+    letter-spacing: 1.2px;
+    cursor: pointer;
+}
+
+#initial-message::before {
+    content: ' ';
+    display: inline-block;
+    margin-right: 5px;
+    animation: nudge 1.5s ease infinite;
+}
+
+@keyframes nudge {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(10px);
+    }
+}
+
+#main-content {
+    display: flex; /* Initially show the main content */
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Support Message */
+#support-message {
+    width: 100%;
+    text-align: center;
+    margin-top: 25px;
+    font-size: 1.2rem;
+    color: #b3d9ff;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.6s ease; /* Fade-in animation */
+}
+
+#support-message a {
+    color: #b3d9ff;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+}
+
+#support-message a:hover {
+    color: #fff;
+}
+
+/* New Validation Feature Styles */
+.card-actions {
+    display: flex;
+    justify-content: space-around; /* Distribute space evenly */
+    width: 100%;
+    margin-top: 15px;
+    gap: 10px; /* Space between buttons */
+    display: none; /* Hide the action buttons in checker */
+}
+
+.validate-button, .copy-button {
+    background-color: #5a8ee6; /* Slightly different shade */
+    color: #fff;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+.validate-button:hover, .copy-button:hover {
+    background-color: #4a7ec6;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.validation-message {
+    margin-top: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.validation-message.valid {
+    color: #66bb6a; /* Green for valid */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.validation-message.invalid {
+    color: #ef5350; /* Red for invalid */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Checker Button Style */
+.checker-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background-color: rgba(45, 45, 45, 0.85);
+    color: #b3d9ff;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    z-index: 100;
+    text-decoration: none; /* Remove underline from link */
+    display: inline-block; /* Ensure proper padding and size */
+}
+
+.checker-button:hover {
+    background-color: #5a8ee6;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+}
+
+
+    </style>
+</head>
+<body>
+
+<canvas id="plexus-canvas"></canvas>
+
+<a href="index.html" class="checker-button">Go to Generator</a>
+
+<div id="initial-message">Press Enter To Continue!</div> <!--  Removed Initial Message -->
+
+<div id="main-content">
+    <header>
+        <h1>4KHUB - Credit Card Checker</h1>
+        <div class="glow"></div>  <!-- Glow effect -->
+    </header>
+
+    <main>
+        <div class="form-group">
+            <label for="cardNumberInput">Enter Card Number to Check:</label>
+            <input type="text" id="cardNumberInput" class="refined-input" placeholder="Enter card number">
+        </div>
+
+        <button onclick="checkCard()">Check Card Number</button>
+
+        <h2 class="results-header">Validation Result:</h2>
+        <div id="results-container">
+            <!-- Validation message will be displayed here -->
+        </div>
+
+        <div id="support-message" style="display:none;">
+            Do you like this? Please support us to do more and more! <a href="https://discord.gg/4khub" target="_blank">Join the Discord!</a>
+        </div>
+    </main>
+
+    <!-- "More Features Coming Soon" Alert -->
+
+    <div class="alert-container">
+        New features coming soon...
+    </div>
+
+    <!-- Social Icons -->
+
+    <div class="social-icons">
+        <a href="https://discord.gg/4khub" target="_blank">
+            <img src="https://freepnglogo.com/images/all_img/1708701355discord-icon-png.png" alt="Discord">
+        </a>
+        <a href="https://www.youtube.com/@4kthe1andonly" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg" alt="YouTube">
+        </a>
+    </div>
+</div>
+
+<script>
+    // Removed initial message and enter to continue functionality
+
+    const mainContent = document.getElementById('main-content');
+    const supportMessage = document.getElementById('support-message');
+
+
+    function validateCardNumber(cardNumber) {
+        if (!cardNumber) {
+            return false;
+        }
+
+        let sum = 0;
+        let shouldDouble = false;
+        for (let i = cardNumber.length - 1; i >= 0; i--) {
+            let digit = parseInt(cardNumber[i]);
+
+            if (shouldDouble) {
+                digit *= 2;
+                if (digit > 9)
+                    digit -= 9;
+            }
+            sum += digit;
+            shouldDouble = !shouldDouble;
+        }
+        return (sum % 10 === 0);
+    }
+
+    function checkCard() {
+        const cardNumberInput = document.getElementById('cardNumberInput');
+        const cardNumber = cardNumberInput.value.trim();
+        const resultsContainer = document.getElementById('results-container');
+        resultsContainer.innerHTML = ''; // Clear previous results
+
+        const isValid = validateCardNumber(cardNumber);
+
+        const cardDisplay = document.createElement('div');
+        cardDisplay.classList.add('card-item', 'float-container');
+        cardDisplay.innerHTML = `
+            <span class="glow"></span>
+            <p>Card Number: ${cardNumber}</p>
+            <div class="validation-message ${isValid ? 'valid' : 'invalid'}">${isValid ? 'Valid' : 'Invalid'}</div>
+        `;
+        resultsContainer.appendChild(cardDisplay);
+        cardDisplay.style.animation = 'fadeInUp 0.8s ease';
+
+        supportMessage.style.display = 'block'; // Show the support message
+    }
+
+
+    // Plexus Animation Script
+    document.addEventListener('DOMContentLoaded', function() {
+        const canvas = document.getElementById('plexus-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const points = [];
+        const numPoints = 150; // Adjust for point density
+        const maxDistance = 120; // Max distance to draw lines
+
+        class Point {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.vx = (Math.random() - 0.5) * 0.3; // small velocity
+                this.vy = (Math.random() - 0.5) * 0.3;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Bounce from edges
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+
+            draw(context) {
+                context.beginPath();
+                context.arc(this.x, this.y, 2, 0, Math.PI * 2); // Small points
+                context.fillStyle = 'rgba(90, 142, 230, 0.6)'; // Faint blue points
+                context.fill();
+            }
+        }
+
+        for (let i = 0; i < numPoints; i++) {
+            points.push(new Point(Math.random() * canvas.width, Math.random() * canvas.height));
+        }
+
+        function drawPlexus() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            points.forEach(point => {
+                point.update();
+                point.draw(ctx);
+            });
+
+            for (let i = 0; i < points.length; i++) {
+                for (let j = i + 1; j < points.length; j++) {
+                    const dx = points[i].x - points[j].x;
+                    const dy = points[i].y - points[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < maxDistance) {
+                        ctx.beginPath();
+                        ctx.moveTo(points[i].x, points[i].y);
+                        ctx.lineTo(points[j].x, points[j].y);
+                        ctx.strokeStyle = `rgba(90, 142, 230, ${1 - distance / maxDistance})`; // Fade lines with distance
+                        ctx.lineWidth = 0.7;
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            requestAnimationFrame(drawPlexus);
+        }
+
+        drawPlexus();
+
+        window.addEventListener('resize', function() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    });
+
+</script>
+
+</body>
+</html>

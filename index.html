@@ -542,6 +542,46 @@
             content: "✨"; /* Changed emoji */
             margin-right: 5px; /* Reduced spacing */
         }
+
+      /* Social Icons */
+      .social-icons {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          display: flex;
+          gap: 15px;
+          z-index: 100;
+      }
+
+      .social-icons a {
+          display: block;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background-color: rgba(45, 45, 45, 0.85);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+      }
+
+      .social-icons a:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+      }
+
+      .social-icons img {
+          width: 24px;
+          height: 24px;
+          opacity: 0.7;
+          transition: opacity 0.3s ease;
+      }
+
+      .social-icons a:hover img {
+          opacity: 1;
+      }
+
     </style>
 </head>
 <body>
@@ -587,6 +627,16 @@
     <!-- "More Features Coming Soon" Alert -->
     <div class="alert-container">
         New features coming soon...
+    </div>
+
+    <!-- Social Icons -->
+    <div class="social-icons">
+        <a href="https://discord.gg/4khub" target="_blank">
+            <img src="https://freepnglogo.com/images/all_img/1708701355discord-icon-png.png" alt="Discord">
+        </a>
+        <a href="https://www.youtube.com/@4kthe1andonly" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg" alt="YouTube">
+        </a>
     </div>
 
     <script>

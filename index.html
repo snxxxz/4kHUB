@@ -677,6 +677,46 @@ button:active::before {
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
 }
 
+/* --- LOADING ANIMATION STYLES --- */
+#loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Darkened overlay */
+    display: none; /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it's on top */
+    flex-direction: column; /* Stack spinner and text */
+}
+
+.loading-spinner {
+    border: 8px solid rgba(106, 167, 224, 0.3); /* Light blue border */
+    border-top: 8px solid #7ab1e6; /* Solid blue top */
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    animation: insane-spin 1s linear infinite; /* Spin animation */
+    margin-bottom: 20px; /* Space between spinner and text */
+}
+
+.loading-text {
+    color: #fff;
+    font-size: 1.4rem;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    animation: pulse 2s ease infinite; /* Pulse animation for text */
+}
+
+@keyframes insane-spin {
+    0% { transform: rotate(0deg); border-top-color: #7ab1e6; }
+    25% { border-top-color: #5a8ee6; }
+    50% { transform: rotate(180deg); border-top-color: #7ab1e6; }
+    75% { border-top-color: #5a8ee6; }
+    100% { transform: rotate(360deg); border-top-color: #7ab1e6; }
+}
+
 
     </style>
 </head>
@@ -685,6 +725,11 @@ button:active::before {
 <canvas id="plexus-canvas"></canvas>
 
 <a href="checker.html" class="checker-button">Go to Checker</a>
+
+<div id="loading-overlay">
+    <div class="loading-spinner"></div>
+    <p class="loading-text">Generating Cards...</p>
+</div>
 
 <div id="initial-message">Press Enter To Continue!</div> <!--  Removed Initial Message -->
 
@@ -753,7 +798,7 @@ button:active::before {
 
     const mainContent = document.getElementById('main-content');
     const supportMessage = document.getElementById('support-message');
-
+    const loadingOverlay = document.getElementById('loading-overlay'); // Get loading overlay
 
     function generateCreditCard(cardPrefix, cardLength) {
         let cardNumber = cardPrefix.split('').map(Number);
@@ -824,34 +869,43 @@ button:active::before {
             return;
         }
 
-        // Clear any existing animations to prevent issues
-        resultsContainer.style.animation = 'none';
-        void resultsContainer.offsetWidth; // Force reflow
-        resultsContainer.style.animation = 'fadeIn 0.6s ease'; // Reapply animation
+        // Show loading overlay
+        loadingOverlay.style.display = 'flex';
 
-        for (let i = 0; i < quantity; i++) {
-            setTimeout(() => {
-                const cardData = generateCreditCard(prefix, length);
-                const cardDisplay = document.createElement('div');
-                cardDisplay.classList.add('card-item', 'float-container');
-                cardDisplay.innerHTML = `
-                    <span class="glow"></span>
-                    <p>Card Number: ${cardData.cardNumber}</p>
-                    <p>Expiry Date: ${cardData.expiryDate}</p>
-                    <p>Name: ${cardData.cardName}</p>
-                    <p>CVV: ${cardData.cvv}</p>
-                    <div class="card-actions">
-                        <button class="validate-button" onclick="validateCardNumber('${cardData.cardNumber}', this.closest('.card-item'))">Validate</button>
-                        <button class="copy-button" onclick="copyToClipboard('${cardData.cardNumber}', this.closest('.card-item'))">Copy</button>
-                    </div>
-                    <div class="notification">Copied to Clipboard!</div>
-                    <div class="validation-message"></div>
-                `;
-                resultsContainer.appendChild(cardDisplay);
-                cardDisplay.style.animation = 'fadeInUp 0.8s ease'; // Reapply animation
-            }, i * 140); // slightly adjust the delay for smoother appearance
-        }
-        supportMessage.style.display = 'block'; // Show the support message
+        // Simulate loading time (5 seconds) before generating cards
+        setTimeout(() => {
+            loadingOverlay.style.display = 'none'; // Hide loading overlay after 5 seconds
+
+            // Clear any existing animations to prevent issues
+            resultsContainer.style.animation = 'none';
+            void resultsContainer.offsetWidth; // Force reflow
+            resultsContainer.style.animation = 'fadeIn 0.6s ease'; // Reapply animation
+
+            for (let i = 0; i < quantity; i++) {
+                setTimeout(() => {
+                    const cardData = generateCreditCard(prefix, length);
+                    const cardDisplay = document.createElement('div');
+                    cardDisplay.classList.add('card-item', 'float-container');
+                    cardDisplay.innerHTML = `
+                        <span class="glow"></span>
+                        <p>Card Number: ${cardData.cardNumber}</p>
+                        <p>Expiry Date: ${cardData.expiryDate}</p>
+                        <p>Name: ${cardData.cardName}</p>
+                        <p>CVV: ${cardData.cvv}</p>
+                        <div class="card-actions">
+                            <button class="validate-button" onclick="validateCardNumber('${cardData.cardNumber}', this.closest('.card-item'))">Validate</button>
+                            <button class="copy-button" onclick="copyToClipboard('${cardData.cardNumber}', this.closest('.card-item'))">Copy</button>
+                        </div>
+                        <div class="notification">Copied to Clipboard!</div>
+                        <div class="validation-message"></div>
+                    `;
+                    resultsContainer.appendChild(cardDisplay);
+                    cardDisplay.style.animation = 'fadeInUp 0.8s ease'; // Reapply animation
+                }, i * 140); // slightly adjust the delay for smoother appearance
+            }
+            supportMessage.style.display = 'block'; // Show the support message
+
+        }, 5000); // 5000 milliseconds = 5 seconds
     }
 
     function copyToClipboard(text, cardElement) {

@@ -27,6 +27,74 @@ body {
     position: relative;
 }
 
+/* Styles for the navigation bar */
+.navbar {
+    display: flex;
+    justify-content: left; /* Align items to the left */
+    align-items: center;
+    background-color: rgba(35, 35, 35, 0.8);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    padding: 15px 25px; /* Adjust padding as needed */
+    width: 100%;
+    max-width: 1000px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 100; /* Ensure it's on top */
+}
+
+.navbar a {
+    color: #b3d9ff;
+    text-decoration: none;
+    margin-right: 20px; /* Spacing between links */
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+    font-weight: 500;
+    letter-spacing: 0.7px;
+}
+
+.navbar a:hover {
+    color: #fff;
+}
+
+.navbar::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 14px;
+    background: linear-gradient(100deg, #5a8ee6, #7ab1e6, #5a8ee6);
+    z-index: -1;
+    filter: blur(10px);
+    opacity: 0.45;
+    transition: opacity 0.3s ease;
+}
+
+.navbar:hover::before {
+    opacity: 0.65;
+}
+
+/* Style for the logo/title */
+.navbar .logo {
+    font-size: 1.4rem;
+    color: #fff;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    margin-right: auto; /* Push other items to the right */
+}
+
+.navbar .logo:hover {
+    color: #b3d9ff;
+}
+
+.navbar .logo::before {
+    content: "4KHUB "; /* Added content: "4KHUB" */
+    margin-right: 5px;
+}
+
 /* --- Plexus Background Animation --- */
 #plexus-canvas {
     position: fixed;
@@ -687,11 +755,18 @@ button:active::before {
 </head>
 <body>
 
+<!-- Navigation Bar -->
+<nav class="navbar">
+    <a href="index.html" class="logo"></a> <!-- Logo/Title -->
+    <a href="index.html">Home</a>
+    <a href="checker.html">Checker</a>
+    <a href="#">Coming Soon...</a>
+    <a href="#">Coming Soon...</a>
+</nav>
+
 <canvas id="plexus-canvas"></canvas>
 
-<a href="index.html" class="checker-button">Go to Generator</a>
-
-<div id="initial-message">Press Enter To Continue!</div> <!--  Removed Initial Message -->
+<div id="initial-message"></div> <!-- Remove Initial Message -->
 
 <div id="main-content">
     <header>

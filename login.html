@@ -27,6 +27,74 @@ body {
     position: relative;
 }
 
+/* Styles for the navigation bar */
+.navbar {
+    display: flex;
+    justify-content: left; /* Align items to the left */
+    align-items: center;
+    background-color: rgba(35, 35, 35, 0.8);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    padding: 15px 25px; /* Adjust padding as needed */
+    width: 100%;
+    max-width: 1000px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 100; /* Ensure it's on top */
+}
+
+.navbar a {
+    color: #b3d9ff;
+    text-decoration: none;
+    margin-right: 20px; /* Spacing between links */
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+    font-weight: 500;
+    letter-spacing: 0.7px;
+}
+
+.navbar a:hover {
+    color: #fff;
+}
+
+.navbar::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 14px;
+    background: linear-gradient(100deg, #5a8ee6, #7ab1e6, #5a8ee6);
+    z-index: -1;
+    filter: blur(10px);
+    opacity: 0.45;
+    transition: opacity 0.3s ease;
+}
+
+.navbar:hover::before {
+    opacity: 0.65;
+}
+
+/* Style for the logo/title */
+.navbar .logo {
+    font-size: 1.4rem;
+    color: #fff;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    margin-right: auto; /* Push other items to the right */
+}
+
+.navbar .logo:hover {
+    color: #b3d9ff;
+}
+
+.navbar .logo::before {
+    content: "4KHUB "; /* Added content: "4KHUB" */
+    margin-right: 5px;
+}
+
 /* --- Plexus Background Animation --- */
 #plexus-canvas {
     position: fixed;
@@ -559,14 +627,6 @@ header:hover .glow {
     animation: none; /* Optional: Stop button pulse animation - not needed for login button as it has no pulse */
 }
 
-/* --- Main Page Button --- */
-.main-page-button {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 100; /* Ensure it's above other elements */
-}
-
 .main-page-button a {
     display: inline-block;
     background-color: rgba(45, 45, 45, 0.85);
@@ -586,17 +646,89 @@ header:hover .glow {
     color: #fff;
 }
 
+/* Styles for the navigation bar */
+.navbar {
+    display: flex;
+    justify-content: left; /* Align items to the left */
+    align-items: center;
+    background-color: rgba(35, 35, 35, 0.8);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    padding: 15px 25px; /* Adjust padding as needed */
+    width: 100%;
+    max-width: 1000px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 100; /* Ensure it's on top */
+}
+
+.navbar a {
+    color: #b3d9ff;
+    text-decoration: none;
+    margin-right: 20px; /* Spacing between links */
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+    font-weight: 500;
+    letter-spacing: 0.7px;
+}
+
+.navbar a:hover {
+    color: #fff;
+}
+
+.navbar::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 14px;
+    background: linear-gradient(100deg, #5a8ee6, #7ab1e6, #5a8ee6);
+    z-index: -1;
+    filter: blur(10px);
+    opacity: 0.45;
+    transition: opacity 0.3s ease;
+}
+
+.navbar:hover::before {
+    opacity: 0.65;
+}
+
+/* Style for the logo/title */
+.navbar .logo {
+    font-size: 1.4rem;
+    color: #fff;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    margin-right: auto; /* Push other items to the right */
+}
+
+.navbar .logo:hover {
+    color: #b3d9ff;
+}
+
+.navbar .logo::before {
+    content: "4KHUB "; /* Added content: "4KHUB" */
+    margin-right: 5px;
+}
+
 
     </style>
 </head>
 <body>
 
-<canvas id="plexus-canvas"></canvas>
+<!-- Navigation Bar -->
+<nav class="navbar">
+    <a href="index.html" class="logo"></a> <!-- Logo/Title -->
+    <a href="index.html">Home</a>
+    <a href="checker.html">Checker</a>
+    <a href="#">Coming Soon...</a>
+    <a href="#">Coming Soon...</a>
+</nav>
 
-<!-- Main Page Button -->
-<div class="main-page-button">
-    <a href="index.html">Main Page</a>
-</div>
+<canvas id="plexus-canvas"></canvas>
 
 <div id="loading-overlay">
     <div class="loading-spinner"></div>
@@ -614,15 +746,15 @@ header:hover .glow {
     <main>
         <div class="form-group">
             <label for="username">Username:</label>
-            <input type="text" id="username" class="refined-input disabled-feature" placeholder="Enter your username" disabled>
+            <input type="text" id="username" class="refined-input" placeholder="Enter your username">
         </div>
 
         <div class="form-group">
             <label for="password">Password:</label>
-            <input type="password" id="password" class="refined-input disabled-feature" placeholder="Enter your password" disabled>
+            <input type="password" id="password" class="refined-input" placeholder="Enter your password">
         </div>
 
-        <button id="coming-soon-button" class="disabled-feature">Coming Soon</button>
+        <button onclick="login()">Login</button>
 
         <!-- Sign up link -->
         <p style="text-align: center; margin-top: 10px;">

@@ -304,7 +304,7 @@
 
     <!-- Navigation Bar -->
     <nav class="navbar container">
-        <a href="home.html" class="logo"></a> <!-- Logo/Title -->
+        <a href="home.html" class="logo"></a>
         <a href="home.html">Home</a>
         <a href="checker.html">Checker</a>
         <a href="index.html">CC Gen</a>
@@ -469,16 +469,6 @@
             const navLinks = document.querySelectorAll('.navbar a');
             navLinks.forEach(link => {
                 link.textContent = link.textContent.replace('.html', '');
-            });
-        });
-
-        // Update navigation links to show 'Home' instead of 'home.html' on first load
-        document.addEventListener('DOMContentLoaded', function() {
-            const navLinks = document.querySelectorAll('.navbar a');
-            navLinks.forEach(link => {
-            if (link.getAttribute('href') === 'home.html') {
-                link.textContent = 'Home';
-            }
             });
         });
 

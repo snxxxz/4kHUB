@@ -464,9 +464,13 @@
             }
         });
 
-        document.querySelectorAll('a').forEach(link => {
-        link.href = link.href.replace('.html', '');
-    });
+        // Update navigation links to remove .html extension
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.navbar a');
+            navLinks.forEach(link => {
+                link.textContent = link.textContent.replace('.html', '');
+            });
+        });
 
     </script>
 

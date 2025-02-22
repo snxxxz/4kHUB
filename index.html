@@ -264,7 +264,6 @@ button:active::before {
     right: -3px;
     bottom: -3px;
     border-radius: 20px;
-    background: linear-gradient(100deg, #5a8ee6, #7ab1e6, #5a8ee6);
     z-index: -1;
     filter: blur(14px);
     opacity: 0.45;
@@ -675,34 +674,6 @@ button:active::before {
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
 }
 
-/* --- LOADING ANIMATION STYLES --- */
-#loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8); /* Darkened overlay */
-    display: none; /* Hidden by default */
-    justify-content: center;
-    align-items: center;
-    z-index: 1000; /* Ensure it's on top */
-    flex-direction: column; /* Stack spinner and text */
-    opacity: 0;
-    transition: opacity 0.4s ease-in-out; /* Smooth fade-in */
-}
-
-/* Loading Spinner */
-.loading-spinner {
-    border: 8px solid rgba(106, 167, 224, 0.3); /* Light blue border */
-    border-top: 8px solid #7ab1e6; /* Solid blue top */
-    border-radius: 50%;
-    width: 70px;
-    height: 70px;
-    animation: spinning 1.5s linear infinite, colorTransition 2s ease-in-out infinite;
-    margin-bottom: 20px; /* Space between spinner and text */
-}
-
 /* Spinner Rotation */
 @keyframes spinning {
     0% { transform: rotate(0deg); }
@@ -726,15 +697,6 @@ button:active::before {
     100% {
         border-top-color: #5a8ee6;
     }
-}
-
-/* Loading Text */
-.loading-text {
-    color: #fff;
-    font-size: 1.4rem;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
-    animation: textPulse 2s ease infinite; /* Pulse animation for text */
-    font-weight: bold;
 }
 
 @keyframes insane-spin {
@@ -878,12 +840,6 @@ button:active::before {
 
 <canvas id="plexus-canvas"></canvas>
 
-
-<div id="loading-overlay">
-    <div class="loading-spinner"></div>
-    <p class="loading-text">Generating Cards...</p>
-</div>
-
 <div id="initial-message">Press Enter To Continue!</div> <!--  Removed Initial Message -->
 
 <div id="main-content">
@@ -956,7 +912,6 @@ button:active::before {
 
     const mainContent = document.getElementById('main-content');
     const supportMessage = document.getElementById('support-message');
-    const loadingOverlay = document.getElementById('loading-overlay'); // Get loading overlay
 
     function generateCreditCard(cardPrefix, cardLength) {
         let cardNumber = cardPrefix.split('').map(Number);
@@ -1015,6 +970,7 @@ button:active::before {
         };
     }
 
+    
     function generateAndDisplayCards() {
         const prefix = document.getElementById('inputPrefix').value;
         const length = document.getElementById('inputLength').value;
@@ -1026,13 +982,6 @@ button:active::before {
             resultsContainer.innerHTML = '<p class="error-display">Please enter a valid number of cards.</p>';
             return;
         }
-
-        // Show loading overlay
-        loadingOverlay.style.display = 'flex';
-
-        // Simulate loading time (5 seconds) before generating cards
-        setTimeout(() => {
-            loadingOverlay.style.display = 'none'; // Hide loading overlay after 5 seconds
 
             // Clear any existing animations to prevent issues
             resultsContainer.style.animation = 'none';
@@ -1061,10 +1010,9 @@ button:active::before {
                     cardDisplay.style.animation = 'fadeInUp 0.8s ease'; // Reapply animation
                 }, i * 140); // slightly adjust the delay for smoother appearance
             }
-            supportMessage.style.display = 'block'; // Show the support message
-
-        }, 5000); // 5000 milliseconds = 5 seconds
-    }
+        supportMessage.style.display = 'block'; // Show the support message
+        supportMessage.style.display = 'block'; // Show the support message
+    } // 5000 milliseconds = 5 seconds
 
     function copyToClipboard(text, cardElement) {
         navigator.clipboard.writeText(text)
@@ -1239,6 +1187,79 @@ button:active::before {
             window.location.replace('home.html');
         }
     });
+
+    document.querySelectorAll('a').forEach(link => {
+        link.href = link.href.replace('.html', '');
+    });
+
+    // Add loading bar element
+    const loadingBar = document.createElement('div');
+    loadingBar.id = 'loading-bar';
+    loadingBar.style.position = 'fixed';
+    loadingBar.style.top = '0';
+    loadingBar.style.left = '0';
+    loadingBar.style.width = '0';
+    loadingBar.style.height = '5px';
+    loadingBar.style.backgroundColor = '#7ab1e6';
+    loadingBar.style.zIndex = '1000';
+    loadingBar.style.transition = 'width 0.3s ease';
+    document.body.appendChild(loadingBar);
+
+    function updateLoadingBar(progress) {
+        loadingBar.style.width = `${progress}%`;
+    }
+
+    function generateAndDisplayCards() {
+        const prefix = document.getElementById('inputPrefix').value;
+        const length = document.getElementById('inputLength').value;
+        const quantity = parseInt(document.getElementById('inputQuantity').value, 10);
+        const resultsContainer = document.getElementById('results-container');
+        resultsContainer.innerHTML = '';
+
+        if (isNaN(quantity) || quantity <= 0) {
+            resultsContainer.innerHTML = '<p class="error-display">Please enter a valid number of cards.</p>';
+            return;
+        }
+
+        // Clear any existing animations to prevent issues
+        resultsContainer.style.animation = 'none';
+        void resultsContainer.offsetWidth; // Force reflow
+        resultsContainer.style.animation = 'fadeIn 0.6s ease'; // Reapply animation
+
+        for (let i = 0; i < quantity; i++) {
+            setTimeout(() => {
+                const cardData = generateCreditCard(prefix, length);
+                const cardDisplay = document.createElement('div');
+                cardDisplay.classList.add('card-item', 'float-container');
+                cardDisplay.innerHTML = `
+                    <span class="glow"></span>
+                    <p>Card Number: ${cardData.cardNumber}</p>
+                    <p>Expiry Date: ${cardData.expiryDate}</p>
+                    <p>Name: ${cardData.cardName}</p>
+                    <p>CVV: ${cardData.cvv}</p>
+                    <div class="card-actions">
+                        <button class="validate-button" onclick="validateCardNumber('${cardData.cardNumber}', this.closest('.card-item'))">Validate</button>
+                        <button class="copy-button" onclick="copyToClipboard('${cardData.cardNumber}', this.closest('.card-item'))">Copy</button>
+                    </div>
+                    <div class="notification">Copied to Clipboard!</div>
+                    <div class="validation-message"></div>
+                `;
+                resultsContainer.appendChild(cardDisplay);
+                cardDisplay.style.animation = 'fadeInUp 0.8s ease'; // Reapply animation
+
+                // Update loading bar progress
+                updateLoadingBar(((i + 1) / quantity) * 100);
+
+                // Hide loading bar when done
+                if (i === quantity - 1) {
+                    setTimeout(() => {
+                        loadingBar.style.width = '0';
+                    }, 500);
+                }
+            }, i * 140); // slightly adjust the delay for smoother appearance
+        }
+        supportMessage.style.display = 'block'; // Show the support message
+    }
 
     document.querySelectorAll('a').forEach(link => {
         link.href = link.href.replace('.html', '');

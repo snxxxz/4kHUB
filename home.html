@@ -188,27 +188,49 @@
             align-items: center;
             margin-bottom: 0.75rem;
             font-size: 1.05rem;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            background-color: rgba(45, 45, 45, 0.7);
+            transition: background-color 0.3s ease;
         }
 
+        .status-item:hover {
+            background-color: rgba(55, 55, 55, 0.85);
+        }
+
+
         .status-icon {
-            width: 1.5rem;
-            height: 1.5rem;
+            width: 1.6rem;
+            height: 1.6rem;
             margin-right: 0.75rem;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             color: #fff;
+            font-size: 0.9rem;
+            transition: transform 0.2s ease;
         }
 
         .status-icon i { /* Font Awesome icons */
-            font-size: 0.8rem;
+            font-size: 0.9rem;
         }
 
-        .status-icon.working { background-color: #4CAF50; } /* Green */
-        .status-icon.updating { background-color: #FFC107; } /* Yellow */
-        .status-icon.coming-soon { background-color: #607D8B; } /* Grey */
-        .status-icon.error { background-color: #F44336; } /* Red */
+        /* Status Colors - More Unique */
+        .status-icon.working { background-color: #4CAF50; /* Standard Green, but kept for simplicity */ }
+        .status-icon.updating {
+            background-color: #ffb300; /* A warmer, slightly desaturated yellow */
+            box-shadow: 0 0 5px rgba(255, 179, 0, 0.5); /* Subtle glow */
+        }
+        .status-icon.coming-soon {
+            background-color: #8e99a0; /* A softer, slightly blue-toned gray */
+            border: 1px solid #777;  /* subtle border */
+        }
+        .status-icon.error { background-color: #f44336; } /* Standard Red */
+
+        .status-icon:hover {
+            transform: scale(1.1);
+        }
 
         .status-item span {
             flex-grow: 1;
@@ -281,8 +303,8 @@
         <a href="index.html" class="logo"></a>
         <a href="home.html">Home</a>
         <a href="checker.html">Checker</a>
-        <a href="#">Coming Soon...</a>
-        <a href="#">Coming Soon...</a>
+        <a href="index.html">CC Gen</a>
+        <a href="#">Ip Pinger</a>
     </nav>
 
     <canvas id="plexus-canvas"></canvas>

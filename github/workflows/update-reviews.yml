@@ -1,0 +1,26 @@
+name: Update Reviews
+on:
+  push:
+    branches:
+      - main # Or the branch you are using for GitHub Pages
+
+jobs:
+  update-reviews:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "snxxxz"
+          git config --global user.email "jakubpatyk222@gmail.com"
+
+      - name: Update reviews.json
+        run: |
+          # This assumes you're modifying reviews.json in the root directory
+          # If not, adjust the path accordingly
+          echo "${{ github.event.head_commit.message }}" > commit_message.txt
+          git add reviews.json
+          git commit -m "$(cat commit_message.txt)" || echo "No changes to commit"
+          git push

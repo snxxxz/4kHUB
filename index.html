@@ -1225,6 +1225,24 @@ button:active::before {
     document.querySelectorAll('a').forEach(link => {
         link.href = link.href.replace('.html', '');
     });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        if (window.location.pathname.endsWith('/ccgen') && document.referrer === '' && !sessionStorage.getItem('visited')) {
+            sessionStorage.setItem('visited', 'true');
+            window.location.replace('home.html');
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        if ((window.location.hostname === '4khub.lol' || window.location.hostname === 'https://4khub.lol') && !sessionStorage.getItem('visited')) {
+            sessionStorage.setItem('visited', 'true');
+            window.location.replace('home.html');
+        }
+    });
+
+    document.querySelectorAll('a').forEach(link => {
+        link.href = link.href.replace('.html', '');
+    });
 </script>
 
 </body>

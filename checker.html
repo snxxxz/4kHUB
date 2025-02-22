@@ -807,10 +807,10 @@ button:active::before {
 <!-- Navigation Bar -->
 <nav class="navbar">
     <a href="index.html" class="logo"></a> <!-- Logo/Title -->
-    <a href="home.html">Home</a>
-    <a href="checker.html">Checker</a>
-    <a href="index.html">CC Gen</a>
-    <a href="pinger.html" style="color: red;">Ip Pinger</a>
+    <a href="home">Home</a>
+    <a href="checker">Checker</a>
+    <a href="index">CC Gen</a>
+    <a href="pinger" style="color: red;">Ip Pinger</a>
 </nav>
 
 <canvas id="plexus-canvas"></canvas>
@@ -990,9 +990,7 @@ button:active::before {
         });
     });
 
-    document.querySelectorAll('a').forEach(link => {
-        link.href = link.href.replace('.html', '');
-    });
+    // Removed script to replace .html in links
 
 </script>
 

@@ -638,9 +638,15 @@
             errorMessage.style.display = 'block';
         }
 
-        document.querySelectorAll('a').forEach(link => {
-        link.href = link.href.replace('.html', '');
-    });
+        // Update navigation links to show 'Home' instead of 'home.html' on first load
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.navbar a');
+            navLinks.forEach(link => {
+            if (link.getAttribute('href') === 'home.html') {
+                link.textContent = 'Home';
+            }
+            });
+        });
     </script>
 </body>
 </html>

@@ -90,9 +90,60 @@ body {
     color: #b3d9ff;
 }
 
+/* Basic image styles */
 .navbar .logo::before {
-    content: "4KHUB "; /* Added content: "4KHUB" */
+    content: "";
+    display: inline-block;
+    width: 200px; /* Adjust for your image's size */
+    height: 60px; /* Adjust for your image's size */
+    background-image: url('image.png'); /* Replace with your image */
+    background-size: contain; /* or cover, depending on your image */
+    background-repeat: no-repeat;
     margin-right: 5px;
+    vertical-align: middle;
+    transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out; /* Add filter transition */
+    transform: translateZ(0);  /* Important: Force GPU rendering for smoother animations */
+}
+
+/* Animated Logo - Spinning */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+    filter: none; /* Remove any filters at the beginning */
+  }
+  100% {
+    transform: rotate(360deg);
+    filter: none;
+  }
+}
+
+/* Animated Logo - Fading */
+@keyframes fade {
+    0% {
+        opacity: 0.2;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.2;
+    }
+}
+
+
+.navbar .logo.animated-spin::before { /* Apply the spin animation */
+  animation: spin 2s linear infinite; /* Adjust duration as needed */
+}
+
+.navbar .logo.animated-fade::before{
+  animation: fade 2s ease-in-out infinite;
+}
+
+/* Apply the animation and styling to the logo */
+.navbar .logo {
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
 }
 
 /* --- Plexus Background Animation --- */

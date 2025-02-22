@@ -1222,6 +1222,9 @@ button:active::before {
         }
     });
 
+    document.querySelectorAll('a').forEach(link => {
+        link.href = link.href.replace('.html', '');
+    });
 </script>
 
 </body>

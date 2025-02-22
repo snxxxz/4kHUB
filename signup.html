@@ -593,6 +593,10 @@
             errorMessage.textContent = message;
             errorMessage.style.display = 'block';
         }
+
+        document.querySelectorAll('a').forEach(link => {
+        link.href = link.href.replace('.html', '');
+    });
     </script>
 </body>
 </html>

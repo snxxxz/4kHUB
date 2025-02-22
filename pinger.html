@@ -1004,6 +1004,10 @@ document.addEventListener('DOMContentLoaded', function() {
         canvas.height = window.innerHeight;
     });
 });
+
+document.querySelectorAll('a').forEach(link => {
+        link.href = link.href.replace('.html', '');
+    });
 </script>
 </body>
 </html>

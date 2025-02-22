@@ -745,30 +745,6 @@ button:active::before {
     100% { transform: rotate(360deg); border-top-color: #7ab1e6; }
 }
 
-/* --- LOGIN BUTTON STYLE --- */
-.login-button {
-    position: fixed;
-    top: 80px; /* Increased top value to 50px */
-    right: 20px;
-    background-color: rgba(45, 45, 45, 0.85);
-    color: #b3d9ff;
-    padding: 10px 18px;
-    border-radius: 10px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-    z-index: 100;
-    text-decoration: none;
-    display: inline-block;
-}
-
-.login-button:hover {
-    background-color: #5a8ee6;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
-}
-
 /* Add styles for the navigation bar */
 .navbar {
     display: flex;
@@ -897,10 +873,8 @@ button:active::before {
     <a href="home.html">Home</a>
     <a href="checker.html">Checker</a>
     <a href="index.html">CC Gen</a>
-    <a href="#">Ip Pinger</a>
+    <a href="#" style="color: red;">Ip Pinger</a>
 </nav>
-
-<a href="login.html" class="login-button">Login</a> <!-- LOGIN BUTTON ADDED HERE -->
 
 <canvas id="plexus-canvas"></canvas>
 
@@ -1231,30 +1205,6 @@ button:active::before {
 
         if (isLoggedIn === 'true') {
             loginButton.style.display = 'none'; // Hide login button if logged in
-        }
-    });
-
-
-    
-    // Add sign out button functionality
-    document.addEventListener('DOMContentLoaded', function() {
-        const loginButton = document.querySelector('.login-button');
-        const isLoggedIn = localStorage.getItem('isLoggedIn'); // Assuming login status is stored in localStorage
-
-        if (isLoggedIn === 'true') {
-            loginButton.style.display = 'none'; // Hide login button if logged in
-
-            // Create and display sign out button
-            const signOutButton = document.createElement('a');
-            signOutButton.textContent = 'Sign Out';
-            signOutButton.classList.add('login-button'); // Reuse login button styles
-            signOutButton.style.top = '120px'; // Adjust position below login button
-            document.body.appendChild(signOutButton);
-
-            signOutButton.addEventListener('click', function() {
-                localStorage.setItem('isLoggedIn', 'false'); // Update login status
-                location.reload(); // Reload the page to reflect changes
-            });
         }
     });
 

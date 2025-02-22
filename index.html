@@ -1227,7 +1227,39 @@ button:active::before {
             canvas.height = window.innerHeight;
         });
     });
+    // Check if user is logged in
+    document.addEventListener('DOMContentLoaded', function() {
+        const loginButton = document.querySelector('.login-button');
+        const isLoggedIn = localStorage.getItem('isLoggedIn'); // Assuming login status is stored in localStorage
 
+        if (isLoggedIn === 'true') {
+            loginButton.style.display = 'none'; // Hide login button if logged in
+        }
+    });
+
+
+    
+    // Add sign out button functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const loginButton = document.querySelector('.login-button');
+        const isLoggedIn = localStorage.getItem('isLoggedIn'); // Assuming login status is stored in localStorage
+
+        if (isLoggedIn === 'true') {
+            loginButton.style.display = 'none'; // Hide login button if logged in
+
+            // Create and display sign out button
+            const signOutButton = document.createElement('a');
+            signOutButton.textContent = 'Sign Out';
+            signOutButton.classList.add('login-button'); // Reuse login button styles
+            signOutButton.style.top = '120px'; // Adjust position below login button
+            document.body.appendChild(signOutButton);
+
+            signOutButton.addEventListener('click', function() {
+                localStorage.setItem('isLoggedIn', 'false'); // Update login status
+                location.reload(); // Reload the page to reflect changes
+            });
+        }
+    });
 </script>
 
 </body>

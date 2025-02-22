@@ -28,7 +28,8 @@
             position: relative;
         }
 
-       /* Styles for the navigation bar */
+        /* --- Dark Theme Setup --- */
+        /* Styles for the navigation bar */
         .navbar {
             display: flex;
             justify-content: left; /* Align items to the left */
@@ -541,6 +542,7 @@
         const loadingOverlay = document.getElementById('loading-overlay');
         const errorMessage = document.getElementById('error-message');
 
+        // Signup function
         function signup() {
             const username = document.getElementById('username').value;
             const email = document.getElementById('email').value;
@@ -557,26 +559,35 @@
                 return;
             }
 
+            // Basic email validation
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                displayError("Please enter a valid email address.");
+                return;
+            }
+
             loadingOverlay.style.display = 'flex';
             loadingOverlay.style.opacity = 1;
             errorMessage.style.display = 'none';
 
+            // Simulate a delay for signup processing (e.g., sending data to a server)
             setTimeout(() => {
-                // Replace this with your actual signup logic
-                const isSuccessfulSignup = true; // For testing purposes
+                // Store user data in localStorage
+                const userData = {
+                    username: username,
+                    email: email,
+                    password: password // NEVER store passwords in plain text in a REAL application.  This is only for a very basic example.  Use proper hashing and salting.
+                };
+                localStorage.setItem('userData', JSON.stringify(userData));
 
-                if (isSuccessfulSignup) {
-                    window.location.href = "signup_success.html";  // Redirect to a success page
-                } else {
-                    displayError("Signup failed. Please try again.");
-                }
+                // Redirect to the login page
+                window.location.href = "login.html";
 
                 loadingOverlay.style.opacity = 0;
                 loadingOverlay.addEventListener('transitionend', function handler() {
                     loadingOverlay.style.display = 'none';
                     loadingOverlay.removeEventListener('transitionend', handler);
                 });
-            }, 2000);
+            }, 2000); // Simulate 2-second processing time
         }
 
         function displayError(message) {

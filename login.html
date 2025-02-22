@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>4KHUB</title>
+    <title>4KHUB - Login</title>
     <link rel="icon" type="image/png" href="image.png">
     <style>
         /* --- General Reset and Base Styles --- */
@@ -208,7 +208,7 @@
             width: 24px;
             height: 24px;
             opacity: 0.7;
-            transition: opacity: 0.3s ease;
+            transition: opacity 0.3s ease;
         }
 
         .social-icons a:hover img {
@@ -598,27 +598,41 @@
                 return;
             }
 
-            loadingOverlay.style.display = 'flex';
-            loadingOverlay.style.opacity = 1;
-            errorMessage.style.display = 'none';
+            // Retrieve user data from localStorage
+            const storedUserData = localStorage.getItem('userData');
+            if (!storedUserData) {
+                displayError("No account found. Please sign up.");
+                return;
+            }
 
-            setTimeout(() => {
-                const isValidLogin = (username === "test" && password === "test");
+            const userData = JSON.parse(storedUserData);
 
-                if (isValidLogin) {
-                    window.location.href = "home.html";
-                } else {
-                    displayError("Invalid username or password. Please try again.");
-                }
+            // Authenticate user
+            if (username === userData.username && password === userData.password) {
+                // Successful login
+                loadingOverlay.style.display = 'flex';
+                loadingOverlay.style.opacity = 1;
+                errorMessage.style.display = 'none';
 
-                loadingOverlay.style.opacity = 0;
-                loadingOverlay.addEventListener('transitionend', function handler() {
-                    loadingOverlay.style.display = 'none';
-                    loadingOverlay.removeEventListener('transitionend', handler);
-                });
+                setTimeout(() => {
+                  // Set a flag to indicate the user is logged in (optional, but good practice)
+                  localStorage.setItem('isLoggedIn', 'true');
 
-            }, 2000);
+                  // Redirect to the home page
+                  window.location.href = "home.html";
+                  loadingOverlay.style.opacity = 0;
+                  loadingOverlay.addEventListener('transitionend', function handler() {
+                      loadingOverlay.style.display = 'none';
+                      loadingOverlay.removeEventListener('transitionend', handler);
+                  });
+                }, 1500);
+
+            } else {
+                // Invalid credentials
+                displayError("Invalid username or password.");
+            }
         }
+
 
         function displayError(message) {
             errorMessage.textContent = message;

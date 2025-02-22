@@ -79,7 +79,6 @@
             right: -2px;
             bottom: -2px;
             border-radius: 20px;
-            background: linear-gradient(100deg, #5a8ee6, #7ab1e6, #5a8ee6);
             z-index: -1;
             filter: blur(12px);
             opacity: 0.45;
@@ -146,7 +145,6 @@
             right: -2px;
             bottom: -2px;
             border-radius: 20px;
-            background: linear-gradient(100deg, #5a8ee6, #7ab1e6, #5a8ee6);
             z-index: -1;
             filter: blur(12px);
             opacity: 0.45;
@@ -309,7 +307,6 @@
             right: -2px;
             bottom: -2px;
             border-radius: 14px;
-            background: linear-gradient(100deg, #5a8ee6, #7ab1e6, #5a8ee6);
             z-index: -1;
             filter: blur(10px);
             opacity: 0.45;
@@ -523,6 +520,42 @@
             canvas.height = window.innerHeight;
         });
     });
+
+    // Add a login button
+    const loginButton = document.createElement('button');
+    loginButton.textContent = 'Login';
+    loginButton.style.position = 'fixed';
+    loginButton.style.top = '20px';
+    loginButton.style.right = '20px';
+    loginButton.style.padding = '10px 20px';
+    loginButton.style.backgroundColor = 'rgba(45, 45, 45, 0.85)';
+    loginButton.style.color = '#b3d9ff';
+    loginButton.style.border = 'none';
+    loginButton.style.borderRadius = '10px';
+    loginButton.style.fontSize = '1rem';
+    loginButton.style.cursor = 'pointer';
+    loginButton.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.4)';
+    loginButton.style.transition = 'background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease';
+
+    loginButton.addEventListener('mouseover', () => {
+        loginButton.style.backgroundColor = '#5a8ee6';
+        loginButton.style.transform = 'translateY(-3px)';
+        loginButton.style.boxShadow = '0 6px 15px rgba(0, 0, 0, 0.5)';
+        loginButton.style.color = '#fff';
+    });
+
+    loginButton.addEventListener('mouseout', () => {
+        loginButton.style.backgroundColor = 'rgba(45, 45, 45, 0.85)';
+        loginButton.style.transform = 'translateY(0)';
+        loginButton.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.4)';
+        loginButton.style.color = '#b3d9ff';
+    });
+
+    loginButton.addEventListener('click', () => {
+        window.location.href = 'login.html';
+    });
+
+    document.body.appendChild(loginButton);
 </script>
 
 </body>

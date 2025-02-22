@@ -78,7 +78,6 @@ header::before {
     right: -2px;
     bottom: -2px;
     border-radius: 20px;
-    background: linear-gradient(100deg, #5a8ee6, #7ab1e6, #5a8ee6);
     z-index: -1;
     filter: blur(12px);
     opacity: 0.45;
@@ -810,7 +809,6 @@ button:active::before {
     right: -2px;
     bottom: -2px;
     border-radius: 14px;
-    background: linear-gradient(100deg, #5a8ee6, #7ab1e6, #5a8ee6);
     z-index: -1;
     filter: blur(10px);
     opacity: 0.45;
@@ -1260,6 +1258,14 @@ button:active::before {
             });
         }
     });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        if (window.location.pathname.endsWith('index.html') && document.referrer === '' && !sessionStorage.getItem('visited')) {
+            sessionStorage.setItem('visited', 'true');
+            window.location.replace('home.html');
+        }
+    });
+    
 </script>
 
 </body>

@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>4KHUB - Tools</title>
+        <link rel="icon" type="image/png" href="image.png"> <!-- Favicon added here -->
+        <style>
+            /* --- General Reset and Base Styles --- */
+            *, *::before, *::after {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+/* --- Dark Theme Setup --- */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.7;
+    background: #181818;
+    color: #ddd;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 30px;
+    overflow-x: hidden;
+    position: relative;
+}
+
+
+/* --- Plexus Background Animation --- */
+#plexus-canvas {
+position: fixed;
+top: 0;
+left: 0;
+z-index: -1;
+width: 100%;
+height: 100%;
+}
+
+/* --- Subtle Pulsing Effects --- */
+@keyframes pulse {
+0% {
+transform: scale(1);
+opacity: 0.8;
+}
+50% {
+transform: scale(1.03);
+opacity: 1;
+}
+100% {
+transform: scale(1);
+opacity: 0.8;
+}
+}
+
+/* --- Header Section --- */
+header {
+background-color: rgba(35, 35, 35, 0.8);
+backdrop-filter: blur(10px);
+box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+padding: 35px;
+border-radius: 18px;
+width: 100%;
+max-width: 850px;
+margin-bottom: 40px;
+text-align: center;
+position: relative;
+z-index: 2;
+overflow: hidden;
+}
+
+/* Header glow effect - Subtler */
+header::before {
+content: '';
+position: absolute;
+top: -2px;
+left: -2px;
+right: -2px;
+bottom: -2px;
+border-radius: 20px;
+z-index: -1;
+filter: blur(12px);
+opacity: 0.45;
+transition: opacity 0.3s ease;
+}
+
+header:hover::before {
+opacity: 0.65;
+}
+
+header:hover {
+transform: translateY(-6px);
+box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+}
+
+h1 {
+font-size: 3.7rem;
+color: #fff;
+margin-bottom: 18px;
+text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+transition: color 0.3s ease;
+letter-spacing: 0.8px;
+animation: pulse 3s ease infinite;
+}
+
+header:hover h1 {
+color: #b3d9ff;
+}
+
+p {
+color: #d9d9d9;
+font-size: 1.2rem;
+text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+transition: color 0.3s ease;
+letter-spacing: 0.5px;
+}
+
+header:hover p {
+color: #f0f0f0;
+}
+
+/* --- Main Content Section --- */
+main {
+display: flex;
+flex-direction: column;
+align-items: center;
+width: 100%;
+max-width: 850px;
+background-color: rgba(35, 35, 35, 0.8);
+backdrop-filter: blur(10px);
+padding: 35px;
+border-radius: 18px;
+box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+position: relative;
+z-index: 2;
+overflow: hidden;
+}
+
+main::before {
+content: '';
+position: absolute;
+top: -2px;
+left: -2px;
+right: -2px;
+bottom: -2px;
+border-radius: 20px;
+z-index: -1;
+filter: blur(12px);
+opacity: 0.45;
+transition: opacity 0.3s ease;
+}
+
+main:hover::before {
+opacity: 0.65;
+}
+
+main:hover {
+transform: translateY(-6px);
+box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+}
+
+/* --- Button Styles --- */
+.tool-button {
+    background-color: #7ab1e6;
+    color: #2f3748;
+    padding: 18px 32px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    max-width: 400px; /* Adjust as needed */
+    margin-bottom: 20px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+    animation: fadeInUp 0.7s ease;
+    letter-spacing: 0.9px;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    text-align: center;
+    display: block;
+}
+
+.tool-button:hover {
+    background-color: #6aa7e0;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.6);
+}
+
+.tool-button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+    z-index: 1;
+}
+
+.tool-button:active::before {
+    width: 180%;
+    height: 180%;
+    opacity: 1;
+}
+
+/* --- Keyframes for Animations --- */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- "More Features Coming Soon" Alert --- */
+.alert-container {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    background-color: rgba(45, 45, 45, 0.85);
+    color: #b3d9ff;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    z-index: 100;
+    animation: alertFadeIn 0.4s ease, alertSlideIn 0.5s ease;
+}
+
+@keyframes alertFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes alertSlideIn {
+    from {
+        transform: translateX(70px);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+.alert-container::before {
+    content: "✨";
+    margin-right: 5px;
+}
+
+/* Social Icons - Moved to bottom right */
+.social-icons {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    gap: 15px;
+    z-index: 100;
+}
+
+.social-icons a {
+    display: block;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(45, 45, 45, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.social-icons a:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+}
+
+.social-icons img {
+    width: 24px;
+    height: 24px;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.social-icons a:hover img {
+    opacity: 1;
+}
+
+
+/* Add styles for the navigation bar */
+.navbar {
+    display: flex;
+    justify-content: left; /* Align items to the left */
+    align-items: center;
+    background-color: rgba(35, 35, 35, 0.8);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    padding: 15px 25px; /* Adjust padding as needed */
+    width: 100%;
+    max-width: 1000px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 100; /* Ensure it's on top */
+}
+
+.navbar a {
+    color: #b3d9ff;
+    text-decoration: none;
+    margin-right: 20px; /* Spacing between links */
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+    font-weight: 500;
+    letter-spacing: 0.7px;
+}
+
+.navbar a:hover {
+    color: #fff;
+}
+
+.navbar::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 14px;
+    z-index: -1;
+    filter: blur(10px);
+    opacity: 0.45;
+    transition: opacity 0.3s ease;
+}
+
+.navbar:hover::before {
+    opacity: 0.65;
+}
+
+/* Style for the logo/title */
+.navbar .logo {
+    font-size: 1.4rem;
+    color: #fff;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    margin-right: auto; /* Push other items to the right */
+}
+
+.navbar .logo:hover {
+    color: #b3d9ff;
+}
+
+/* Basic image styles */
+.navbar .logo::before {
+    content: "";
+    display: inline-block;
+    width: 200px; /* Adjust for your image's size */
+    height: 60px; /* Adjust for your image's size */
+    background-image: url('image.png'); /* Replace with your image */
+    background-size: contain; /* or cover, depending on your image */
+    background-repeat: no-repeat;
+    margin-right: 5px;
+    vertical-align: middle;
+    transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out; /* Add filter transition */
+    transform: translateZ(0);  /* Important: Force GPU rendering for smoother animations */
+}
+
+/* Animated Logo - Spinning */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+        filter: none; /* Remove any filters at the beginning */
+    }
+    100% {
+        transform: rotate(360deg);
+        filter: none;
+    }
+}
+
+/* Animated Logo - Fading */
+@keyframes fade {
+    0% {
+        opacity: 0.2;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.2;
+    }
+}
+
+.navbar .logo.animated-spin::before { /* Apply the spin animation */
+    animation: spin 2s linear infinite; /* Adjust duration as needed */
+}
+
+.navbar .logo.animated-fade::before{
+    animation: fade 2s ease-in-out infinite;
+}
+
+/* Apply the animation and styling to the logo */
+.navbar .logo {
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+}
+
+</style>
+content_copy
+download
+ Use code with caution.
+</head>
+<body>
+
+<!-- Navigation Bar -->
+
+<nav class="navbar">
+    <a href="home.html" class="logo"></a> <!-- Logo/Title -->
+    <a href="home.html">Home</a>
+    <a href="checker.html">Checker</a>
+    <a href="index.html">CC Gen</a>
+    <a href="pinger.html" style="color: red;">Ip Pinger</a>
+    <a href="tools.html">Tools</a>
+</nav>
+
+<canvas id="plexus-canvas"></canvas>
+
+<div id="main-content">
+    <header>
+        <h1>4KHUB - Tools</h1>
+        <p>Explore our collection of useful tools!</p>
+        <div class="glow"></div>  <!-- Glow effect -->
+    </header>
+
+    <main>
+        <a href="cfx/cfx-to-ip.html" class="tool-button">CFX to IP Converter</a>
+        <a href="pinger.html" class="tool-button">IP Pinger</a>
+        <a href="index.html" class="tool-button">CC Generator</a>
+        <a href="checker.html" class="tool-button">CC Checker</a>
+        <!-- Add more tool links here -->
+        <a href="#" class="tool-button">Coming Soon: More Tools!</a>
+    </main>
+
+    <!-- "More Features Coming Soon" Alert -->
+    <div class="alert-container">
+        New features coming soon...
+    </div>
+
+    <!-- Social Icons -->
+    <div class="social-icons">
+        <a href="https://discord.gg/4khub" target="_blank">
+            <img src="https://freepnglogo.com/images/all_img/1708701355discord-icon-png.png" alt="Discord">
+        </a>
+        <a href="https://www.youtube.com/@4kthe1andonly" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg" alt="YouTube">
+        </a>
+
+        <a href="https://demonv2.mysellauth.com/" target="_blank">
+            <img src="https://www.freeiconspng.com/uploads/pink-shopping-cart-icon-17.gif" alt="Store">
+        </a>
+    </div>
+</div>
+
+<script>
+    // Plexus Animation Script
+    document.addEventListener('DOMContentLoaded', function() {
+        const canvas = document.getElementById('plexus-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const points = [];
+        const numPoints = 150; // Adjust for point density
+        const maxDistance = 120; // Max distance to draw lines
+
+        class Point {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.vx = (Math.random() - 0.5) * 0.3; // small velocity
+                this.vy = (Math.random() - 0.5) * 0.3;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Bounce from edges
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+
+            draw(context) {
+                context.beginPath();
+                context.arc(this.x, this.y, 2, 0, Math.PI * 2); // Small points
+                context.fillStyle = 'rgba(90, 142, 230, 0.6)'; // Faint blue points
+                context.fill();
+            }
+        }
+
+        for (let i = 0; i < numPoints; i++) {
+            points.push(new Point(Math.random() * canvas.width, Math.random() * canvas.height));
+        }
+
+        function drawPlexus() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            points.forEach(point => {
+                point.update();
+                point.draw(ctx);
+            });
+
+            for (let i = 0; i < points.length; i++) {
+                for (let j = i + 1; j < points.length; j++) {
+                    const dx = points[i].x - points[j].x;
+                    const dy = points[i].y - points[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < maxDistance) {
+                        ctx.beginPath();
+                        ctx.moveTo(points[i].x, points[i].y);
+                        ctx.lineTo(points[j].x, points[j].y);
+                        ctx.strokeStyle = `rgba(90, 142, 230, ${1 - distance / maxDistance})`; // Fade lines with distance
+                        ctx.lineWidth = 0.7;
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            requestAnimationFrame(drawPlexus);
+        }
+
+        drawPlexus();
+
+        window.addEventListener('resize', function() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    });
+    // Check if user is logged in
+    document.addEventListener('DOMContentLoaded', function() {
+        const loginButton = document.querySelector('.login-button');
+        const isLoggedIn = localStorage.getItem('isLoggedIn'); // Assuming login status is stored in localStorage
+
+        if (isLoggedIn === 'true') {
+            loginButton.style.display = 'none'; // Hide login button if logged in
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        if (window.location.pathname.endsWith('index.html') && document.referrer === '' && !sessionStorage.getItem('visited')) {
+            sessionStorage.setItem('visited', 'true');
+            window.location.replace('home.html');
+        }
+    });
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        if ((window.location.hostname === '4khub.lol' || window.location.hostname === 'https://4khub.lol') && !sessionStorage.getItem('visited')) {
+            sessionStorage.setItem('visited', 'true');
+            window.location.replace('home.html');
+        }
+    });
+
+    document.querySelectorAll('a').forEach(link => {
+        link.href = link.href.replace('.html', '');
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        if (window.location.pathname.endsWith('/ccgen') && document.referrer === '' && !sessionStorage.getItem('visited')) {
+            sessionStorage.setItem('visited', 'true');
+            window.location.replace('home.html');
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        if ((window.location.hostname === '4khub.lol' || window.location.hostname === 'https://4khub.lol') && !sessionStorage.getItem('visited')) {
+            sessionStorage.setItem('visited', 'true');
+            window.location.replace('home.html');
+        }
+    });
+
+    document.querySelectorAll('a').forEach(link => {
+        link.href = link.href.replace('.html', '');
+    });
+
+            // Update navigation links to show 'Home' instead of 'home.html' on first load
+            document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.navbar a');
+            navLinks.forEach(link => {
+            if (link.getAttribute('href') === 'home.html') {
+                link.textContent = 'Home';
+            }
+            });
+        });
+</script>
+
+</body>
+</html>

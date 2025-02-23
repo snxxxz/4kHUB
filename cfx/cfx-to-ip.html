@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CFX to IP Resolver</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="title animate__animated animate__fadeInDown">CFX to IP Resolver</h1>
+        <div class="input-section animate__animated animate__fadeIn">
+            <input type="text" id="cfxInput" placeholder="Enter CFX.re link (e.g., cfx.re/join/my59jq)">
+            <div class="button-group">
+                <button id="resolveBtn" class="primary-btn">Resolve</button>
+                <button id="clearBtn" class="secondary-btn">Clear</button>
+            </div>
+        </div>
+        <div id="loading" class="spinner"></div>
+        <div id="serverInfo" class="server-info animate__animated"></div>
+        <div id="playerList" class="player-list animate__animated"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,27 +1,767 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CFX to IP Resolver</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <title>CFX to IP - Enhanced Edition</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        /* --- General Styles --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #121212; /* Darker background */
+            font-family: 'Poppins', sans-serif; /* Modern font */
+            color: #fff;
+            overflow-y: auto;
+            padding: 2rem;
+            background: linear-gradient(to bottom, #1e272e, #0a1118); /* Updated background gradient */
+        }
+
+        .container {
+            max-width: 1200px; /* Reduced width */
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            padding: 3rem; /* Increased padding */
+            background: rgba(25, 25, 25, 0.85); /* Darker, translucent */
+            border-radius: 20px; /* Softer corners */
+            backdrop-filter: blur(25px); /* Stronger blur */
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6); /* Enhanced shadow */
+            border: 1px solid rgba(255, 255, 255, 0.08); /* Subtle border */
+        }
+
+        /* --- Title --- */
+        .title {
+            font-size: 3rem; /* Slightly smaller */
+            color: #eee; /* Lighter text */
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem; /* More space */
+            text-align: center;
+            font-weight: 500; /* Medium weight */
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4); /* Softer shadow */
+        }
+
+        /* --- Input Section --- */
+        .input-section {
+            background: rgba(35, 35, 35, 0.7); /* Slightly lighter */
+            padding: 2rem 2.5rem; /* Increased padding */
+            border-radius: 15px;
+            backdrop-filter: blur(20px); /* Increased blur */
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2); /* More subtle shadow */
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem; /* Increased gap */
+            width: 100%;
+            justify-content: center;
+        }
+
+        input {
+            padding: 1.2rem 1.5rem; /* More padding */
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 12px; /* More rounded */
+            background: rgba(50, 50, 50, 0.8); /* Darker input field */
+            color: #ddd; /* Softer color */
+            outline: none;
+            flex: 1;
+            min-width: 300px;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.3); /* Inset shadow */
+        }
+
+        input:focus {
+            background: rgba(60, 60, 60, 0.9); /* Slightly lighter focus */
+            box-shadow: 0 5px 20px rgba(100, 149, 237, 0.3); /* Blue shadow */
+        }
+
+        /* --- Button Group --- */
+        .button-group {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center; /* Center align buttons */
+            width: 100%;
+        }
+
+        .primary-btn,
+        .secondary-btn,
+        .save-btn {
+            padding: 1.2rem 2.5rem; /* Increased padding */
+            font-size: 1.1rem; /* Slightly smaller font */
+            border: none;
+            border-radius: 12px; /* More rounded */
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500; /* Medium weight */
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3); /* Button shadow */
+            width: auto;
+            flex: 1; /* Distribute space evenly */
+            min-width: 120px;
+            text-align: center; /* Center text within buttons */
+        }
+
+        .primary-btn {
+            background: #5e81ac; /* Calm blue */
+            color: #fff;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(100, 149, 237, 0.5); /* More pronounced shadow */
+        }
+
+        .secondary-btn {
+            background: rgba(50, 50, 50, 0.8); /* Darker secondary */
+            color: #ddd; /* Softer color */
+        }
+
+        .secondary-btn:hover {
+            transform: translateY(-3px);
+            background: rgba(60, 60, 60, 0.9); /* Slightly lighter hover */
+        }
+
+        .save-btn {
+            background: #a3be8c; /* Soft green */
+            color: #fff;
+        }
+
+        .save-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(163, 190, 140, 0.5); /* More pronounced shadow */
+        }
+
+        /* --- Spinner --- */
+        .spinner {
+            display: none;
+            width: 40px; /* Smaller spinner */
+            height: 40px;
+            border: 5px solid rgba(100, 149, 237, 0.3); /* Blue spinner */
+            border-top: 5px solid #5e81ac;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-top: 1rem;
+        }
+
+        /* --- Server Info --- */
+        .server-info {
+            width: 100%;
+            text-align: center;
+            font-size: 1.1rem; /* Smaller font */
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3); /* Softer shadow */
+            margin-top: 1rem;
+            padding: 1.5rem;
+            background: rgba(35, 35, 35, 0.7); /* Darker info background */
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+        }
+
+        .server-info p {
+            margin: 0.5rem 0;
+            font-weight: 400;
+        }
+
+        /* --- Player List --- */
+        .player-list {
+            width: 100%;
+            background: rgba(35, 35, 35, 0.7); /* Darker player list */
+            padding: 1.5rem;
+            border-radius: 12px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+            max-height: 400px; /* Reduced height */
+            overflow-y: auto;
+        }
+
+        .player-list table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid rgba(255, 255, 255, 0.05); /* Subtle border */
+        }
+
+        .player-list th,
+        .player-list td {
+            padding: 0.8rem; /* Reduced padding */
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08); /* Subtle border */
+            font-size: 0.9rem; /* Smaller font */
+            font-weight: 300;
+        }
+
+        .player-list th {
+            background: rgba(100, 149, 237, 0.1); /* Blue header */
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4); /* Softer shadow */
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .player-list tr {
+            transition: background 0.3s ease;
+        }
+
+        .player-list tr:hover {
+            background: rgba(100, 149, 237, 0.05); /* Blue hover */
+        }
+
+        /* --- Animations --- */
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* --- Additional Styles --- */
+        .additional-info {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .server-variables {
+            background: rgba(35, 35, 35, 0.7); /* Darker variables */
+            padding: 1.5rem;
+            border-radius: 12px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+        }
+
+        .server-variables h3 {
+            font-size: 1.2rem; /* Smaller font */
+            margin-bottom: 0.7rem;
+            color: #5e81ac; /* Blue */
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        .server-variables p {
+            margin: 0.5rem 0;
+            font-size: 1rem; /* Smaller font */
+            word-break: break-word;
+            font-weight: 300;
+        }
+
+        .player-info {
+            background: rgba(35, 35, 35, 0.7); /* Darker player info */
+            padding: 1.5rem;
+            border-radius: 12px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+        }
+
+        .player-info h3 {
+            font-size: 1.2rem; /* Smaller font */
+            margin-bottom: 0.7rem;
+            color: #5e81ac; /* Blue */
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        .player-info p {
+            margin: 0.5rem 0;
+            font-size: 1rem; /* Smaller font */
+            font-weight: 300;
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+
+            .title {
+                font-size: 2.5rem;
+            }
+
+            .input-section {
+                flex-direction: column;
+                padding: 1.5rem;
+                gap: 1.5rem;
+            }
+
+            input {
+                min-width: auto;
+            }
+
+            .button-group {
+                flex-direction: column;
+                width: 100%;
+                gap: 1rem;
+            }
+
+            .primary-btn,
+            .secondary-btn,
+            .save-btn {
+                width: 100%;
+            }
+
+            .server-info,
+            .player-list,
+            .server-variables,
+            .player-info {
+                padding: 1rem;
+            }
+        }
+
+        /* === Custom Animations === */
+        @keyframes slideIn {
+            from {
+                transform: translateX(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .server-info p,
+        .server-variables p,
+        .player-info p {
+            animation: slideIn 0.5s ease-out forwards;
+            opacity: 0; /* Hide initially */
+        }
+
+        /* Ensure table rows are correctly animated */
+        .player-list table tr {
+            animation: slideInRow 0.6s ease-out forwards;
+            opacity: 0; /* Hide initially */
+        }
+
+        @keyframes slideInRow {
+            from {
+                transform: translateX(-10px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Button Hover Animation */
+        .primary-btn:hover,
+        .secondary-btn:hover,
+        .save-btn:hover {
+            animation: buttonHover 0.3s forwards;
+        }
+
+        @keyframes buttonHover {
+            0% {
+                transform: translateY(0);
+                box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+            }
+            100% {
+                transform: translateY(-3px);
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            }
+        }
+
+    </style>
 </head>
+
 <body>
     <div class="container">
-        <h1 class="title animate__animated animate__fadeInDown">CFX to IP Resolver</h1>
+        <h1 class="title animate__animated animate__fadeInDown">CFX to IP - Enhanced</h1>
         <div class="input-section animate__animated animate__fadeIn">
             <input type="text" id="cfxInput" placeholder="Enter CFX.re link (e.g., cfx.re/join/my59jq)">
             <div class="button-group">
-                <button id="resolveBtn" class="primary-btn">Resolve</button>
-                <button id="clearBtn" class="secondary-btn">Clear</button>
+                <button id="resolveBtn" class="primary-btn"><i class="fas fa-search"></i> Resolve</button>
+                <button id="clearBtn" class="secondary-btn"><i class="fas fa-eraser"></i> Clear</button>
+                <button id="saveBtn" class="save-btn"><i class="fas fa-save"></i> Save to PDF</button>
             </div>
         </div>
         <div id="loading" class="spinner"></div>
         <div id="serverInfo" class="server-info animate__animated"></div>
+        <div class="additional-info">
+            <div id="serverVariables" class="server-variables animate__animated"></div>
+            <div id="playerInfo" class="player-info animate__animated"></div>
+        </div>
         <div id="playerList" class="player-list animate__animated"></div>
     </div>
-    <script src="script.js"></script>
+    <script>
+        const resolveBtn = document.getElementById('resolveBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const saveBtn = document.getElementById('saveBtn');
+        const cfxInput = document.getElementById('cfxInput');
+        const serverInfoDiv = document.getElementById('serverInfo');
+        const playerListDiv = document.getElementById('playerList');
+        const serverVariablesDiv = document.getElementById('serverVariables');
+        const playerInfoDiv = document.getElementById('playerInfo');
+        const spinner = document.getElementById('loading');
+
+        // Helper function to fetch with timeout
+        async function fetchWithTimeout(url, timeout = 5000) {
+            const controller = new AbortController();
+            const id = setTimeout(() => controller.abort(), timeout);
+            try {
+                const response = await fetch(url, { signal: controller.signal });
+                clearTimeout(id);
+                return response;
+            } catch (error) {
+                clearTimeout(id);
+                throw error;
+            }
+        }
+
+        // Function to attempt to grab IP addresses using multiple techniques
+        async function getPlayerIPs(ip) {
+            let playerIPs = [];
+            const endpoints = [
+                `http://${ip}/client_log`, // A very risky endpoint
+                `http://${ip}/citizen-server-impl/dumps/crash`, // Another extremely risky endpoint
+            ];
+
+            for (const endpoint of endpoints) {
+                try {
+                    const response = await fetchWithTimeout(endpoint, 2000); // Shorter timeout
+                    if (response.ok) {
+                        const logData = await response.text();
+                        // Extremely dangerous: parsing logs to find IP addresses
+                        const ipRegex = /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d{1,5})/;
+                        let match;
+                        while ((match = ipRegex.exec(logData)) !== null) {
+                            playerIPs.push(match[1]);
+                        }
+                    } else {
+                        console.warn(`Failed to fetch ${endpoint}`);
+                    }
+                } catch (e) {
+                    console.warn(`Failed to fetch ${endpoint}: ${e.message}`);
+                }
+            }
+            return playerIPs;
+        }
+
+        // Function to fetch server variables
+        async function getServerVariables(ip) {
+            try {
+                const response = await fetchWithTimeout(`http://${ip}/status.json`);
+                if (response.ok) {
+                    const data = await response.json();
+                    return data.vars || {};
+                } else {
+                    console.warn("Failed to fetch status.json");
+                    return {};
+                }
+            } catch (e) {
+                console.warn(`Failed to fetch status.json: ${e.message}`);
+                return {};
+            }
+        }
+
+        resolveBtn.addEventListener('click', async () => {
+            const cfxLink = cfxInput.value.trim();
+            if (!cfxLink) {
+                serverInfoDiv.innerHTML = "<p>Please enter a CFX.re link.</p>";
+                serverInfoDiv.className = 'server-info animate__animated animate__shakeX';
+                playerListDiv.innerHTML = '';
+                serverVariablesDiv.innerHTML = '';
+                playerInfoDiv.innerHTML = '';
+                return;
+            }
+
+            // Show spinner
+            spinner.style.display = 'block';
+            serverInfoDiv.innerHTML = '';
+            playerListDiv.innerHTML = '';
+            serverVariablesDiv.innerHTML = '';
+            playerInfoDiv.innerHTML = '';
+
+            const serverId = cfxLink.split('/').pop();
+            try {
+                // Fetch server data from CFX.re API
+                const serverResponse = await fetchWithTimeout(`https://servers-frontend.fivem.net/api/servers/single/${serverId}`);
+                if (!serverResponse.ok) throw new Error('Server not found.');
+                const serverData = await serverResponse.json();
+                const ip = serverData.Data.connectEndPoints[0];
+                // const hostname = serverData.Data.hostname; // Removed complex name
+                const hostname = serverData.Data.hostname.replace(/\^./g, ''); // Remove color codes for simpler name.
+                const playersOnline = serverData.Data.clients;
+                const maxPlayers = serverData.Data.svMaxclients;
+                const serverVersion = serverData.Data.server; // Get server version
+
+                // Fetch server variables
+                const serverVariables = await getServerVariables(ip);
+                let serverVariablesHTML = '<h3>Server Variables</h3>';
+                for (const key in serverVariables) {
+                    serverVariablesHTML += `<p>${key}: ${serverVariables[key]}</p>`;
+                }
+                serverVariablesDiv.innerHTML = serverVariablesHTML;
+                serverVariablesDiv.className = 'server-variables animate__animated animate__fadeIn';
+
+                // Attempt to fetch player list from multiple endpoints
+                let players = [];
+                const endpoints = [
+                    `http://${ip}/players.json`,
+                    `http://${ip}/dynamic.json`, // Some servers use this
+                    `http://${ip}/info.json`, // Rare, but worth a shot
+                ];
+
+                for (const endpoint of endpoints) {
+                    try {
+                        const response = await fetchWithTimeout(endpoint);
+                        if (response.ok) {
+                            const data = await response.json();
+                            // Handle different data structures
+                            if (Array.isArray(data)) {
+                                players = data; // Standard players.json format
+                            } else if (data.players && Array.isArray(data.players)) {
+                                players = data.players; // dynamic.json or similar
+                            }
+                            if (players.length > 0) break; // Exit if we got data
+                        }
+                    } catch (e) {
+                        console.warn(`Failed to fetch from ${endpoint}: ${e.message}`);
+                    }
+                }
+
+                // Fallback: Check CFX.re API response for player data
+                if (players.length === 0 && serverData.Data.players && Array.isArray(serverData.Data.players)) {
+                    players = serverData.Data.players;
+                }
+
+                // Attempt to grab IP addresses (VERY ILLEGAL!)
+                let playerIPs = [];
+                try {
+                    playerIPs = await getPlayerIPs(ip);
+                } catch (e) {
+                    console.warn("Failed to grab IP addresses:", e);
+                }
+
+                // Hide spinner
+                spinner.style.display = 'none';
+
+                // Display server info
+                serverInfoDiv.innerHTML = `
+                    <p>Server IP: ${ip}</p>
+                    <p>Hostname: ${hostname}</p>
+                    <p>Players Online: ${playersOnline}/${maxPlayers}</p>
+                    <p>Server Version: ${serverVersion}</p> <!-- Show server version -->
+                `;
+                serverInfoDiv.className = 'server-info animate__animated animate__bounceIn';
+
+                // Display player list with more details and IP addresses (if available)
+                let playerInfoHTML = '<h3>Player Information</h3>';
+                if (players.length > 0) {
+                    let tableHTML = `
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Ping</th>
+                                    <th>Identifier</th>
+                                    <th>IP Address</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                    `;
+                    for (let i = 0; i < players.length; i++) {
+                        const player = players[i];
+                        const playerId = player.id || i + 1;
+                        const playerName = player.name || 'Unknown';
+                        const playerPing = player.ping !== undefined ? `${player.ping} ms` : 'N/A';
+                        const playerIdentifier = player.identifiers && player.identifiers.length > 0
+                            ? player.identifiers[0].substring(0, 20) + '...'
+                            : 'N/A';
+
+                        // Get IP address (VERY ILLEGAL!)
+                        const playerIP = playerIPs[i] || 'Unknown';
+                        playerInfoHTML += `<p>${playerName}: ${playerIP}</p>`;
+
+                        tableHTML += `
+                            <tr style="animation-delay: ${i * 0.1}s" class="row-slide-in">
+                                <td>${playerId}</td>
+                                <td>${playerName}</td>
+                                <td>${playerPing}</td>
+                                <td>${playerIdentifier}</td>
+                                <td>${playerIP}</td>
+                            </tr>
+                        `;
+                    }
+                    tableHTML += '</tbody></table>';
+                    playerListDiv.innerHTML = tableHTML;
+                    playerListDiv.className = 'player-list animate__animated animate__fadeIn';
+
+                    playerInfoDiv.innerHTML = playerInfoHTML;
+                    playerInfoDiv.className = 'player-info animate__animated animate__fadeIn';
+                } else {
+                    playerListDiv.innerHTML = `
+                        <p>No player data available.</p>
+                        <p>Players Online (from CFX): ${playersOnline}</p>
+                    `;
+                    playerListDiv.className = 'player-list animate__animated animate__fadeIn';
+                    playerInfoDiv.innerHTML = `<p>No player information to display.</p>`;
+                    playerInfoDiv.className = 'player-info animate__animated animate__fadeIn';
+                }
+
+                // Store data for saving to PDF
+                window.serverData = {
+                    serverIP: ip,
+                    hostname: hostname,
+                    playersOnline: playersOnline,
+                    maxPlayers: maxPlayers,
+                    serverVersion: serverVersion, // Store server version
+                    serverVariables: serverVariables,
+                    players: players.map((player, index) => ({
+                        id: player.id || index + 1,
+                        name: player.name || 'Unknown',
+                        ping: player.ping !== undefined ? `${player.ping} ms` : 'N/A',
+                        identifier: player.identifiers && player.identifiers.length > 0
+                            ? player.identifiers[0].substring(0, 20) + '...'
+                            : 'N/A',
+                        ip: playerIPs[index] || 'Unknown',
+                    })),
+                };
+            } catch (error) {
+                spinner.style.display = 'none';
+                serverInfoDiv.innerHTML = `<p>Error: ${error.message || 'Couldn’t resolve server.'}</p>`;
+                serverInfoDiv.className = 'server-info animate__animated animate__shakeX';
+                playerListDiv.innerHTML = '';
+                serverVariablesDiv.innerHTML = '';
+                playerInfoDiv.innerHTML = '';
+                window.serverData = null;
+            }
+        });
+
+        clearBtn.addEventListener('click', () => {
+            cfxInput.value = '';
+            serverInfoDiv.innerHTML = '';
+            playerListDiv.innerHTML = '';
+            serverVariablesDiv.innerHTML = '';
+            playerInfoDiv.innerHTML = '';
+            serverInfoDiv.className = 'server-info animate__animated';
+            playerListDiv.className = 'player-list animate__animated';
+            serverVariablesDiv.className = 'server-variables animate__animated';
+            playerInfoDiv.className = 'player-info animate__animated';
+            spinner.style.display = 'none';
+            window.serverData = null;
+        });
+
+        saveBtn.addEventListener('click', () => {
+            if (!window.serverData) {
+                alert("No data to save. Please resolve a server first.");
+                return;
+            }
+
+            // Use jsPDF to generate the PDF
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            let y = 10; // Initial Y position
+            const lineHeight = 8; // Reduced for cleaner spacing
+            const startX = 10;
+            let currentX = startX;
+            const colWidth = 40; // Column width for player table
+
+            // Function to add text to the PDF and increment X/Y position
+            function addText(text, isHeader = false) {
+                if (isHeader) {
+                    doc.setFontSize(12);
+                } else {
+                    doc.setFontSize(10);
+                }
+                doc.text(text, currentX, y);
+                currentX += colWidth;
+            }
+
+            function resetX() {
+                currentX = startX;
+                y += lineHeight;
+            }
+
+            // Server Information
+            doc.setFontSize(14);
+            doc.text("Server Information:", startX, y);
+            resetX();
+            doc.setFontSize(10);
+            addText(`Server IP: ${window.serverData.serverIP}`);
+            resetX();
+            addText(`Hostname: ${window.serverData.hostname}`);
+            resetX();
+            addText(`Players Online: ${window.serverData.playersOnline}/${window.serverData.maxPlayers}`);
+            resetX();
+            addText(`Server Version: ${window.serverData.serverVersion}`); // Add server version
+            resetX();
+            y += 5;
+
+            // Server Variables
+            doc.setFontSize(14);
+            doc.text("Server Variables:", startX, y);
+            resetX();
+            doc.setFontSize(10);
+            for (const key in window.serverData.serverVariables) {
+                addText(`${key}: ${window.serverData.serverVariables[key]}`);
+                resetX();
+            }
+            y += 5;
+
+            // Player Information Table
+            doc.setFontSize(14);
+            doc.text("Player Information:", startX, y);
+            resetX();
+
+            // Table headers
+            addText("ID", true);
+            addText("Name", true);
+            addText("Ping", true);
+            addText("Identifier", true);
+            addText("IP Address", true);
+            resetX();
+
+            // Table rows
+            doc.setFontSize(10);
+            if (window.serverData.players.length > 0) {
+                window.serverData.players.forEach(player => {
+                    currentX = startX; // Reset X for each row
+                    addText(String(player.id));
+                    addText(player.name.substring(0, 10)); // Limit name length
+                    addText(player.ping);
+                    addText(player.identifier.substring(0, 15)); // Limit identifier length
+                    addText(player.ip);
+                    resetX();
+                });
+            } else {
+                addText("No player data available.");
+                resetX();
+            }
+
+            // Save the PDF
+            doc.save("server_data.pdf");
+        });
+
+        // Custom row animation
+        const styleSheet = document.styleSheets[0];
+        styleSheet.insertRule(`
+            .row-slide-in {
+                animation: slideInRow 0.5s ease-out forwards;
+            }
+        `, styleSheet.cssRules.length);
+    </script>
 </body>
+
 </html>

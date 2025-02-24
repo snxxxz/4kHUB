@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>4KHUB - About</title>
+    <title>4KHUB - Daily Drops</title>
     <link rel="icon" type="image/png" href="image.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeSv9w23qG5gGECW/C3B7zJt3Xj2f53U5l+j8vI3x4j+3qg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-        /* --- General Reset & Base --- */
         *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
@@ -28,7 +27,6 @@
             position: relative;
         }
 
-        /* --- Plexus Background --- */
         #plexus-canvas {
             position: fixed;
             top: 0;
@@ -38,7 +36,6 @@
             height: 100%;
         }
 
-        /* --- Subtle Animations --- */
         @keyframes pulse {
             0% { transform: scale(1); opacity: 0.8; }
             50% { transform: scale(1.03); opacity: 1; }
@@ -50,7 +47,6 @@
             to { opacity: 1; }
         }
 
-        /* --- Utility Classes --- */
         .container {
             width: 100%;
             max-width: 850px;
@@ -96,7 +92,6 @@
         .text-shadow { text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); }
         .transition { transition: color 0.3s ease; }
 
-        /* --- Header --- */
         header {
             text-align: center;
         }
@@ -111,7 +106,6 @@
             font-size: 1.1rem;
         }
 
-        /* --- Navigation --- */
         .navbar {
             display: flex;
             justify-content: flex-start;
@@ -159,84 +153,46 @@
             vertical-align: middle;
         }
 
-        /* --- About Section --- */
-        .about-section h2 {
+        .daily-drops-section h2 {
             font-size: 1.8rem;
             margin-bottom: 1rem;
         }
 
-        .about-section p {
+        .daily-drop-item {
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            background-color: rgba(45, 45, 45, 0.7);
+            margin-bottom: 1.5rem;
+        }
+
+        .daily-drop-item h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.75rem;
+            color: #fff;
+        }
+
+        .daily-drop-item p {
             font-size: 1.05rem;
             line-height: 1.7;
-            text-align: justify;
-        }
-
-        .about-section a {
-            text-decoration: underline;
-        }
-
-        .about-section a:hover { color: #fff; }
-
-        /* --- Status Section --- */
-        .status-section h2 {
-            font-size: 1.8rem;
             margin-bottom: 1rem;
         }
 
-        .status-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 0.75rem;
-            font-size: 1.05rem;
-            padding: 0.75rem 1rem;
-            border-radius: 0.5rem;
-            background-color: rgba(45, 45, 45, 0.7);
-            transition: background-color 0.3s ease;
-        }
-
-        .status-item:hover {
-            background-color: rgba(55, 55, 55, 0.85);
-        }
-
-
-        .status-icon {
-            width: 1.6rem;
-            height: 1.6rem;
-            margin-right: 0.75rem;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .daily-drop-item a.download-button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: #5a8ee6;
             color: #fff;
-            font-size: 0.9rem;
-            transition: transform 0.2s ease;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
-        .status-icon i { /* Font Awesome icons */
-            font-size: 0.9rem;
+        .daily-drop-item a.download-button:hover {
+            background-color: #4a7cc6;
+            transform: translateY(-2px);
         }
 
-        /* Status Colors - More Unique */
-        .status-icon.working { background-color: #4CAF50; /* Standard Green, but kept for simplicity */ }
-        .status-icon.updating {
-            background-color: #ffb300; /* A warmer, slightly desaturated yellow */
-            box-shadow: 0 0 5px rgba(255, 179, 0, 0.5); /* Subtle glow */
-        }
-        .status-icon.coming-soon {
-            background-color: #8e99a0; /* A softer, slightly blue-toned gray */
-            border: 1px solid #777;  /* subtle border */
-        }
-        .status-icon.error { background-color: #f44336; } /* Standard Red */
 
-        .status-icon:hover {
-            transform: scale(1.1);
-        }
-
-        .status-item span {
-            flex-grow: 1;
-        }
-
-        /* Social Icons */
         .social-icons {
             position: fixed;
             bottom: 20px;
@@ -276,7 +232,6 @@
         }
 
 
-        /* --- Login Button --- */
         .login-button {
             position: fixed;
             top: 1.25rem;
@@ -302,14 +257,13 @@
 </head>
 <body>
 
-    <!-- Navigation Bar -->
     <nav class="navbar container">
-        <a href="home.html" class="logo"></a>
-        <a href="home.html">Home</a>
-        <a href="checker.html">Checker</a>
-        <a href="index.html">CC Gen</a>
-        <a href="pinger.html" style="color: red;">Ip Pinger</a>
-        <a href="tools.html">Tools</a>
+        <a href="../home.html" class="logo"></a>
+        <a href="../home.html">Home</a>
+        <a href="../checker.html">Checker</a>
+        <a href="../index.html">CC Gen</a>
+        <a href="../pinger.html" style="color: red;">Ip Pinger</a>
+        <a href="../tools.html">Tools</a>
         <a href="drops/daily drops.html" class="daily-drops-link">Daily Drops</a>
 
         <style>
@@ -348,55 +302,17 @@
 
     <div class="container">
         <header class="mb-3">
-
+            <h1 class="text-white text-shadow mb-1">Daily Drops</h1>
         </header>
 
-        <section class="about-section mb-3">
-            <h2 class="text-white text-shadow mb-1">What is 4KHUB?</h2>
-            <p>4KHUB is a platform designed to provide features that people don't put on their own websites.</p>
-        </section>
-
-        <section class="about-section mb-3">
-            <h2 class="text-white text-shadow mb-1">Who is Behind 4KHUB?</h2>
-            <p>4KHUB is brought to you by snxxz1337, the developer, under the ownership of 4k. It's a project from snxxz1337 committed to providing a valuable service and constantly working to improve 4KHUB.</p>
-        </section>
-
-        <section class="status-section mb-3">
-            <h2 class="text-white text-shadow mb-1">Status</h2>
-            <div class="status-item">
-                <div class="status-icon working"><i class="fas fa-check"></i></div>
-                <span>CC Gen</span>
-            </div>
-            <div class="status-item">
-                <div class="status-icon working"><i class="fas fa-check"></i></div>
-                <span>CC Checker</span>
-            </div>
-            <div class="status-item">
-                <div class="status-icon working"><i class="fas fa-spinner fa-spin"></i></div>
-                <span>IP Pinger</span>
-            </div>
-
-            <div class="status-item">
-                <div class="status-icon working"><i class="fas fa-check"></i></div>
-                <span>Cfx To IP</span>
-            </div>
-            
-            <div class="status-item">
-                <div class="status-icon coming-soon"><i class="fas fa-question"></i></div>
-                <span>Unkown...</span>
+        <section class="daily-drops-section mb-3">
+            <h2 class="text-white text-shadow mb-2">Today's Drop</h2>
+            <div class="daily-drop-item" id="daily-drop-content">
             </div>
         </section>
 
-        <section class="about-section">
-            <h2 class="text-white text-shadow mb-1">Contact & Support</h2>
-            <p>We value your feedback and are here to help! If you have any questions or need assistance, please reach out to us:</p>
-            <ul>
-                <li><a class="text-blue" href="https://discord.gg/4khub">Discord Server</a></li>
-            </ul>
-        </section>
     </div>
 
-    <!-- Social Icons -->
     <div class="social-icons">
         <a href="https://discord.gg/4khub" target="_blank">
             <img src="https://freepnglogo.com/images/all_img/1708701355discord-icon-png.png" alt="Discord">
@@ -409,11 +325,9 @@
         </a>
     </div>
 
-    <!-- Login Button -->
     <a href="login.html" class="login-button">Login</a>
 
     <script>
-        // Plexus Animation Script
         document.addEventListener('DOMContentLoaded', function() {
             const canvas = document.getElementById('plexus-canvas');
             const ctx = canvas.getContext('2d');
@@ -488,7 +402,6 @@
             });
         });
 
-        // Check login status and update login button
         document.addEventListener('DOMContentLoaded', function() {
             const loginButton = document.querySelector('.login-button');
             const isLoggedIn = localStorage.getItem('isLoggedIn');
@@ -503,13 +416,43 @@
             }
         });
 
-        // Update navigation links to remove .html extension
         document.addEventListener('DOMContentLoaded', function() {
             const navLinks = document.querySelectorAll('.navbar a');
             navLinks.forEach(link => {
                 link.textContent = link.textContent.replace('.html', '');
             });
         });
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const dailyDropContentDiv = document.getElementById('daily-drop-content');
+            const today = new Date().getDate();
+            const lastDropDay = localStorage.getItem('lastDropDay');
+
+            const dailyDrops = [
+                {
+                    "title": "",
+                    "description": "coming soon...",
+                    "downloadLink": "#"
+                }
+            ];
+
+            let dropIndex = today % dailyDrops.length;
+
+            if (lastDropDay !== String(today)) {
+                localStorage.setItem('lastDropDay', today);
+            }
+
+            const currentDrop = dailyDrops[dropIndex];
+
+            let dropHTML = `
+                <h3>${currentDrop.title}</h3>
+                <p>${currentDrop.description}</p>
+                <a href="${currentDrop.downloadLink}" class="download-button">coming soon...</a>
+            `;
+            dailyDropContentDiv.innerHTML = dropHTML;
+        });
+
 
     </script>
 

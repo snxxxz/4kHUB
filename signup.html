@@ -421,6 +421,38 @@
         <a href="index.html">CC Gen</a>
         <a href="pinger.html" style="color: red;">Ip Pinger</a>
         <a href="tools.html">Tools</a>
+        <a href="drops/daily drops.html" class="daily-drops-link">Daily Drops</a>
+
+        <style>
+            .daily-drops-link {
+                color: #ffcc00;
+                font-weight: bold;
+                text-shadow: 0 0 5px rgba(255, 204, 0, 0.8), 0 0 10px rgba(255, 204, 0, 0.6);
+                animation: pulse 1.5s infinite, colorChange 3s infinite;
+            }
+
+            .daily-drops-link:hover {
+                color: #fff700;
+                text-shadow: 0 0 10px rgba(255, 247, 0, 1), 0 0 20px rgba(255, 247, 0, 0.8);
+                animation: pulse 1.5s infinite, colorChangeHover 3s infinite;
+            }
+
+            @keyframes colorChange {
+                0% { color: #ffcc00; }
+                25% { color: #ff66cc; }
+                50% { color: #66ff66; }
+                75% { color: #66ccff; }
+                100% { color: #ffcc00; }
+            }
+
+            @keyframes colorChangeHover {
+                0% { color: #fff700; }
+                25% { color: #ff33cc; }
+                50% { color: #33ff33; }
+                75% { color: #33ccff; }
+                100% { color: #fff700; }
+            }
+        </style>
     </nav>
 
     <!-- <canvas id="plexus-canvas"></canvas> REMOVE -->

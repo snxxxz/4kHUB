@@ -173,7 +173,8 @@
         /* --- Server Info & Details Section --- */
         .server-info-section,
         .player-list,
-        .server-settings-section { /* Added server-settings-section */
+        .server-settings-section,
+        .anticheat-section { /* Added anticheat-section */
             width: 100%;
             background: rgba(35, 35, 35, 0.7);
             padding: 1.5rem;
@@ -186,7 +187,8 @@
         .player-list h2,
         .server-variables h3,
         .player-info h3,
-        .server-settings-section h2 { /* Added server-settings-section h2 */
+        .server-settings-section h2,
+        .anticheat-section h2 { /* Added anticheat-section h2 */
             font-size: 1.4rem; /* Increased heading size */
             margin-bottom: 1rem; /* Increased margin below headings */
             color: #5e81ac;
@@ -197,7 +199,8 @@
         }
 
         .server-info-section p,
-        .server-settings-section p { /* Added server-settings-section p */
+        .server-settings-section p,
+        .anticheat-section p { /* Added anticheat-section p */
             margin: 0.7rem 0; /* Increased margin for paragraphs */
             font-size: 1.1rem;
             text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
@@ -311,7 +314,8 @@
             .player-list,
             .server-variables,
             .player-info,
-            .server-settings-section { /* Added server-settings-section */
+            .server-settings-section,
+            .anticheat-section { /* Added anticheat-section */
                 padding: 1rem;
             }
         }
@@ -332,7 +336,8 @@
         .server-info-section p,
         .server-variables p,
         .player-info p,
-        .server-settings-section p { /* Added server-settings-section p */
+        .server-settings-section p,
+        .anticheat-section p { /* Added anticheat-section p */
             animation: slideIn 0.5s ease-out forwards;
             opacity: 0;
         }
@@ -411,6 +416,13 @@
                 </div>
             </div>
 
+            <div id="anticheatSection" class="anticheat-section animate__animated">
+                <h2 class="section-title"><i class="fas fa-shield-alt"></i> Anti-Cheat Detection</h2>
+                <div id="anticheatInfo">
+                    <!-- Anti-cheat info will be placed here by JS -->
+                </div>
+            </div>
+
             <div id="playerList" class="player-list animate__animated">
                 <h2 class="section-title"><i class="fas fa-users"></i> Player List</h2>
                 <!-- Player table will be placed here by JS -->
@@ -435,14 +447,16 @@
         const saveBtn = document.getElementById('saveBtn');
         const cfxInput = document.getElementById('cfxInput');
         const serverInfoDiv = document.getElementById('serverInfo');
-        const serverDetailsDiv = document.getElementById('serverDetails'); // New div for details
-        const serverSettingsDiv = document.getElementById('serverSettings'); // New div for settings
+        const serverDetailsDiv = document.getElementById('serverDetails');
+        const serverSettingsDiv = document.getElementById('serverSettings');
+        const anticheatInfoDiv = document.getElementById('anticheatInfo'); // New div for anticheat info
         const playerListDiv = document.getElementById('playerList');
         const serverVariablesDiv = document.getElementById('serverVariables');
         const playerInfoDiv = document.getElementById('playerInfo');
-        const serverInfoSectionDiv = document.getElementById('serverInfoSection'); // Section containers
+        const serverInfoSectionDiv = document.getElementById('serverInfoSection');
         const serverDetailsSectionDiv = document.getElementById('serverDetailsSection');
-        const serverSettingsSectionDiv = document.getElementById('serverSettingsSection'); // New section container
+        const serverSettingsSectionDiv = document.getElementById('serverSettingsSection');
+        const anticheatSectionDiv = document.getElementById('anticheatSection'); // New section container for anticheat
         const playerListSectionDiv = document.getElementById('playerList');
         const spinner = document.getElementById('loading');
 
@@ -511,17 +525,49 @@
             }
         }
 
+        // Function to detect anti-cheat (basic resource name check)
+        function detectAntiCheat(statusData) {
+            if (!statusData || !statusData.resources) {
+                return "Unknown";
+            }
+            const resources = statusData.resources;
+            // Expanded and more generic antiCheatKeywords -  **YOU NEED TO CUSTOMIZE THIS LIST BASED ON YOUR FINDINGS**
+            const antiCheatKeywords = [
+                "anticheat", "anti-cheat", "ac_", "ac-", // Generic terms
+                "kore", "koreshield", "lux", "lux_", "lux_", "badcompany", "bc-ac", // Specific AC names/prefixes
+                "shield", "guard", "protect", "security", "cheatblocker", "cheat-blocker", // More generic security terms
+                "blockcheat", "block-cheat", "cfx-ac", "fivepd-ac", "vanguard", "sentinel", "aetheris", // More examples, expand this!
+                "aurora-ac", "polaris-ac", "ares-ac", "olympus-ac", // Example names, you'll find more
+                "ironshield", "titaniumshield", "diamondshield", // Example names, you'll find more
+                "secure", "anti_exploit", "exploit_fix", // Related security terms
+                // Add more keywords based on server resource names you find!
+            ];
+
+            for (const resource of resources) {
+                const lowerResource = resource.toLowerCase();
+                for (const keyword of antiCheatKeywords) {
+                    if (lowerResource.includes(keyword)) {
+                        return resource; // Return the resource name as the anti-cheat name
+                    }
+                }
+            }
+            return "None detected (or unknown)";
+        }
+
+
         resolveBtn.addEventListener('click', async () => {
             const cfxLink = cfxInput.value.trim();
             if (!cfxLink) {
                 serverInfoDiv.innerHTML = "<p>Please enter a CFX.re link.</p>";
-                serverInfoSectionDiv.className = 'server-info-section animate__animated animate__shakeX'; // Animate section
+                serverInfoSectionDiv.className = 'server-info-section animate__animated animate__shakeX';
                 serverDetailsDiv.innerHTML = '';
-                serverDetailsSectionDiv.className = 'server-info-section animate__animated'; // Reset animation class
+                serverDetailsSectionDiv.className = 'server-info-section animate__animated';
                 serverSettingsDiv.innerHTML = '';
-                serverSettingsSectionDiv.className = 'server-settings-section animate__animated'; // Reset animation class
+                serverSettingsSectionDiv.className = 'server-settings-section animate__animated';
+                anticheatInfoDiv.innerHTML = ''; // Clear anticheat info
+                anticheatSectionDiv.className = 'anticheat-section animate__animated'; // Reset anticheat animation class
                 playerListDiv.innerHTML = '';
-                playerListSectionDiv.className = 'player-list animate__animated'; // Reset animation class
+                playerListSectionDiv.className = 'player-list animate__animated';
                 serverVariablesDiv.innerHTML = '';
                 playerInfoDiv.innerHTML = '';
                 return;
@@ -532,13 +578,15 @@
             serverInfoDiv.innerHTML = '';
             serverDetailsDiv.innerHTML = '';
             serverSettingsDiv.innerHTML = '';
+            anticheatInfoDiv.innerHTML = ''; // Clear anticheat info
             playerListDiv.innerHTML = '';
             serverVariablesDiv.innerHTML = '';
             playerInfoDiv.innerHTML = '';
-            serverInfoSectionDiv.className = 'server-info-section animate__animated'; // Reset animation class
-            serverDetailsSectionDiv.className = 'server-info-section animate__animated'; // Reset animation class
-            serverSettingsSectionDiv.className = 'server-settings-section animate__animated'; // Reset animation class
-            playerListSectionDiv.className = 'player-list animate__animated'; // Reset animation class
+            serverInfoSectionDiv.className = 'server-info-section animate__animated';
+            serverDetailsSectionDiv.className = 'server-info-section animate__animated';
+            serverSettingsSectionDiv.className = 'server-settings-section animate__animated';
+            anticheatSectionDiv.className = 'anticheat-section animate__animated'; // Reset anticheat animation class
+            playerListSectionDiv.className = 'player-list animate__animated';
 
 
             const serverId = cfxLink.split('/').pop();
@@ -548,21 +596,22 @@
                 if (!serverResponse.ok) throw new Error('Server not found.');
                 const serverData = await serverResponse.json();
                 const ip = serverData.Data.connectEndPoints[0];
-                // const hostname = serverData.Data.hostname; // Removed complex name
                 const hostname = serverData.Data.hostname.replace(/\^./g, ''); // Remove color codes for simpler name.
                 const playersOnline = serverData.Data.clients;
                 const maxPlayers = serverData.Data.svMaxclients;
-                const serverVersion = serverData.Data.server; // Get server version
-                const enhancedHostSupport = serverData.Data.enhancedHostSupport; // Enhanced Host Support
+                const serverVersion = serverData.Data.server;
+                const enhancedHostSupport = serverData.Data.enhancedHostSupport;
 
                 // Fetch server variables and status
                 const serverVariables = await getServerVariables(ip);
-                console.log("Variables received from getServerVariables:", serverVariables); // Log variables after fetching
+                console.log("Variables received from getServerVariables:", serverVariables);
                 let statusData = {};
                 try {
                     const statusResponse = await fetchWithTimeout(`http://${ip}/status.json`);
                     if (statusResponse.ok) {
                         statusData = await statusResponse.json();
+                        // **DEBUGGING STEP: Log server resources to console**
+                        console.log("statusData.resources:", statusData.resources); // Log resources here!
                     } else {
                         console.warn("Failed to fetch status.json for additional info.");
                     }
@@ -570,11 +619,17 @@
                     console.warn("Error fetching status.json for additional info:", e.message);
                 }
 
+                // Detect Anti-Cheat
+                const detectedAntiCheat = detectAntiCheat(statusData);
+                let anticheatHTML = `<p><i class="fas fa-shield-alt"></i> Anti-Cheat: ${detectedAntiCheat}</p>`;
+                anticheatInfoDiv.innerHTML = anticheatHTML;
+                anticheatSectionDiv.className = 'anticheat-section animate__animated animate__fadeIn';
+
 
                 let serverVariablesHTML = '<h3>Server Variables (Not working or outdated)</h3>';
-                console.log("About to generate Server Variables HTML. Variables object:", serverVariables); // Log before loop
+                console.log("About to generate Server Variables HTML. Variables object:", serverVariables);
                 for (const key in serverVariables) {
-                    console.log(`Processing variable key: ${key}, value: ${serverVariables[key]}`); // Log each variable
+                    console.log(`Processing variable key: ${key}, value: ${serverVariables[key]}`);
                     serverVariablesHTML += `<p>${key}: ${serverVariables[key]}</p>`;
                 }
                 serverVariablesDiv.innerHTML = serverVariablesHTML;
@@ -584,8 +639,8 @@
                 let players = [];
                 const endpoints = [
                     `http://${ip}/players.json`,
-                    `http://${ip}/dynamic.json`, // Some servers use this
-                    `http://${ip}/info.json`, // Rare, but worth a shot
+                    `http://${ip}/dynamic.json`,
+                    `http://${ip}/info.json`,
                 ];
 
                 for (const endpoint of endpoints) {
@@ -593,20 +648,18 @@
                         const response = await fetchWithTimeout(endpoint);
                         if (response.ok) {
                             const data = await response.json();
-                            // Handle different data structures
                             if (Array.isArray(data)) {
-                                players = data; // Standard players.json format
+                                players = data;
                             } else if (data.players && Array.isArray(data.players)) {
-                                players = data.players; // dynamic.json or similar
+                                players = data.players;
                             }
-                            if (players.length > 0) break; // Exit if we got data
+                            if (players.length > 0) break;
                         }
                     } catch (e) {
                         console.warn(`Failed to fetch from ${endpoint}: ${e.message}`);
                     }
                 }
 
-                // Fallback: Check CFX.re API response for player data
                 if (players.length === 0 && serverData.Data.players && Array.isArray(serverData.Data.players)) {
                     players = serverData.Data.players;
                 }
@@ -619,13 +672,13 @@
                     console.warn("Failed to grab IP addresses:", e);
                 }
 
-                // --- NEW: Geolocation ---
+                // Geolocation
                 let locationData = null;
                 try {
-                    const geoResponse = await fetchWithTimeout(`http://ip-api.com/json/${ip}`); // Using ip-api.com
+                    const geoResponse = await fetchWithTimeout(`http://ip-api.com/json/${ip}`);
                     if (geoResponse.ok) {
                         locationData = await geoResponse.json();
-                        console.log("Geolocation Data:", locationData); // Log to see the structure
+                        console.log("Geolocation Data:", locationData);
                     } else {
                         console.warn("Failed to fetch geolocation data.");
                     }
@@ -633,17 +686,17 @@
                     console.warn("Error fetching geolocation data:", e.message);
                 }
 
-                // --- NEW: Try to find Game Type from serverVariables ---
+                // Game Type
                 let gameType = "Unknown";
-                const gameTypeKeys = ["gametype", "mode", "serverType", "gameType", "server_type"]; // Common keys to check
+                const gameTypeKeys = ["gametype", "mode", "serverType", "gameType", "server_type"];
                 for (const key of gameTypeKeys) {
                     if (serverVariables[key]) {
                         gameType = serverVariables[key];
-                        break; // Stop after finding the first one
+                        break;
                     }
                 }
 
-                // --- NEW: Extract additional server settings ---
+                // Additional server settings
                 const mapName = statusData.mapname || "Unknown";
                 const scriptHookAllowed = statusData.scriptHookAllowed === true ? 'Yes' : 'No';
                 const serverBuild = statusData.build || "Unknown";
@@ -665,16 +718,16 @@
 
                 // Display server details
                 let serverDetailsHTML = ``;
-                if (locationData && locationData.status === 'success') { // Check for success status
+                if (locationData && locationData.status === 'success') {
                     serverDetailsHTML += `
                         <p><i class="fas fa-map-marker-alt"></i> Location: ${locationData.city}, ${locationData.regionName}, ${locationData.countryCode}</p>
                         <p><i class="fas fa-location-arrow"></i> Coordinates: ${locationData.lat}, ${locationData.lon}</p>
                         <p><i class="fas fa-building"></i> ISP: ${locationData.isp}</p>
                     `;
                 } else {
-                    serverDetailsHTML += `<p><i class="fas fa-exclamation-triangle"></i> Location: Information unavailable</p>`; // Fallback if geolocation fails
+                    serverDetailsHTML += `<p><i class="fas fa-exclamation-triangle"></i> Location: Information unavailable</p>`;
                 }
-                serverDetailsHTML += `<p><i class="fas fa-gamepad"></i> Game Type: ${gameType}</p>`; // Game Type
+                serverDetailsHTML += `<p><i class="fas fa-gamepad"></i> Game Type: ${gameType}</p>`;
                 serverDetailsDiv.innerHTML = serverDetailsHTML;
                 serverDetailsSectionDiv.className = 'server-info-section animate__animated animate__fadeIn';
 
@@ -751,15 +804,16 @@
                     hostname: hostname,
                     playersOnline: playersOnline,
                     maxPlayers: maxPlayers,
-                    serverVersion: serverVersion, // Store server version
+                    serverVersion: serverVersion,
                     serverVariables: serverVariables,
-                    location: locationData, // Store location data
-                    gameType: gameType, // Store game type
-                    mapName: mapName, // Store map name
-                    resourceCount: resourceCount, // Store resource count
-                    scriptHookAllowed: scriptHookAllowed, // Store script hook allowed
-                    serverBuild: serverBuild, // Store server build
-                    enhancedHostSupport: enhancedHostSupport, // Store enhanced host support
+                    location: locationData,
+                    gameType: gameType,
+                    mapName: mapName,
+                    resourceCount: resourceCount,
+                    scriptHookAllowed: scriptHookAllowed,
+                    serverBuild: serverBuild,
+                    enhancedHostSupport: enhancedHostSupport,
+                    antiCheat: detectedAntiCheat, // Store detected anti-cheat
                     players: players.map((player, index) => ({
                         id: player.id || index + 1,
                         name: player.name || 'Unknown',
@@ -778,6 +832,8 @@
                 serverDetailsSectionDiv.className = 'server-info-section animate__animated';
                 serverSettingsDiv.innerHTML = '';
                 serverSettingsSectionDiv.className = 'server-settings-section animate__animated';
+                anticheatInfoDiv.innerHTML = ''; // Clear anticheat info
+                anticheatSectionDiv.className = 'anticheat-section animate__animated'; // Reset anticheat animation class
                 playerListDiv.innerHTML = '';
                 playerListSectionDiv.className = 'player-list animate__animated';
                 serverVariablesDiv.innerHTML = '';
@@ -791,12 +847,14 @@
             serverInfoDiv.innerHTML = '';
             serverDetailsDiv.innerHTML = '';
             serverSettingsDiv.innerHTML = '';
+            anticheatInfoDiv.innerHTML = ''; // Clear anticheat info
             playerListDiv.innerHTML = '';
             serverVariablesDiv.innerHTML = '';
             playerInfoDiv.innerHTML = '';
             serverInfoSectionDiv.className = 'server-info-section animate__animated';
             serverDetailsSectionDiv.className = 'server-info-section animate__animated';
             serverSettingsSectionDiv.className = 'server-settings-section animate__animated';
+            anticheatSectionDiv.className = 'anticheat-section animate__animated'; // Reset anticheat animation class
             playerListSectionDiv.className = 'player-list animate__animated';
             serverVariablesDiv.className = 'server-variables animate__animated';
             playerInfoDiv.className = 'player-info animate__animated';
@@ -813,13 +871,12 @@
             // Use jsPDF to generate the PDF
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-            let y = 10; // Initial Y position
-            const lineHeight = 8; // Reduced for cleaner spacing
+            let y = 10;
+            const lineHeight = 8;
             const startX = 10;
             let currentX = startX;
-            const colWidth = 40; // Column width for player table
+            const colWidth = 40;
 
-            // Function to add text to the PDF and increment X/Y position
             function addText(text, isHeader = false) {
                 if (isHeader) {
                     doc.setFontSize(12);
@@ -846,7 +903,7 @@
             resetX();
             addText(`Players Online: ${window.serverData.playersOnline}/${window.serverData.maxPlayers}`);
             resetX();
-            addText(`Server Version: ${window.serverData.serverVersion}`); // Add server version
+            addText(`Server Version: ${window.serverData.serverVersion}`);
             resetX();
             y += 5;
 
@@ -887,6 +944,15 @@
             resetX();
             y += 5;
 
+            // Anti-Cheat Information
+            doc.setFontSize(14);
+            doc.text("Anti-Cheat Information:", startX, y);
+            resetX();
+            doc.setFontSize(10);
+            addText(`Anti-Cheat: ${window.serverData.antiCheat}`);
+            resetX();
+            y += 5;
+
 
             // Server Variables
             doc.setFontSize(14);
@@ -916,11 +982,11 @@
             doc.setFontSize(10);
             if (window.serverData.players.length > 0) {
                 window.serverData.players.forEach(player => {
-                    currentX = startX; // Reset X for each row
+                    currentX = startX;
                     addText(String(player.id));
-                    addText(player.name.substring(0, 10)); // Limit name length
+                    addText(player.name.substring(0, 10));
                     addText(player.ping);
-                    addText(player.identifier.substring(0, 15)); // Limit identifier length
+                    addText(player.identifier.substring(0, 15));
                     addText(player.ip);
                     resetX();
                 });

@@ -1275,6 +1275,86 @@ button:active::before {
             }
             });
         });
+
+        // Add loading animation element
+        const loadingAnimation = document.createElement('div');
+        loadingAnimation.id = 'loading-animation';
+        loadingAnimation.style.position = 'fixed';
+        loadingAnimation.style.top = '50%';
+        loadingAnimation.style.left = '50%';
+        loadingAnimation.style.transform = 'translate(-50%, -50%)';
+        loadingAnimation.style.width = '80px';
+        loadingAnimation.style.height = '80px';
+        loadingAnimation.style.border = '10px solid rgba(122, 177, 230, 0.2)';
+        loadingAnimation.style.borderTop = '10px solid #7ab1e6';
+        loadingAnimation.style.borderRadius = '50%';
+        loadingAnimation.style.animation = 'spin 1s linear infinite';
+        loadingAnimation.style.zIndex = '1000';
+        loadingAnimation.style.display = 'none'; // Initially hidden
+        document.body.appendChild(loadingAnimation);
+
+        function showLoadingAnimation() {
+            loadingAnimation.style.display = 'block';
+        }
+
+        function hideLoadingAnimation() {
+            loadingAnimation.style.display = 'none';
+        }
+
+        function generateAndDisplayCards() {
+            const prefix = document.getElementById('inputPrefix').value;
+            const length = document.getElementById('inputLength').value;
+            const quantity = parseInt(document.getElementById('inputQuantity').value, 10);
+            const resultsContainer = document.getElementById('results-container');
+            resultsContainer.innerHTML = '';
+
+            if (isNaN(quantity) || quantity <= 0) {
+            resultsContainer.innerHTML = '<p class="error-display">Please enter a valid number of cards.</p>';
+            return;
+            }
+
+            showLoadingAnimation(); // Show loading animation
+
+            // Clear any existing animations to prevent issues
+            resultsContainer.style.animation = 'none';
+            void resultsContainer.offsetWidth; // Force reflow
+            resultsContainer.style.animation = 'fadeIn 0.6s ease'; // Reapply animation
+
+            for (let i = 0; i < quantity; i++) {
+            setTimeout(() => {
+                const cardData = generateCreditCard(prefix, length);
+                const cardDisplay = document.createElement('div');
+                cardDisplay.classList.add('card-item', 'float-container');
+                cardDisplay.innerHTML = `
+                <span class="glow"></span>
+                <p>Card Number: ${cardData.cardNumber}</p>
+                <p>Expiry Date: ${cardData.expiryDate}</p>
+                <p>Name: ${cardData.cardName}</p>
+                <p>CVV: ${cardData.cvv}</p>
+                <div class="card-actions">
+                    <button class="validate-button" onclick="validateCardNumber('${cardData.cardNumber}', this.closest('.card-item'))">Validate</button>
+                    <button class="copy-button" onclick="copyToClipboard('${cardData.cardNumber}', this.closest('.card-item'))">Copy</button>
+                </div>
+                <div class="notification">Copied to Clipboard!</div>
+                <div class="validation-message"></div>
+                `;
+                resultsContainer.appendChild(cardDisplay);
+                cardDisplay.style.animation = 'fadeInUp 0.8s ease'; // Reapply animation
+
+                // Update loading bar progress
+                updateLoadingBar(((i + 1) / quantity) * 100);
+
+                // Hide loading bar and animation when done
+                if (i === quantity - 1) {
+                setTimeout(() => {
+                    loadingBar.style.width = '0';
+                    hideLoadingAnimation(); // Hide loading animation
+                }, 500);
+                }
+            }, i * 140); // slightly adjust the delay for smoother appearance
+            }
+            supportMessage.style.display = 'block'; // Show the support message
+        }
 </script>
 
 </body>

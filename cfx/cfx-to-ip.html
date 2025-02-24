@@ -24,190 +24,233 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: #121212; /* Darker background */
-            font-family: 'Poppins', sans-serif; /* Modern font */
+            background: #121212;
+            font-family: 'Poppins', sans-serif;
             color: #fff;
             overflow-y: auto;
             padding: 2rem;
-            background: linear-gradient(to bottom, #1e272e, #0a1118); /* Updated background gradient */
+            background: linear-gradient(to bottom, #1e272e, #0a1118);
         }
 
         .container {
-            max-width: 1200px; /* Reduced width */
+            max-width: 1200px;
             width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 2rem;
-            padding: 3rem; /* Increased padding */
-            background: rgba(25, 25, 25, 0.85); /* Darker, translucent */
-            border-radius: 20px; /* Softer corners */
-            backdrop-filter: blur(25px); /* Stronger blur */
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6); /* Enhanced shadow */
-            border: 1px solid rgba(255, 255, 255, 0.08); /* Subtle border */
+            padding: 3rem;
+            background: rgba(25, 25, 25, 0.85);
+            border-radius: 20px;
+            backdrop-filter: blur(25px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         /* --- Title --- */
         .title {
-            font-size: 3rem; /* Slightly smaller */
-            color: #eee; /* Lighter text */
+            font-size: 3rem;
+            color: #eee;
             letter-spacing: 2px;
-            margin-bottom: 1.5rem; /* More space */
+            margin-bottom: 1.5rem;
             text-align: center;
-            font-weight: 500; /* Medium weight */
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4); /* Softer shadow */
+            font-weight: 500;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
         }
 
         /* --- Input Section --- */
         .input-section {
-            background: rgba(35, 35, 35, 0.7); /* Slightly lighter */
-            padding: 2rem 2.5rem; /* Increased padding */
+            background: rgba(35, 35, 35, 0.7);
+            padding: 2rem 2.5rem;
             border-radius: 15px;
-            backdrop-filter: blur(20px); /* Increased blur */
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2); /* More subtle shadow */
+            backdrop-filter: blur(20px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
             display: flex;
             flex-wrap: wrap;
-            gap: 2rem; /* Increased gap */
+            gap: 2rem;
             width: 100%;
             justify-content: center;
+            margin-bottom: 1.5rem; /* Added margin below input section */
         }
 
         input {
-            padding: 1.2rem 1.5rem; /* More padding */
+            padding: 1.2rem 1.5rem;
             font-size: 1.1rem;
             border: none;
-            border-radius: 12px; /* More rounded */
-            background: rgba(50, 50, 50, 0.8); /* Darker input field */
-            color: #ddd; /* Softer color */
+            border-radius: 12px;
+            background: rgba(50, 50, 50, 0.8);
+            color: #ddd;
             outline: none;
             flex: 1;
             min-width: 300px;
             transition: all 0.3s ease;
-            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.3); /* Inset shadow */
+            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.3);
         }
 
         input:focus {
-            background: rgba(60, 60, 60, 0.9); /* Slightly lighter focus */
-            box-shadow: 0 5px 20px rgba(100, 149, 237, 0.3); /* Blue shadow */
+            background: rgba(60, 60, 60, 0.9);
+            box-shadow: 0 5px 20px rgba(100, 149, 237, 0.3);
         }
 
         /* --- Button Group --- */
         .button-group {
             display: flex;
             gap: 1.5rem;
-            justify-content: center; /* Center align buttons */
+            justify-content: center;
             width: 100%;
         }
 
         .primary-btn,
         .secondary-btn,
         .save-btn {
-            padding: 1.2rem 2.5rem; /* Increased padding */
-            font-size: 1.1rem; /* Slightly smaller font */
+            padding: 1.2rem 2.5rem;
+            font-size: 1.1rem;
             border: none;
-            border-radius: 12px; /* More rounded */
+            border-radius: 12px;
             cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            font-weight: 500; /* Medium weight */
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3); /* Button shadow */
+            font-weight: 500;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
             width: auto;
-            flex: 1; /* Distribute space evenly */
+            flex: 1;
             min-width: 120px;
-            text-align: center; /* Center text within buttons */
+            text-align: center;
         }
 
         .primary-btn {
-            background: #5e81ac; /* Calm blue */
+            background: #5e81ac;
             color: #fff;
         }
 
         .primary-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(100, 149, 237, 0.5); /* More pronounced shadow */
+            box-shadow: 0 8px 20px rgba(100, 149, 237, 0.5);
         }
 
         .secondary-btn {
-            background: rgba(50, 50, 50, 0.8); /* Darker secondary */
-            color: #ddd; /* Softer color */
+            background: rgba(50, 50, 50, 0.8);
+            color: #ddd;
         }
 
         .secondary-btn:hover {
             transform: translateY(-3px);
-            background: rgba(60, 60, 60, 0.9); /* Slightly lighter hover */
+            background: rgba(60, 60, 60, 0.9);
         }
 
         .save-btn {
-            background: #a3be8c; /* Soft green */
+            background: #a3be8c;
             color: #fff;
         }
 
         .save-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(163, 190, 140, 0.5); /* More pronounced shadow */
+            box-shadow: 0 8px 20px rgba(163, 190, 140, 0.5);
         }
 
         /* --- Spinner --- */
         .spinner {
             display: none;
-            width: 40px; /* Smaller spinner */
+            width: 40px;
             height: 40px;
-            border: 5px solid rgba(100, 149, 237, 0.3); /* Blue spinner */
+            border: 5px solid rgba(100, 149, 237, 0.3);
             border-top: 5px solid #5e81ac;
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin-top: 1rem;
+            margin-bottom: 1.5rem; /* Added margin below spinner */
         }
 
-        /* --- Server Info --- */
-        .server-info {
+        /* --- Info Sections Container --- */
+        .info-sections {
             width: 100%;
-            text-align: center;
-            font-size: 1.1rem; /* Smaller font */
-            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3); /* Softer shadow */
-            margin-top: 1rem;
-            padding: 1.5rem;
-            background: rgba(35, 35, 35, 0.7); /* Darker info background */
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem; /* Spacing between info sections */
         }
 
-        .server-info p {
-            margin: 0.5rem 0;
-            font-weight: 400;
-        }
-
-        /* --- Player List --- */
-        .player-list {
+        /* --- Server Info & Details Section --- */
+        .server-info-section,
+        .player-list,
+        .server-settings-section { /* Added server-settings-section */
             width: 100%;
-            background: rgba(35, 35, 35, 0.7); /* Darker player list */
+            background: rgba(35, 35, 35, 0.7);
             padding: 1.5rem;
             border-radius: 12px;
             backdrop-filter: blur(20px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-            max-height: 400px; /* Reduced height */
-            overflow-y: auto;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
+
+        .server-info-section h2,
+        .player-list h2,
+        .server-variables h3,
+        .player-info h3,
+        .server-settings-section h2 { /* Added server-settings-section h2 */
+            font-size: 1.4rem; /* Increased heading size */
+            margin-bottom: 1rem; /* Increased margin below headings */
+            color: #5e81ac;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .server-info-section p,
+        .server-settings-section p { /* Added server-settings-section p */
+            margin: 0.7rem 0; /* Increased margin for paragraphs */
+            font-size: 1.1rem;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+            font-weight: 400;
+        }
+
+        /* --- Server Variables & Player Info Sections (Moved to additional-info) --- */
+        .additional-info {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .server-variables,
+        .player-info {
+            background: rgba(35, 35, 35, 0.7);
+            padding: 1.5rem;
+            border-radius: 12px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+
+        .server-variables p,
+        .player-info p {
+            margin: 0.5rem 0;
+            font-size: 1rem;
+            word-break: break-word;
+            font-weight: 300;
+        }
+
+        /* --- Player List --- */
+
 
         .player-list table {
             width: 100%;
             border-collapse: collapse;
-            border: 1px solid rgba(255, 255, 255, 0.05); /* Subtle border */
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .player-list th,
         .player-list td {
-            padding: 0.8rem; /* Reduced padding */
+            padding: 0.8rem;
             text-align: left;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08); /* Subtle border */
-            font-size: 0.9rem; /* Smaller font */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.9rem;
             font-weight: 300;
         }
 
         .player-list th {
-            background: rgba(100, 149, 237, 0.1); /* Blue header */
-            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4); /* Softer shadow */
+            background: rgba(100, 149, 237, 0.1);
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
             font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -218,7 +261,7 @@
         }
 
         .player-list tr:hover {
-            background: rgba(100, 149, 237, 0.05); /* Blue hover */
+            background: rgba(100, 149, 237, 0.05);
         }
 
         /* --- Animations --- */
@@ -230,61 +273,6 @@
             100% {
                 transform: rotate(360deg);
             }
-        }
-
-        /* --- Additional Styles --- */
-        .additional-info {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .server-variables {
-            background: rgba(35, 35, 35, 0.7); /* Darker variables */
-            padding: 1.5rem;
-            border-radius: 12px;
-            backdrop-filter: blur(20px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-        }
-
-        .server-variables h3 {
-            font-size: 1.2rem; /* Smaller font */
-            margin-bottom: 0.7rem;
-            color: #5e81ac; /* Blue */
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: 500;
-        }
-
-        .server-variables p {
-            margin: 0.5rem 0;
-            font-size: 1rem; /* Smaller font */
-            word-break: break-word;
-            font-weight: 300;
-        }
-
-        .player-info {
-            background: rgba(35, 35, 35, 0.7); /* Darker player info */
-            padding: 1.5rem;
-            border-radius: 12px;
-            backdrop-filter: blur(20px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-        }
-
-        .player-info h3 {
-            font-size: 1.2rem; /* Smaller font */
-            margin-bottom: 0.7rem;
-            color: #5e81ac; /* Blue */
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: 500;
-        }
-
-        .player-info p {
-            margin: 0.5rem 0;
-            font-size: 1rem; /* Smaller font */
-            font-weight: 300;
         }
 
         /* --- Responsive Design --- */
@@ -319,10 +307,11 @@
                 width: 100%;
             }
 
-            .server-info,
+            .server-info-section,
             .player-list,
             .server-variables,
-            .player-info {
+            .player-info,
+            .server-settings-section { /* Added server-settings-section */
                 padding: 1rem;
             }
         }
@@ -333,23 +322,25 @@
                 transform: translateX(-20px);
                 opacity: 0;
             }
+
             to {
                 transform: translateX(0);
                 opacity: 1;
             }
         }
 
-        .server-info p,
+        .server-info-section p,
         .server-variables p,
-        .player-info p {
+        .player-info p,
+        .server-settings-section p { /* Added server-settings-section p */
             animation: slideIn 0.5s ease-out forwards;
-            opacity: 0; /* Hide initially */
+            opacity: 0;
         }
 
         /* Ensure table rows are correctly animated */
         .player-list table tr {
             animation: slideInRow 0.6s ease-out forwards;
-            opacity: 0; /* Hide initially */
+            opacity: 0;
         }
 
         @keyframes slideInRow {
@@ -357,6 +348,7 @@
                 transform: translateX(-10px);
                 opacity: 0;
             }
+
             to {
                 transform: translateX(0);
                 opacity: 1;
@@ -375,12 +367,12 @@
                 transform: translateY(0);
                 box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
             }
+
             100% {
                 transform: translateY(-3px);
                 box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
             }
         }
-
     </style>
 </head>
 
@@ -396,12 +388,46 @@
             </div>
         </div>
         <div id="loading" class="spinner"></div>
-        <div id="serverInfo" class="server-info animate__animated"></div>
-        <div class="additional-info">
-            <div id="serverVariables" class="server-variables animate__animated"></div>
-            <div id="playerInfo" class="player-info animate__animated"></div>
+
+        <div class="info-sections">
+            <div id="serverInfoSection" class="server-info-section animate__animated">
+                <h2 class="section-title"><i class="fas fa-server"></i> Server Information</h2>
+                <div id="serverInfo">
+                    <!-- Server info paragraphs will be placed here by JS -->
+                </div>
+            </div>
+
+            <div id="serverDetailsSection" class="server-info-section animate__animated">
+                <h2 class="section-title"><i class="fas fa-info-circle"></i> Server Details</h2>
+                <div id="serverDetails">
+                    <!-- Server details paragraphs will be placed here by JS -->
+                </div>
+            </div>
+
+            <div id="serverSettingsSection" class="server-settings-section animate__animated">
+                <h2 class="section-title"><i class="fas fa-cogs"></i> Game & Server Settings</h2>
+                <div id="serverSettings">
+                    <!-- Server settings paragraphs will be placed here by JS -->
+                </div>
+            </div>
+
+            <div id="playerList" class="player-list animate__animated">
+                <h2 class="section-title"><i class="fas fa-users"></i> Player List</h2>
+                <!-- Player table will be placed here by JS -->
+            </div>
+
+            <div class="additional-info">
+                <div id="serverVariables" class="server-variables animate__animated">
+                    <h3 class="section-subtitle"><i class="fas fa-code"></i> Server Variables</h3>
+                    <!-- Server variables paragraphs will be placed here by JS -->
+                </div>
+                <div id="playerInfo" class="player-info animate__animated">
+                    <h3 class="section-subtitle"><i class="fas fa-user-astronaut"></i> Player Information</h3>
+                    <!-- Player info paragraphs will be placed here by JS -->
+                </div>
+            </div>
         </div>
-        <div id="playerList" class="player-list animate__animated"></div>
+
     </div>
     <script>
         const resolveBtn = document.getElementById('resolveBtn');
@@ -409,9 +435,15 @@
         const saveBtn = document.getElementById('saveBtn');
         const cfxInput = document.getElementById('cfxInput');
         const serverInfoDiv = document.getElementById('serverInfo');
+        const serverDetailsDiv = document.getElementById('serverDetails'); // New div for details
+        const serverSettingsDiv = document.getElementById('serverSettings'); // New div for settings
         const playerListDiv = document.getElementById('playerList');
         const serverVariablesDiv = document.getElementById('serverVariables');
         const playerInfoDiv = document.getElementById('playerInfo');
+        const serverInfoSectionDiv = document.getElementById('serverInfoSection'); // Section containers
+        const serverDetailsSectionDiv = document.getElementById('serverDetailsSection');
+        const serverSettingsSectionDiv = document.getElementById('serverSettingsSection'); // New section container
+        const playerListSectionDiv = document.getElementById('playerList');
         const spinner = document.getElementById('loading');
 
         // Helper function to fetch with timeout
@@ -432,21 +464,23 @@
         async function getPlayerIPs(ip) {
             let playerIPs = [];
             const endpoints = [
-                `http://${ip}/client_log`, // A very risky endpoint
-                `http://${ip}/citizen-server-impl/dumps/crash`, // Another extremely risky endpoint
+                `http://${ip}/client_log`, // HIGH RISK: Logs
+                `http://${ip}/citizen-server-impl/dumps/crash`, // HIGH RISK: Crash Dumps
             ];
 
             for (const endpoint of endpoints) {
                 try {
-                    const response = await fetchWithTimeout(endpoint, 2000); // Shorter timeout
+                    const response = await fetchWithTimeout(endpoint, 2000);
                     if (response.ok) {
                         const logData = await response.text();
-                        // Extremely dangerous: parsing logs to find IP addresses
+
+                        // Regex for IPv4 with port (MOST LIKELY to be useful)
                         const ipRegex = /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d{1,5})/;
                         let match;
                         while ((match = ipRegex.exec(logData)) !== null) {
                             playerIPs.push(match[1]);
                         }
+
                     } else {
                         console.warn(`Failed to fetch ${endpoint}`);
                     }
@@ -457,13 +491,16 @@
             return playerIPs;
         }
 
-        // Function to fetch server variables
+        // Helper function to fetch server variables (modified with logging)
         async function getServerVariables(ip) {
             try {
                 const response = await fetchWithTimeout(`http://${ip}/status.json`);
                 if (response.ok) {
                     const data = await response.json();
-                    return data.vars || {};
+                    console.log("getServerVariables - Full status.json data:", data); // Log full data
+                    const vars = data.vars || {};
+                    console.log("getServerVariables - Extracted vars:", vars); // Log extracted vars
+                    return vars;
                 } else {
                     console.warn("Failed to fetch status.json");
                     return {};
@@ -478,8 +515,13 @@
             const cfxLink = cfxInput.value.trim();
             if (!cfxLink) {
                 serverInfoDiv.innerHTML = "<p>Please enter a CFX.re link.</p>";
-                serverInfoDiv.className = 'server-info animate__animated animate__shakeX';
+                serverInfoSectionDiv.className = 'server-info-section animate__animated animate__shakeX'; // Animate section
+                serverDetailsDiv.innerHTML = '';
+                serverDetailsSectionDiv.className = 'server-info-section animate__animated'; // Reset animation class
+                serverSettingsDiv.innerHTML = '';
+                serverSettingsSectionDiv.className = 'server-settings-section animate__animated'; // Reset animation class
                 playerListDiv.innerHTML = '';
+                playerListSectionDiv.className = 'player-list animate__animated'; // Reset animation class
                 serverVariablesDiv.innerHTML = '';
                 playerInfoDiv.innerHTML = '';
                 return;
@@ -488,9 +530,16 @@
             // Show spinner
             spinner.style.display = 'block';
             serverInfoDiv.innerHTML = '';
+            serverDetailsDiv.innerHTML = '';
+            serverSettingsDiv.innerHTML = '';
             playerListDiv.innerHTML = '';
             serverVariablesDiv.innerHTML = '';
             playerInfoDiv.innerHTML = '';
+            serverInfoSectionDiv.className = 'server-info-section animate__animated'; // Reset animation class
+            serverDetailsSectionDiv.className = 'server-info-section animate__animated'; // Reset animation class
+            serverSettingsSectionDiv.className = 'server-settings-section animate__animated'; // Reset animation class
+            playerListSectionDiv.className = 'player-list animate__animated'; // Reset animation class
+
 
             const serverId = cfxLink.split('/').pop();
             try {
@@ -504,11 +553,28 @@
                 const playersOnline = serverData.Data.clients;
                 const maxPlayers = serverData.Data.svMaxclients;
                 const serverVersion = serverData.Data.server; // Get server version
+                const enhancedHostSupport = serverData.Data.enhancedHostSupport; // Enhanced Host Support
 
-                // Fetch server variables
+                // Fetch server variables and status
                 const serverVariables = await getServerVariables(ip);
-                let serverVariablesHTML = '<h3>Server Variables</h3>';
+                console.log("Variables received from getServerVariables:", serverVariables); // Log variables after fetching
+                let statusData = {};
+                try {
+                    const statusResponse = await fetchWithTimeout(`http://${ip}/status.json`);
+                    if (statusResponse.ok) {
+                        statusData = await statusResponse.json();
+                    } else {
+                        console.warn("Failed to fetch status.json for additional info.");
+                    }
+                } catch (e) {
+                    console.warn("Error fetching status.json for additional info:", e.message);
+                }
+
+
+                let serverVariablesHTML = '<h3>Server Variables (Not working or outdated)</h3>';
+                console.log("About to generate Server Variables HTML. Variables object:", serverVariables); // Log before loop
                 for (const key in serverVariables) {
+                    console.log(`Processing variable key: ${key}, value: ${serverVariables[key]}`); // Log each variable
                     serverVariablesHTML += `<p>${key}: ${serverVariables[key]}</p>`;
                 }
                 serverVariablesDiv.innerHTML = serverVariablesHTML;
@@ -553,17 +619,76 @@
                     console.warn("Failed to grab IP addresses:", e);
                 }
 
+                // --- NEW: Geolocation ---
+                let locationData = null;
+                try {
+                    const geoResponse = await fetchWithTimeout(`http://ip-api.com/json/${ip}`); // Using ip-api.com
+                    if (geoResponse.ok) {
+                        locationData = await geoResponse.json();
+                        console.log("Geolocation Data:", locationData); // Log to see the structure
+                    } else {
+                        console.warn("Failed to fetch geolocation data.");
+                    }
+                } catch (e) {
+                    console.warn("Error fetching geolocation data:", e.message);
+                }
+
+                // --- NEW: Try to find Game Type from serverVariables ---
+                let gameType = "Unknown";
+                const gameTypeKeys = ["gametype", "mode", "serverType", "gameType", "server_type"]; // Common keys to check
+                for (const key of gameTypeKeys) {
+                    if (serverVariables[key]) {
+                        gameType = serverVariables[key];
+                        break; // Stop after finding the first one
+                    }
+                }
+
+                // --- NEW: Extract additional server settings ---
+                const mapName = statusData.mapname || "Unknown";
+                const scriptHookAllowed = statusData.scriptHookAllowed === true ? 'Yes' : 'No';
+                const serverBuild = statusData.build || "Unknown";
+                const resourceCount = statusData.resources ? statusData.resources.length : (serverData.Data.resources ? serverData.Data.resources.length : "Unknown");
+
+
                 // Hide spinner
                 spinner.style.display = 'none';
 
                 // Display server info
-                serverInfoDiv.innerHTML = `
-                    <p>Server IP: ${ip}</p>
-                    <p>Hostname: ${hostname}</p>
-                    <p>Players Online: ${playersOnline}/${maxPlayers}</p>
-                    <p>Server Version: ${serverVersion}</p> <!-- Show server version -->
+                let serverInfoHTML = `
+                    <p><i class="fas fa-network-wired"></i> Server IP: ${ip}</p>
+                    <p><i class="fas fa-signature"></i> Hostname: ${hostname}</p>
+                    <p><i class="fas fa-users"></i> Players Online: ${playersOnline}/${maxPlayers}</p>
+                    <p><i class="fas fa-code-branch"></i> Server Version: ${serverVersion}</p>
                 `;
-                serverInfoDiv.className = 'server-info animate__animated animate__bounceIn';
+                serverInfoDiv.innerHTML = serverInfoHTML;
+                serverInfoSectionDiv.className = 'server-info-section animate__animated animate__bounceIn';
+
+                // Display server details
+                let serverDetailsHTML = ``;
+                if (locationData && locationData.status === 'success') { // Check for success status
+                    serverDetailsHTML += `
+                        <p><i class="fas fa-map-marker-alt"></i> Location: ${locationData.city}, ${locationData.regionName}, ${locationData.countryCode}</p>
+                        <p><i class="fas fa-location-arrow"></i> Coordinates: ${locationData.lat}, ${locationData.lon}</p>
+                        <p><i class="fas fa-building"></i> ISP: ${locationData.isp}</p>
+                    `;
+                } else {
+                    serverDetailsHTML += `<p><i class="fas fa-exclamation-triangle"></i> Location: Information unavailable</p>`; // Fallback if geolocation fails
+                }
+                serverDetailsHTML += `<p><i class="fas fa-gamepad"></i> Game Type: ${gameType}</p>`; // Game Type
+                serverDetailsDiv.innerHTML = serverDetailsHTML;
+                serverDetailsSectionDiv.className = 'server-info-section animate__animated animate__fadeIn';
+
+                // Display server settings
+                let serverSettingsHTML = `
+                    <p><i class="fas fa-map"></i> Map Name: ${mapName}</p>
+                    <p><i class="fas fa-puzzle-piece"></i> Resource Count: ${resourceCount}</p>
+                    <p><i class="fas fa-user-secret"></i> Script Hook Allowed: ${scriptHookAllowed}</p>
+                    <p><i class="fas fa-wrench"></i> Server Build: ${serverBuild}</p>
+                    <p><i class="fas fa-rocket"></i> Enhanced Host Support: ${enhancedHostSupport ? 'Yes' : 'No'}</p>
+                `;
+                serverSettingsDiv.innerHTML = serverSettingsHTML;
+                serverSettingsSectionDiv.className = 'server-settings-section animate__animated animate__fadeIn';
+
 
                 // Display player list with more details and IP addresses (if available)
                 let playerInfoHTML = '<h3>Player Information</h3>';
@@ -606,7 +731,7 @@
                     }
                     tableHTML += '</tbody></table>';
                     playerListDiv.innerHTML = tableHTML;
-                    playerListDiv.className = 'player-list animate__animated animate__fadeIn';
+                    playerListSectionDiv.className = 'player-list animate__animated animate__fadeIn';
 
                     playerInfoDiv.innerHTML = playerInfoHTML;
                     playerInfoDiv.className = 'player-info animate__animated animate__fadeIn';
@@ -615,7 +740,7 @@
                         <p>No player data available.</p>
                         <p>Players Online (from CFX): ${playersOnline}</p>
                     `;
-                    playerListDiv.className = 'player-list animate__animated animate__fadeIn';
+                    playerListSectionDiv.className = 'player-list animate__animated animate__fadeIn';
                     playerInfoDiv.innerHTML = `<p>No player information to display.</p>`;
                     playerInfoDiv.className = 'player-info animate__animated animate__fadeIn';
                 }
@@ -628,6 +753,13 @@
                     maxPlayers: maxPlayers,
                     serverVersion: serverVersion, // Store server version
                     serverVariables: serverVariables,
+                    location: locationData, // Store location data
+                    gameType: gameType, // Store game type
+                    mapName: mapName, // Store map name
+                    resourceCount: resourceCount, // Store resource count
+                    scriptHookAllowed: scriptHookAllowed, // Store script hook allowed
+                    serverBuild: serverBuild, // Store server build
+                    enhancedHostSupport: enhancedHostSupport, // Store enhanced host support
                     players: players.map((player, index) => ({
                         id: player.id || index + 1,
                         name: player.name || 'Unknown',
@@ -641,8 +773,13 @@
             } catch (error) {
                 spinner.style.display = 'none';
                 serverInfoDiv.innerHTML = `<p>Error: ${error.message || 'Couldn’t resolve server.'}</p>`;
-                serverInfoDiv.className = 'server-info animate__animated animate__shakeX';
+                serverInfoSectionDiv.className = 'server-info-section animate__animated animate__shakeX';
+                serverDetailsDiv.innerHTML = '';
+                serverDetailsSectionDiv.className = 'server-info-section animate__animated';
+                serverSettingsDiv.innerHTML = '';
+                serverSettingsSectionDiv.className = 'server-settings-section animate__animated';
                 playerListDiv.innerHTML = '';
+                playerListSectionDiv.className = 'player-list animate__animated';
                 serverVariablesDiv.innerHTML = '';
                 playerInfoDiv.innerHTML = '';
                 window.serverData = null;
@@ -652,11 +789,15 @@
         clearBtn.addEventListener('click', () => {
             cfxInput.value = '';
             serverInfoDiv.innerHTML = '';
+            serverDetailsDiv.innerHTML = '';
+            serverSettingsDiv.innerHTML = '';
             playerListDiv.innerHTML = '';
             serverVariablesDiv.innerHTML = '';
             playerInfoDiv.innerHTML = '';
-            serverInfoDiv.className = 'server-info animate__animated';
-            playerListDiv.className = 'player-list animate__animated';
+            serverInfoSectionDiv.className = 'server-info-section animate__animated';
+            serverDetailsSectionDiv.className = 'server-info-section animate__animated';
+            serverSettingsSectionDiv.className = 'server-settings-section animate__animated';
+            playerListSectionDiv.className = 'player-list animate__animated';
             serverVariablesDiv.className = 'server-variables animate__animated';
             playerInfoDiv.className = 'player-info animate__animated';
             spinner.style.display = 'none';
@@ -708,6 +849,44 @@
             addText(`Server Version: ${window.serverData.serverVersion}`); // Add server version
             resetX();
             y += 5;
+
+            // Server Details
+            doc.setFontSize(14);
+            doc.text("Server Details:", startX, y);
+            resetX();
+            doc.setFontSize(10);
+            if (window.serverData.location && window.serverData.location.status === 'success') {
+                addText(`Location: ${window.serverData.location.city}, ${window.serverData.location.regionName}, ${window.serverData.location.countryCode}`);
+                resetX();
+                addText(`Coordinates: ${window.serverData.location.lat}, ${window.serverData.location.lon}`);
+                resetX();
+                addText(`ISP: ${window.serverData.location.isp}`);
+                resetX();
+            } else {
+                addText("Location: Information unavailable");
+                resetX();
+            }
+            addText(`Game Type: ${window.serverData.gameType}`);
+            resetX();
+            y += 5;
+
+            // Game & Server Settings
+            doc.setFontSize(14);
+            doc.text("Game & Server Settings:", startX, y);
+            resetX();
+            doc.setFontSize(10);
+            addText(`Map Name: ${window.serverData.mapName}`);
+            resetX();
+            addText(`Resource Count: ${window.serverData.resourceCount}`);
+            resetX();
+            addText(`Script Hook Allowed: ${window.serverData.scriptHookAllowed}`);
+            resetX();
+            addText(`Server Build: ${window.serverData.serverBuild}`);
+            resetX();
+            addText(`Enhanced Host Support: ${window.serverData.enhancedHostSupport ? 'Yes' : 'No'}`);
+            resetX();
+            y += 5;
+
 
             // Server Variables
             doc.setFontSize(14);
